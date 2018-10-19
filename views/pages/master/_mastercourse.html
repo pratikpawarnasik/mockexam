@@ -1,0 +1,140 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidManageCourseCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Courses
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" ng-init="getCourse()">
+	    	<div id="getmessage">{{getmessage}}</div>
+	    	
+	    		<div class="row table_action">
+    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+    					
+    					<button class="back_button" ng-click="doTheBack()">
+		        				<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+		        			</button>
+    					<button ng-click="openModal()">
+		        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Course
+		        			</button>
+    				</div>
+    			</div>
+	    		<table class="dashboard_tab course_list_tab">
+	        		<tr>
+	        			<td align="left" width="5%">Sr.No</td>
+	        			<td align="left" width="35%">Course Name</td>
+	        			<td align="left" width="25%">Category</td>
+	        			<td align="right" width="35%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="course in courseArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	        			<td>{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.</td>
+	        			<td>{{course.name}}</td>
+	        			<td>{{course.category}}</td>
+	        			<td align="right">
+		        			<a data-ng-if="course.level == 2" href="javascript:;" ui-sref="root.mastersubject({name : 'course',id : course.id})"><i class="fa fa-plus"></i> Add Subject</a>	
+		        			<a data-ng-if="course.level == 3" href="javascript:;" ui-sref="root.masterchapter({name : 'course',id : course.id})"><i class="fa fa-plus"></i> Add Chapter</a>
+						    
+							  <a href="javascript:;" ng-click="editCourse(course.id)"><i class="fa fa-pencil"></i></a>
+							
+	        			</td>
+	        		</tr>
+        		
+        		</table>
+        		<pagination 
+				  ng-if="courseArr.length != 0"
+			      ng-model="currentPage"
+			      total-items="courseArr.length"
+			      ng-click="pageChange(currentPage)"
+			      max-size="maxSize" 
+			      class="pagination-sm"
+			      items-per-page="itemsPerPage" 
+			      boundary-links="true">
+				</pagination>
+        		<div id="tablemessage">{{tablemessage}}</div>
+	    </div>
+	     
+	</div>
+</div>
+
+<!------------------modal- add course ---------------->
+<div id="add_new_course" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header m_student_modal">
+                <button class="close" data-dismiss="modal">X</button>
+               <h4 class="modal-title m_student_title form"> {{formname}} </h4>
+            </div>
+            <div class="modal-body" ng-init="getCategory()">
+                <div class="">
+		     	<form angular-validator-submit="submitCreateCourse()" class="course-form" id="courseForm" name="courseForm" novalidate angular-validator>	
+		     	<div id="message">{{message}}</div>
+		     		<div class="row">
+		     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				     		<label>Course Category <span class="mandatory">*</span></label>
+				     		<select 
+					     		class="dashboard_text" 
+					     		id="category"
+					     		name="category" 
+					     		data-ng-model="courseDet.category"
+					     		required-message="'Please select course category.'"
+					     		required
+					     		>
+				     			<option value="">Select Category</option>
+				     			<option value="{{item.id}}" ng-repeat="item in categoryArr">{{item.name}}</option>
+				     		</select>
+				     	</div>
+		    			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				     		<label>Course Name <span class="mandatory">*</span></label>
+				     		<input 
+					     		type="text" 
+					     		name="cname" 
+					     		placeholder="Course Name"
+					     		ng-model="courseDet.name"
+							    required-message="'Please enter course name.'"
+					     		class="dashboard_text" 
+					     		validate-on="dirty"
+					     		maxlength="100"
+					     		required
+					     		autocomplete="off"
+				     		/>
+		     			</div>
+		     			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				     		<label>Course Description<span class="mandatory">*</span></label>
+				     		<textarea 
+					     		type="text" 
+					     		name="courseDesc" 
+					     		id="courseDesc" 
+					     		placeholder="erEnt Description"
+					     		ng-model="courseDet.desc" 
+							    class="dashboard_text margin" 
+					     		autocomplete="off"
+				     		>
+		     	
+			     		</textarea>
+		     			</div>
+		     		</div>
+		     		<input ng-show="edit" type="submit" name="" value="Edit Course" class="dashboard_btn" />
+		     		<input ng-show="add" type="submit" name="" value="Add Course" class="dashboard_btn" />
+		     	</form>
+	     	</div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+
+</div>
+
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

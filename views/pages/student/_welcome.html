@@ -1,0 +1,340 @@
+  <div data-ng-include="'views/header/_header.html'"></div>
+<div data-ng-controller="welcomeStudentJS">
+<div class="container-fluid wrapper">
+    <div class="row" ng-init="studentDashboardInformation();exams_buy_flash();">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"  ng-init="getExam_data()">
+      <a  href="javascript:;" ui-sref="root.schuduled">
+          <div class="top_indicator block_3 ">
+            <div class="topblock_icon"><img src="images/all_exams.png"></div>
+            <div class="align_right">
+              <h4>All Exams</h4>
+              <h2>{{examdataArr.length}}</h2>
+            </div>
+         
+          </div>
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <a  href="javascript:;" ui-sref="root.examhistory">
+          <div class="top_indicator block_1">
+            <div class="topblock_icon"><img src="images/upcoming_exam.png"></div>
+            <div class="align_right">
+              <h4>Start Exam</h4>
+              <h2>{{countdata.upcomingExam}}</h2>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <a  href="javascript:;" ui-sref="root.examresult">
+          <div class="top_indicator block_2">
+            <div class="topblock_icon"><img src="images/appearedexam.png"></div>
+            <div class="align_right">
+              <h4>My Appeared Exams</h4>
+              
+              <h2>{{examResultData.length}}</h2>
+            </div>
+          </div>
+        </a>  
+      </div>
+    
+      <!-- <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
+      <a  href="javascript:;" ui-sref="root.examhistory">
+          <div class="top_indicator block_3 ">
+            <div class="topblock_icon"><img src="images/dash_icon4.png"></div>
+            <div class="align_right">
+              <h4>Start Exam</h4>
+              <h2>{{countdata.upcomingExam}}</h2>
+            </div>
+         
+          </div>
+        </a>
+      </div> -->
+  </div>  
+  <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" ng-init="getExams()">
+          <a href="javascript:;" ui-sref="root.studcourse">
+          <div class="block_title">
+            <table class="dash_tab_title">
+              <tr>
+                <td>Preparation Test</td>
+                <td align="right"><i class="fa fa-eye"></i></td>
+              </tr>
+            </table>
+          </div>
+          </a>
+          <div class="dash_block">
+            <table class="dash_tab table">
+              <tr>
+                <td width="50%">Course Name</td>
+                <td width="30%">Exam Date</td>
+                <td align="right">&nbsp;</td>
+              </tr>
+              <tr ng-repeat="item in examsArr" ng-if="$index <= 3">
+                {{item.exam_name}}
+                <td>{{item.exam_name}}</td>
+                <td>{{item.exam_date}}</td>
+                <td align="right">&nbsp;</td>
+              </tr>
+            </table>
+            <div ng-if="examsArr < 1"> Preparation test not available now.</div>
+          </div>
+        </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" ng-init="getExamResult()">
+          <a href="javascript:;" ui-sref="root.examresult">
+          <div class="block_title">
+            <table class="dash_tab_title">
+              <tr>
+                <td>Exams Status</td>
+                <td align="right"><i class="fa fa-eye"></i></td>
+              </tr>
+            </table>
+          </div>
+          </a>
+         <div class="dash_block">
+            <table class="dash_tab table">
+              <tr>
+                <td width="20%">Exam Date</td>
+                <td width="20%">Attempt </td>
+                <td width="20%">Not Attempt</td>
+                <td width="20%">Correct</td>
+                <td width="20%">Wrong</td>
+               
+              </tr>
+              <tr ng-repeat="res in examResultData">
+                <td>{{res.date1}}</td>
+                <td>{{res.attempt}}/{{res.noofquestion}}</td>
+                <td>{{res.not_attempt}}/{{res.noofquestion}}</td>
+                <td>{{res.correct}}/{{res.noofquestion}}</td>
+                <td>{{res.wrong}}/{{res.noofquestion}}</td>
+                
+              </tr>
+            </table>
+            <div ng-if="examResultData < 1"> Examination data not available.</div>
+          </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <a href="javascript:;" ui-sref="root.examresult">
+          <div class="block_title">
+            <table class="dash_tab_title">
+              <tr>
+                <td>Exams Result</td>
+                <td align="right"><i class="fa fa-eye"></i></td>
+              </tr>
+            </table>
+          </div>
+          </a>
+         <div class="dash_block">
+            <table class="dash_tab table">
+              <tr>
+                <td width="20%">Roll No.</td>
+                <td width="20%">Rank</td>
+                <td width="20%">Score</td>
+                <td width="18%">Attempt</td>
+                <td width="22%">Time Taken</td>
+               
+              </tr>
+              <tr ng-repeat="rank in studRank">
+                <td>{{rank.sr_stud_roll_no}}</td>
+                <td>{{rank.serial_number}}</td>
+                <td>{{rank.sr_total_score}}</td>
+                <td>{{rank.sr_attempt_que}}</td>
+                <td>{{rank.sr_total_time/60 | number:1}}</td>
+                
+              </tr>
+            </table>
+            <div ng-if="studRank < 1"> Examination data not available.</div>
+          </div>
+    </div>
+  </div>
+    <div class="row" style="padding:10px" id="graph_view">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <table id="calendar" class="calendar"><h4><strong></strong></h4></table>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <!--  Show course wise -->
+          <div>
+            <!-- <select class="graph_select" id="graph_1_year" name="year" ng-model="graph_1_year" ng-change="graph_1_data(graph_1_year)">
+              <option ng-repeat="item in courseArr" value={{item.id}}>{{item.name}}</option>
+            </select> -->
+          </div>
+            <div id="graph_1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+          
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-if="portal == 'other'">
+            <div>
+            <select class="graph_select" id="graph_2_year" name="year" ng-model="graph_2_year" ng-change="graph_2_data(graph_2_year)">
+              <option ng-repeat="item in courseArr" value={{item.id}}>{{item.name}}</option>
+            </select>
+          </div>
+            <div id="graph_2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+    </div>
+  
+</div> 
+<div id="exam_buy" class="modal fade floating_modal_box custom-regi" role="dialog" data-backdrop="static">
+  <div class="modal-dialog custom_registration">
+    <!-- Modal content-->
+    <div class="modal-content">
+       <div class="modal-header">
+                <button class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <h4 class="modal-title">Buy Exam</h4>
+
+        </div>
+      <div class="modal-body">
+        <div class="login-page">
+      <div class="form">
+        <div id="otp-form">
+        <div class="form_input" >
+            <form class="otp-form" angular-validator-submit="submitBuyExaForm()" name="buyExamForm" novalidate angular-validator>
+                <h3 class="floating_form_title1">Exam Details</h3>
+                <div id="exammsg">{{exammsg}}</div>
+                  <div><!--  id="course" -->
+                  <select
+                   
+                    class="form-control custom-dropdown"
+                    name="course" 
+                    data-ng-model="course"
+                    data-ng-change="load_sub_group(course)"
+                    >
+                      <option value="">Select Course</option>
+                      <option value="{{item.id}}" ng-repeat="item in courseArr">{{item.name}}</option>
+                    
+                  </select>
+                  </div>
+                   <section class="examselect_radio">
+                    <div class="col-md-12" ><!-- id="groupDiv" -->
+                      <div class="col-md-3 customexamlabel">
+                            <label >Select Subject Group:</label>
+                      </div>
+                      <div class="col-md-9 customexamlabel">
+                          <span ng-repeat="group in subGroupDetail" class="ng-scope">         
+                            <input type="radio" 
+                              name="subGroup"
+                              data-ng-model="examDet.subGroup"
+                              value="{{group.id}}"
+                              data-ng-change="uncheck_node()" >                           
+                            <label class="ng-binding">{{group.name}}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
+                      </div>
+                    </div>
+                  </section> 
+                  <section class="examselect_radio">
+                    <div class="col-md-12" data-ng-if='examDet.subGroup' id="modeId">
+                      <div class="col-md-3 customexamlabel">
+                            <label >Exam Mode:</label>
+                      </div>
+                      <div class="col-md-9 customexamlabel">
+                          <label class="exam-radio2">    
+                          
+                          <label class="exam-radio">             
+                          <input 
+                            type="radio"
+                            ng-model="examDet.mode" 
+                            name="mode"
+                            value="11"                            
+                            data-ng-change="load_exam_data()" 
+                            
+                          />
+                          Online</label>&nbsp;&nbsp;
+                          <label class="exam-radio1">                  
+                          <input 
+                            type="radio" 
+                            ng-model="examDet.mode" 
+                            name="mode" 
+                            value="22"
+                            data-ng-change="load_exam_data()" 
+                          />
+                          Offline(Paper & Pen)</label>&nbsp;&nbsp
+                         <!--  <input 
+                            type="radio" 
+                            ng-model="examDet.mode" 
+                            name="mode"
+                            value="33"
+                            data-ng-change="load_exam_data()" 
+                           
+                          />
+                          Online/Offline</label>&nbsp;&nbsp;  --> 
+                          </div> 
+                    </section>
+                    <section>   
+                          <div class="col-md-12">                
+                          <div id="exam-filter" ng-hide ="examDetail.length === 0">
+                            <div  class="row custom_dateprice">
+                            <table class="dashboard_tab category_list_tab">
+                              <tr class="buyexamstriped">
+                                <th align="left" width="5%"></th>
+                                <th align="left" width="15%">Sr.No</th>
+                                <th align="left" width="15%">Exam Code</th>
+                                <th align="left" width="15%">Exam Name</th>
+                                <th align="left" width="15%">Start Exam</th>
+                                <th align="left" width="15%">Duration (Min.)</th>
+                                <th align="left" width="15%">Exam Fees (Rs.)</th>
+                                <!-- <th align="left" width="15%">Exam Fee</th> -->
+                                <th align="right" width="15%">&nbsp;</th>
+                              </tr>
+                              <tr data-ng-repeat="exam in examDetail">
+                              <td>
+                              <input 
+                                    class="categories" 
+                                    type="checkbox" 
+                                    name="selectedExam[]"
+                                    data-ng-model="examDet.selectedExam[exam.id]" 
+                                    value="{{exam.id}}"
+                                    ng-true-value = "{{exam.id}}"
+                                    ng-false-value = ""
+                                    ng-click="toggleSelection(exam.id)"
+                                    >                               
+                            </td>
+                                <td>
+                                  {{$index +1}}
+                                </td>
+                                <td>
+                                  {{exam.id}}
+                                </td>
+                                <td>
+                                {{exam.name}}
+                                </td>
+                                 
+                                <td>
+                                {{exam.exam_date}}
+                                </td>
+                                <td>
+                                {{exam.duration}} Min.
+                                </td>
+                                <td>
+                                  <!-- <i class="fa fa-inr" aria-hidden="true"></i>.  -->{{exam.fee}} Rs.
+                                </td>
+                                <!-- <td>
+                                  asdf
+                                </td> -->
+                                <td>
+                                </td>
+                               
+                              </tr>
+                          
+                          </table>
+                          </div>
+                      </div>
+                    </div>
+                    <div id="dataNull"></div>
+                  </section>   
+            <!-- <br><button class="btn btn-success modal_btn" type="submit">Submit</button>  -->
+            <button  type="submit" ng-disabled="valid" class="input_btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; &nbsp;Buy Now</button>
+            </form>
+          </div>
+        </div>
+       
+       
+      
+     
+      
+      </div>
+    </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

@@ -1,0 +1,645 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidMasterStudentCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Students
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+	<div class="container">
+		<div class="row">
+			<div>
+				<div class="">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+			    		
+			    	</div>
+				</div>
+				<div class="">
+						<span >
+							<label >Send</label>			     		
+			                <input 
+			                type="radio"
+			                ng-model="mailStatus" 
+			                name="send" 
+			                ng-value="0"
+			               	 ng-click="getNewStud()"	               
+			                />
+			                &nbsp;&nbsp;&nbsp;&nbsp;
+			                <label >Resend</label>			            
+			                <input 
+			                type="radio" 
+			                ng-model="mailStatus" 
+			                name=resend"" 
+			                ng-value="1"
+			                ng-click="getNewStud()"
+			                />
+	                	</span>
+			    		<select id=""
+				     		class="select_ctrl auto"
+				     		name="searchby" 
+				     		data-ng-model="searchby"
+				     		ng-change="reset();"
+				     		>
+						<option value="">Search by </option>
+						<option ng-value='Name'>Name</option>
+						<option ng-value='Date'>Date</option>
+						<option ng-value='Email'>Email</option>
+						<option ng-value='Mobile'>Mobile</option>
+						
+						</select>
+							
+	    					<input 
+	    			     		type="text" 
+	    			     		name="startdate"
+	                            id="startdate"
+	                            ng-blur="adddate('startdate')"
+	    			     		placeholder="Start date"
+	    			     		ng-model="startdate"
+	    			     		class="select_ctrl" 
+	    			     		 ng-show="searchby== 'Date'"
+
+	    		     		/>
+	    		     		&nbsp;
+	    		     		<input 
+	    			     		type="text" 
+	    			     		name="enddate"
+	                            id="enddate"
+	                            ng-blur="adddate('enddate')"
+	    			     		placeholder="End date"
+	    			     		ng-model="enddate"
+	    			     		class="select_ctrl" 
+	    			     		 ng-show="searchby== 'Date'"
+	    		     		/>
+	    		     		&nbsp;<input type="text" class="select_ctrl" placeholder="Name" ng-model="searchtext" ng-show="searchby== 'Name'">
+	    		     		&nbsp;<input type="text" class="select_ctrl" placeholder="Email" ng-model="searchmail" ng-show="searchby== 'Email'">
+	    		     		&nbsp;<input type="text" class="select_ctrl" placeholder="Mobile" ng-model="searchmobile" ng-show="searchby== 'Mobile'">
+					     	   <button type="button" class="btn btn-primary" ng-click="getNewStud()">Search</button>
+					     	   &nbsp;
+					     	   <button type="button" class="btn remove_btn" ng-click="reset()">Reset</button>
+	    		</div>
+	    	</div><br>
+				<div class="">
+				<b>Upload Students by Excel</b>
+				</div>
+				<div class="upload_block">
+		     		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-5">
+			        	<div class="vm_uploadfile" style="position:relative;">
+					    <a class='btn btn-primary' href='javascript:;'>
+					     Browse Excel
+					     <input type="file" id="myFile" ng-model="uplodDet.fname" file-model="myFile" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+					    </a>
+					    &nbsp;
+					   </div>
+				   </div>
+				   <div class="col-lg-7 col-md-6 col-sm-6 col-xs-7">
+				    	<span id="upload-file-info"></span>
+				     	<input type="button" ng-click="uploadStudList(id)" value="Upload Students" class="btn bt_submit no_margin vm_upload_question"/>
+				   </div>
+
+				   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+					   <div class="table_action align_right mobile">
+					    <button ng-click="downloadexcel()"><i class="fa fa-download"></i>&nbsp;&nbsp;Download Excel Format</button>
+					   </div>
+				   </div>
+		        </div>
+				<div id="uploadmessage">{{uploadmessage}}</div>
+
+	    
+		    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-init="getNewStud()">
+		    	<div id="getmessage">{{getmessage}}</div>
+		    		<div class="row table_action">
+	    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+	    						<button class="back_button" ng-click="doTheBack()">
+									<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+								</button>
+
+		        				<button ng-click="openModal()">
+			        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Student
+			        			</button>
+			        			<button class="remove_btn" ng-click="delSelectStudent()">
+			        				<i class="fa fa-close"></i>&nbsp;&nbsp;Delete Selected
+			        			</button>
+			        			<button class="excel_btn" ng-click="downloadStudentExcel()"  data-toggle="tooltip" title data-original-title="Download Excel">
+			        				<i class="fa fa-file-excel-o"></i>
+			        			</button>
+			        			<button class="pdf_btn" ng-click="downloadStudentPdf()" data-toggle="tooltip" title data-original-title="Download Pdf">
+			        				<i class="fa fa-file-pdf-o"></i>
+			        			</button>
+			        			
+			        		
+		        		</div>
+		        	</div>
+		    
+		    		<table class="dashboard_tab category_list_tab">
+		        		<tr>
+		        			<td align="left" width="2%">&nbsp;<!-- <input type="checkbox" id="select_student" ng-model="allselect" /> --></td>
+		        			<td align="left" width="4%">Sr.No.</td>
+		        			<td align="left" width="4%">Reg.No.</td>
+		        			<td align="left" width="20%">Name </td>
+		        			<td align="left" width="15%">Email</td>
+		        			<td align="left" width="15%">Contact No.</td>
+		        			
+		        			<td align="left" width="15%">Reg.Date</td>
+		        			<td align="right" width="15%">Status</td>
+		        			<td align="left" width="15%"></td>
+		        		</tr>
+		        		<tr data-ng-repeat="studlist in NewStudList.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+		        			<td>
+		        			<!-- ng-checked="selection.indexOf(fruitName) > -1"-->
+		        				<input 
+		        				class="categories" 
+		        				type="checkbox" 
+		        				name="selectedQuestion[]"
+		        				ng-model="delquestion.selected" 
+		        				value="{{studlist.stud_id}}"
+		        				ng-click="toggleSelection(studlist.stud_id)"
+		        				>	        				
+		        			</td>
+		        			<td>
+		        			{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.
+		        			</td>
+		        			<td>{{studlist.stud_id}}</td>
+		        			<td>{{studlist.stud_name}}</td>
+		        			<td>{{studlist.stud_email}}</td>
+		        			<td>{{studlist.stud_contact}}</td>
+
+		        			<td>{{studlist.submitdate |  date :  "dd.MM.y" }}<b> </td>
+		        			<td align="right">
+								  <a href="javascript:;" ng-click="mailSendFun(studlist.stud_id)" ng-if="studlist.mailStatus == '0'">Send     </a>
+								  <a href="javascript:;" ng-click="mailSendFun(studlist.stud_id)" ng-if="studlist.mailStatus == '1'">Resend </i></a>
+		        			</td>
+		        			<td align="right">
+							  <a href="javascript:;" ng-click="getStudent(studlist.stud_id)"><i class="fa fa-pencil"></i></a>
+	        			</td>
+		        		
+		        		</tr>
+	        		
+	        		</table>
+	        		<pagination 
+					  ng-if="NewStudList.length != 0"
+				      ng-model="currentPage"
+				      total-items="NewStudList.length"
+				      ng-click="pageChange(currentPage)"
+				      max-size="maxSize" 
+				      class="pagination-sm"
+				      items-per-page="itemsPerPage" 
+				      boundary-links="true">
+					</pagination>
+	        		<div id="tablemessage">{{tablemessage}}</div>
+		    </div>
+		     
+		</div>
+	</div>
+</div>
+
+<!------------------modal- add course ---------------->
+	<div id="add_new_student" class="modal fade" role="dialog" data-backdrop="static">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	        	<div class="modal-header m_student_modal">
+	                <button class="close" data-dismiss="modal">X</button>
+	               <h4 class="modal-title m_student_title form"> {{formname}} </h4>
+	            </div>
+	            <div class="modal-body" ng-init="get_state()">
+	                
+			     	<form angular-validator-submit="submitNewStudent()" class="category-form" id="studentForm" name="studentForm" novalidate angular-validator>	
+			     	<div id="message">{{message}}</div>
+			     		
+			     		<div class="col-md-12">
+				     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+				     		<!-- <label>Student Name <span class="mandatory">*</span></label> -->
+			     			<input 
+					     		type="text" 
+					     		name="studname" 
+					     		placeholder="Student Name"
+					     		ng-model="studProfileDet.studname" 
+							    required-message="'Please enter student name.'"
+					     		class="dashboard_text" 
+					     		validate-on="dirty"
+					     		maxlength="50"
+					     		required
+					     		autocomplete="off"
+				     		/>
+				     		</div>
+				     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				     		<!-- <label>Email Address  <span class="mandatory">*</span></label> -->
+					     	<input  type = "text"
+			                  name = "email"
+			                  placeholder="Email Address"
+			                  ng-model = "studProfileDet.email"
+			                  ng-pattern="emailFormat"
+			                  class="dashboard_text"
+			                  invalid-message="'Please enter the valid email address.'"
+			                  required-message="'Please enter the email address.'"
+			                  validate-on="dirty"
+			                  required
+			                  autocomplete="off"
+			                  />
+			                </div>
+			            </div>
+			            <div class="col-md-12">
+				     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			                 <!-- <label>Contact Number <span class="mandatory">*</span></label> --> 
+			                 <input 
+			                  type="text" 
+			                  placeholder="Mobile Number" 
+			                  class="dashboard_text"
+			                  name="contact" 
+			                  ng-model="studProfileDet.contact" 
+			                  ng-pattern="/(^[1-9]\d{9}$)/" 
+			                  invalid-message="'Enter only 10 digits contact number.'"
+			                  required-message="'Please enter the contact number.'"
+			                  validate-on="dirty"
+			                  required
+			                  autocomplete="off"
+			                  />
+			                  </div>
+			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			                 <!--  <label>Mother Name <span class="mandatory">*</span></label> --> 
+			                 <input 
+			                  type="text" 
+			                  placeholder="Mother Name" 
+			                  class="dashboard_text"
+			                  name="mother_name" 
+			                  ng-model="studProfileDet.mother_name" 		                 
+			                  required-message="'Please enter Mother Name.'"
+			                  validate-on="dirty"
+			                  required
+			                  autocomplete="off"
+			                  />
+			                </div>
+			            </div>
+			            <div class="col-md-12">
+			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			                  <label>Gender <span class="mandatory">*</span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+			         			<label >Male</label>			     		
+				                <input 
+				                type="radio"
+				                ng-model="studProfileDet.gender" 
+				                name="gender" 
+				                ng-value="1"		               
+				                />
+				                &nbsp;&nbsp;&nbsp;&nbsp;
+				                <label >Female</label>			            
+				                <input 
+				                type="radio" 
+				                ng-model="studProfileDet.gender" 
+				                name="gender" 
+				                ng-value="2"
+				                required
+				                required-message="'Please select your gender.'"
+				                />
+			                </div>
+			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			                	<!-- <label>Date of Birth<span class="mandatory">*</span></label> -->
+				                <input 
+					     		type="text" 
+					     		name="dob"
+		                        id="dob"
+		                        ng-blur="adddate('dob')"
+					     		placeholder="DOB"
+					     		ng-model="studProfileDet.dob"
+							    required-message="'Please enter Your birth date.'"
+					     		class="dashboard_text" 
+					     		validate-on="dirty"
+					     		autocomplete="off"
+					     		
+	    		     		/>
+			                </div>
+			            </div>
+			        
+			        	<div class="col-md-12">
+			                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+								<!-- <label>Class  <span class="mandatory">*</span></label> -->			     			
+								<input type="text" 
+				                  placeholder="Enter Standard, eg.11th,12th etc." 
+				                  class="dashboard_text"
+				                  name="course" 
+				                  ng-model="studProfileDet.standard" 			                  
+				                  validate-on="dirty"
+				                  required
+							      required-message="'Please enter standard.'"
+				                  autocomplete="off"
+				                  />
+				     		</div>
+				     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+								<!-- <label>College Details <span class="mandatory">*</span></label>	 -->		     			
+								<input 
+				                  type="text" 
+				                  placeholder="Enter college name." 
+				                  class="dashboard_text"
+				                  name="college_name" 
+				                  ng-model="studProfileDet.college_name" 			                  
+				                  validate-on="dirty"
+							      required-message="'Please enter college name.'"
+
+				                  required
+				                  autocomplete="off"
+					             />
+				     		</div>
+				     	</div>
+			            <div class="col-md-12">
+				     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+								<!-- <label>Address  <span class="mandatory">*</span></label> -->
+								<input type="text" 
+							      placeholder="Please enter the address." 
+							      class="dashboard_text"
+							      name="address"
+							      ng-model="studProfileDet.address"
+							      required-message="Please enter the address."
+							      required
+							      validate-on="dirty"
+							      autocomplete="off"
+							    />
+					     		
+			                 
+			                </div>
+			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			                  <label>Country <span class="mandatory">*</span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+			         			<label >India</label>			     		
+				                <input 
+				                type="radio"
+				                ng-model="studProfileDet.country" 
+				                name="country" 
+				                ng-value="1"		               
+				                />
+				                &nbsp;&nbsp;&nbsp;&nbsp;
+				                <label >Other</label>			            
+				                <input 
+				                type="radio" 
+				                ng-model="studProfileDet.country" 
+				                name="country" 
+				                ng-value="2"
+				                required 
+				                required-message="'Please select your Country.'"
+				                />
+			                </div>
+			            </div>
+			            <div class="col-md-12">
+			                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" ng-if="studProfileDet.country == 2">
+								<!-- <label>Country Name  <span class="mandatory">*</span></label> -->
+								<input type="text" 
+							      placeholder="Country Name" 
+							      class="dashboard_text"
+							      name="other_country"
+							      ng-model="studProfileDet.other_country"
+							      required-message="'Please enter the other_country.'"
+							      maxlength="20"
+							      validate-on="dirty"
+							      autocomplete="off"
+							    />
+
+				     		</div>
+				     	</div>
+			            <div class="col-md-12">
+				     		<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" ng-if="studProfileDet.country == 1">
+								<!-- <label>Pin Code </label> -->	     			
+				     			<input 
+				                  type="text" 
+				                  placeholder="Pin Code" 
+				                  class="dashboard_text custom-dropdown-state"
+				                  name="pin" 
+				                  ng-model="studProfileDet.pin" 
+				                  ng-pattern="/(^[1-9]\d{5}$)/" 
+				                  invalid-message="'Enter Only 6 digits Number'"
+				                  required-message="'Please enter the pin code.'"
+				                  validate-on="dirty"
+				                  maxlength="6"
+				                
+				                  autocomplete="off"
+				                  />
+				     		</div>
+			                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"  ng-if="studProfileDet.country == 1">
+			                	<!-- <label>State </label> -->
+			                	<select
+						     		id="state"
+						     		class="form-control custom-dropdown-state"
+						     		name="state" 
+						     		data-ng-model="studProfileDet.state"
+						     		data-ng-change="get_district(studProfileDet.state)"
+						     		data-ng-click=""
+						     		
+						     		>
+		        					<option value="">Select State</option>
+		        					<option value="{{item.state_id}}" ng-repeat="item in stateDetail">{{item.state_name}}</option>	        					
+			        			</select> &nbsp;
+				     		</div>
+				     		<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" ng-if="studProfileDet.country == 1">
+				     			<!-- <label>District </label> -->
+			                	<select
+						     		id="district"
+						     		class="form-control custom-dropdown-state"
+						     		name="district" 
+						     		data-ng-model="studProfileDet.district"
+						     		
+						     		>
+		        					<option value="">Select District</option>
+		        					<option value="{{item.district_id}}" ng-repeat="item in distDetail">{{item.district_name}}</option>
+		        				</select> &nbsp;
+				     		</div>
+				     	</div>
+				     	<div class="col-md-12">	
+				     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+								<!-- <label>Coordinator Name</label>	 -->		     			
+								<input 
+				                  type="text" 
+				                  placeholder="Enter coordinator name." 
+				                  class="dashboard_text"
+				                  name="coordinator" 
+				                  ng-model="studProfileDet.coordinator"			                  
+				                  validate-on="dirty"
+				                  autocomplete="off"
+					             />
+				     		</div>
+				     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+								<!-- <label>How to know? </label> -->			     			
+								<input 
+				                  type="text" 
+				                  placeholder="How did you get to know about exam?" 
+				                  class="dashboard_text"
+				                  name="how_to_know" 
+				                  ng-model="studProfileDet.how_to_know" 
+				                  validate-on="dirty"
+				                  autocomplete="off"
+					             />
+				     		</div>
+				     	</div>
+			     		
+			     		<input ng-show="action == 'add'" type="submit" name="" value="Add new student" class="dashboard_btn"/>
+			     		<input ng-show="action !== 'add'" type="submit" name="" value="Edit student" class="dashboard_btn"/>
+			     	</form>
+		     	</div>
+	        </div>
+	    </div>
+	    
+	</div>
+	<div id="admin_exam_buy" class="modal fade floating_modal_box custom-regi" role="dialog" data-backdrop="static">
+	  <div class="modal-dialog custom_registration">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	       <div class="modal-header">
+	                <button class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+	                <h4 class="modal-title">Choose exam for uploading students</h4>
+
+	        </div>
+	      <div class="modal-body">
+	        <div class="login-page">
+	      <div class="form">
+	        <div id="otp-form">
+	        <div class="form_input" >
+	            <form class="otp-form" angular-validator-submit="getExcellFormat()" name="chooseExam" novalidate angular-validator>
+	                <h3 class="floating_form_title1">Exam Details</h3>
+	                <div id="otpmessage">{{otpmessage}}</div>
+	                  <div><!--  id="course" -->
+	                  <select
+	                   
+	                    class="form-control custom-dropdown"
+	                    name="course" 
+	                    data-ng-model="course"
+	                    data-ng-change="load_sub_group(course)"
+	                    >
+	                      <option value="">Select Exam</option>{{courseArr}}
+	                      <option value="{{item.id}}" ng-repeat="item in courseArr">{{item.name}}</option>
+	                    
+	                  </select>
+	                  </div>
+	                   <section class="examselect_radio">
+	                    <div class="col-md-12" ><!-- id="groupDiv" -->
+	                      <div class="col-md-3 customexamlabel">
+	                            <label >Select Subject Group:</label>
+	                      </div>
+	                      <div class="col-md-9 customexamlabel">
+	                          <span ng-repeat="group in subGroupDetail" class="ng-scope">         
+	                            <input type="radio" 
+	                              name="subGroup"
+	                              data-ng-model="examDet.subGroup"
+	                              value="{{group.id}}"
+	                              data-ng-change="uncheck_node()" >                           
+	                            <label class="ng-binding">{{group.name}}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+	                          </span>
+	                      </div>
+	                    </div>
+	                  </section> 
+	                  <section class="examselect_radio">
+	                    <div class="col-md-12" data-ng-if='examDet.subGroup' id="modeId">
+	                      <div class="col-md-3 customexamlabel">
+	                            <label >Exam Mode:</label>
+	                      </div>
+	                      <div class="col-md-9 customexamlabel">
+	                          <label class="exam-radio2">    
+	                          
+	                          <label class="exam-radio">             
+	                          <input 
+	                            type="radio"
+	                            ng-model="examDet.mode" 
+	                            name="mode"
+	                            value="11"                            
+	                            data-ng-change="load_exam_data()" 
+	                            
+	                          />
+	                          Online</label>&nbsp;&nbsp;
+	                          <label class="exam-radio1">                  
+	                          <input 
+	                            type="radio" 
+	                            ng-model="examDet.mode" 
+	                            name="mode" 
+	                            value="22"
+	                            data-ng-change="load_exam_data()" 
+	                          />
+	                          Offline</label>&nbsp;&nbsp
+	                         <!--  <input 
+	                            type="radio" 
+	                            ng-model="examDet.mode" 
+	                            name="mode"
+	                            value="33"
+	                            data-ng-change="load_exam_data()" 
+	                           
+	                          />
+	                          Online/Offline</label>&nbsp;&nbsp; -->  
+	                          </div> 
+	                    </section>
+	                    <section>   
+	                          <div class="col-md-12">                
+	                          <div id="exam-filter" ng-hide ="examDetail.length === 0">
+	                            <div  class="row custom_dateprice">
+	                            <table class="dashboard_tab category_list_tab">
+	                              <tr class="buyexamstriped">
+	                                <th align="left" width="5%"></th>
+	                                <th align="left" width="15%">Sr.No</th>
+	                                <th align="left" width="15%">Exam Name</th>
+	                                <th align="left" width="15%">Start Exam</th>
+	                                <th align="left" width="15%">Exam Fees</th>
+	                                <!-- <th align="left" width="15%">Exam Fee</th> -->
+	                                <th align="right" width="15%">&nbsp;</th>
+	                              </tr>
+	                              <tr data-ng-repeat="exam in examDetail">
+	                              <td>
+	                              	<input type="radio" 
+		                              name="selectedExam"
+		                              data-ng-model="examDet.selectedExam"
+		                              value="{{exam.id}}"
+		                              data-ng-change="" >
+	                              <!-- <input 
+	                                    class="categories" 
+	                                    type="checkbox" 
+	                                    name="selectedExam"
+	                                    data-ng-model="examDet.selectedExam[exam.id]" 
+	                                    value="{{exam.id}}"
+	                                    ng-true-value = "{{exam.id}}"
+	                                    ng-false-value = ""
+	                                    ng-click="toggleSelection(exam.id)"
+	                                    >         -->                       
+	                            </td>
+	                                <td>
+	                                  {{$index +1}}
+	                                </td>
+	                                <td>
+	                                {{exam.name}}
+	                                </td>
+	                                <td>
+	                                {{exam.exam_date}}
+	                                </td>
+	                                <td>
+	                                  {{exam.fee}}
+	                                </td>
+	                                <!-- <td>
+	                                  asdf
+	                                </td> -->
+	                                <td>
+	                                </td>
+	                               
+	                              </tr>
+	                          
+	                          </table>
+	                          </div>
+	                      </div>
+	                    </div>
+	                  </section>   
+	            <!-- <br><button class="btn btn-success modal_btn" type="submit">Submit</button>  -->
+	            <button  type="submit" ng-disabled="valid" class="input_btn"><i class="fa fa-download"></i>&nbsp;&nbsp;Get Excel Format</button>
+	            </form>
+	          </div>
+	        </div>
+	       
+	      </div>
+	    </div>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+</div> 
+
+
+</div>
+
+<!--------------------- footer page ----------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

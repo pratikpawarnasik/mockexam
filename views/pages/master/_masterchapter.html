@@ -1,0 +1,155 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidManageChapterCtrl">
+
+
+<div class="container-fluid wrapper">
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" ng-init="getChapter()">
+	    	<div class="full_width_table">
+	    	<div id="getmessage">{{getmessage}}</div>
+	    		<table class="table_action">
+	        		<tr>
+	        			<td align="left"><h3 class="header_title">Chapters for - <span class="text_strong">{{coursename}}</span> </h3></td>
+	        			<td align="right">
+
+							<button class="back_button" ng-click="doTheBack()">
+								<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+							</button>
+	        				<button ng-click="openModal()">
+		        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Chapter
+		        			</button>
+		        			<!--<button class="remove_btn" ng-click="delSelectChapter()">
+		        				<i class="fa fa-close"></i>&nbsp;&nbsp;Delete All
+		        			</button>-->
+		        		</td>
+	        		</tr>
+	        	</table>
+	    	
+	    		<table class="dashboard_tab chapter_list_tab">
+	        		<tr>
+	        			<!--<td align="left" width="5%"><input type="checkbox" id="select_chapter" ng-model="allselect" /></td>-->
+	        			<td align="left" width="5%">Sr.No</td>
+	        			<td align="left" width="25%">Chapter Name</td>
+	        			<!-- <td align="left" width="15%">Description</td> -->
+	        			<td align="left" width="15%">{{colname}}</td>
+	        			<td align="left" width="10%">No.of Questions</td>
+	        			<td align="left" width="10%">Final Exam Question</td>
+	        			<td align="right" width="35%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="chapter in chapterArr">
+	        			<!--<td>
+	        				<input 
+	        				class="chapter" 
+	        				type="checkbox" 
+	        				name="selectedChapter[]"
+	        				ng-model="delchapter.selected" 
+	        				value="{{chapter.id}}"
+	        				ng-click="toggleSelection(chapter.id)"
+	        				>
+	        				
+	        			</td>-->
+	        			<td>{{$index+1}}</td>
+	        			<td>{{chapter.name}}</td>
+	        	
+	        			<td>{{chapter.dispname}}</td>
+	        			<td>{{chapter.totalquestion}}</td>
+	        			<td>{{chapter.totalfinalquestion}}</td>
+	        			<td align="right">
+							  <a ng-if="chapter.topic == '0'" href="javascript:;" ui-sref="root.question({id : chapter.id ,totalQun : chapter.totalquestion})"><i class="fa fa-plus"></i> Manage Questions</a>
+							  <!-- <a ng-if="chapter.topic == '1'"  href="javascript:;" ui-sref="root.topic({chapterid : chapter.id})"><i class="fa fa-plus"></i> Add Topic</a> -->
+							  <a href="javascript:;" ng-click="editChapter(chapter.id)"><i class="fa fa-pencil"></i></a>
+							  <a href="javascript:;" ng-click="deleteChapter(chapter.id)"><i class="fa fa-remove"></i></a>
+	        			</td>
+	        		</tr>
+        		
+        		</table>
+        		<div id="tablemessage">{{tablemessage}}</div>
+			</div>
+	    </div>
+	     
+	</div>
+</div>
+
+<!------------------modal- add chapter ---------------->
+<div id="add_new_chapter" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header m_student_modal">
+                <button class="close" data-dismiss="modal">X</button>
+               <h4 class="modal-title m_student_title form"> {{formname}} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+		     	<form angular-validator-submit="submitCreateChapter()" class="chapter-form" id="chapterForm" name="chapterForm" novalidate angular-validator>	
+		     	<div id="message">{{message}}</div>
+		     		<div>
+		     		<label>Chapter Name <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text" 
+			     		name="cname" 
+			     		placeholder="Chapter Name"
+			     		ng-model="chapterDet.name" 
+					    required-message="'Please enter chapter name.'"
+			     		class="dashboard_text" 
+			     		validate-on="dirty"
+			     		required
+			     		autocomplete="off"
+		     		/>
+		     		</div>
+		     		<div>
+		     		<label>Description</label>
+		     		<input 
+			     		type="text"
+			     		placeholder="Description" 
+			     		name="desc" 
+			     		ng-model="chapterDet.desc" 
+					    class="dashboard_text" 
+			     		autocomplete="off" 
+		     		/>
+		     		</div>
+<!-- 		     		<div ng-show="add">
+		            	<label>Is Topic Assign <span class="mandatory">*</span></label>
+		     		</div>
+		     		<div ng-show="add">
+			     		<div ng-init="chapterDet.topic=0">
+				     		
+				                <input 
+				                type="radio" 
+				                ng-model="chapterDet.topic" 
+				                name="topic" 
+				                ng-value="0"
+				                checked="checked"
+				                required
+				                />
+				                <label >No</label></br>
+				            
+				                <input 
+				                type="radio"
+				                ng-model="chapterDet.topic" 
+				                name="topic" 
+				                ng-value="1"
+				                required
+				                />
+				                <label >Yes</label></br>
+				        </div>
+		     		</div> -->
+		     		<div>
+		     		<input ng-show="edit" type="submit" name="" value="Edit Chapter" class="dashboard_btn" />
+		     		<input ng-show="add" type="submit" name="" value="Add Chapter" class="dashboard_btn" /></div>
+		     	</form>
+	     	</div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+
+</div>
+
+<!--------------------- footer page ----------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

@@ -1,0 +1,212 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+<!--<style>
+	.graph_select{
+		width: 11%;
+		left: 10%;
+		position: absolute;
+		z-index: 1;
+	}
+</style>-->
+<div data-ng-controller="vidMasterCtrl">
+<!------------------- Banner ------------------>
+<div class="container-fluid wrapper">
+    <div class="row" ng-init="getMasterDashCount();">
+       	<!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        	<div class="top_indicator block1">
+        		<div class="topblock_icon"><i class="fa fa-building-o"></i></div>
+        		<div  class="align_right">
+        			<h4>Total Registered Institutes</h4>
+        			<h2>{{institutecount}}</h2>
+        		</div>
+        	</div>
+	    </div>-->
+	    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <a  href="javascript:;" ui-sref="root.allexamsadmin">
+        	<div class="top_indicator block_grid_1">
+        		<div class="topblock_icon"><img src="images/dash_icon1.png"></div>
+        		<div  class="align_right">
+        			<h4>Total Upcoming Exams</h4>
+        			<h2>{{examcount}}</h2>
+        		</div>
+        	</div>
+        </a>
+	    </div>
+	    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <a  href="javascript:;" ui-sref="root.masterstudents">
+        	<div class="top_indicator block_grid_2">
+            
+        		<div class="topblock_icon"><img src="images/dash_icon3.png"></div>
+        		<div  class="align_right">
+        			<h4>Total Online Students</h4>
+        			<h2>{{onlinestudent}}</h2>
+        		</div>
+
+        		<!--<br>
+        			<p><span>Direct : </span>  {{masterstudentcount}}</p>
+        			<p><span>Institute : </span>  {{inststudentcount}}</p>-->
+        	</div>
+          </a>
+	    </div>
+       <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <a  href="javascript:;" ui-sref="root.masterstudents">
+          <div class="top_indicator block_grid_3">
+            <div class="topblock_icon"><img src="images/dash_icon2.png"></div>
+            <div  class="align_right">
+              <h4>Total Offline Students</h4>
+              <h2>{{offlinestudent}}</h2>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <a  href="javascript:;" ui-sref="root.mastercourse">
+          <div class="top_indicator block_grid_4">
+            <div class="topblock_icon"><img src="images/dash_icon4.png"></div>
+            <div  class="align_right">
+              <h4>Total Courses</h4>
+              <h2>{{coursecount}}</h2>
+            </div>
+            <!--<br>
+              <p><span>Direct : </span>  {{masterstudentcount}}</p>
+              <p><span>Institute : </span>  {{inststudentcount}}</p>-->
+          </div>
+        </a>
+      </div>
+	    <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        	<div class="top_indicator block4">
+        		<div class="topblock_icon"><i class="fa fa-paper-plane"></i></div>
+        		<div  class="align_right">
+        			<h4>Total Institute Branches</h4>
+        			<h2>{{branchcount}}</h2>
+        		</div>
+        	</div>
+	    </div>-->
+	</div>
+	<div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"  ng-init="getCourse();">
+          <div class="block_title">
+            <table class="dash_tab_title">
+              <tr>
+                <td>Recently Added Courses</td>
+                <td align="right"><a href="javascript:;" ui-sref="root.mastercourse"><i class="fa fa-eye"></i></a></td>
+              </tr>
+            </table>
+          </div>
+          <div class="dash_block">
+            <table class="dashboard_tab feedback_list_tab">
+              <tr>
+                <td align="left" width="10%">Sr.No. </td>
+                <td align="left" width="40%">Course Name</td>
+                <td align="left" width="40%">Category</td>
+                <td align="left" width="10%">&nbsp;</td>
+              </tr>
+              <tr data-ng-repeat="item in courseArr  | limitTo:10">
+                <td>{{$index + 1}}.</td>
+                <td>{{item.course_name}}</td>
+                <td>{{item.category_name}}</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+            <div id="getcourse">{{getcourse}}</div>
+          </div>
+        </div>
+
+       	<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" ng-init="getQueryList();">
+       		<div class="block_title">
+       			<table class="dash_tab_title">
+       				<tr>
+       					<td>Raise Questions</td>
+       					<td align="right"><a href="javascript:;" ui-sref="root.masterdoubts"><i class="fa fa-eye"></i></a></td>
+       				</tr>
+       			</table>
+       		</div>
+       		<div class="dash_block">
+       			<table class="dashboard_tab feedback_list_tab">
+	        		<tr>
+	        			<td align="left" width="30%">Student Name</td>
+	        			<td align="left" width="30%">Exam Details</td>
+	        			<td align="left" width="30%">Question</td>
+	        		</tr>
+              <tr data-ng-repeat="darray in doubtsArr | limitTo:10">
+	        		<!-- <tr data-ng-repeat="item in feedbackArr" ng-if="$index <= 3"> -->
+	        			<td>{{darray.student}} ({{darray.mobile}})</td>
+	        			<td>{{darray.exam}}</br><b> on</b> {{darray.exam_date |  date :  "dd.MM.y"}}<b> At.</b>{{darray.exam_time}}</td>
+	        			<td><span ng-bind-html="darray.question | to_trusted"></span></td>
+	        		</tr>
+        		</table>
+        		<div id="queryListMessage">{{queryListMessage}}</div>
+       		</div>
+       	</div>
+		    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" ng-init="getNewStud();">
+			     <div class="block_title">
+       			<table class="dash_tab_title">
+       				<tr>
+       					<td>Recent Registered Students</td>
+       					<td align="right"><a href="javascript:;" ui-sref="root.masterstudents"><i class="fa fa-eye"></i></a></td>
+       				</tr>
+       			</table>
+       	</div>
+       		<div class="dash_block">
+       			<table class="dashboard_tab feedback_list_tab">
+	        		<tr>
+	        			<td align="left" width="30%">Reg.No.</td>
+	        			<td align="left" width="30%">Name</td>
+	        			<td align="left" width="30%">Reg.Date</td>
+	        		</tr>
+	        		<tr data-ng-repeat="studlist in NewStudList  | limitTo:10">
+                <td>{{studlist.stud_id}}</td>
+	        			
+                <td>{{studlist.stud_name}}</td>
+	        			<td>{{studlist.submitdate |  date :  "dd.MM.y" }}<b> </td>
+	        		</tr>
+        		</table>
+        		<div id="tablemessage">{{tablemessage}}</div>
+       		</div>
+       	</div>
+       	
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <table id="calendaradmin" class="calendar"></table>
+      </div>
+      <div class="col-md-6" ng-init="getFeedback()">
+        <div class="block_title">
+            <table class="dash_tab_title">
+              <tr>
+                <td>Student Feedback</td>
+                <td align="right"><a href="javascript:;" ui-sref="root.feedback"><i class="fa fa-eye"></i></a></td>
+              </tr>
+            </table>
+        </div>
+        <div id="getmessage">{{getmessage}}</div>
+          <table class="dashboard_tab feedback_list_tab">
+              <tr>
+                <td align="left" width="10%">Sr.No</td>
+                <td align="left" width="15%">Student Name</td>
+                
+                <td align="left" width="60%">Feedback Message</td>
+                <td align="left" width="15%">Submit Date</td>
+                
+
+              </tr>
+              <tr data-ng-repeat="feedback in feedbackArr   | limitTo:5">
+              
+                <td>{{$index + 1}}.</td>
+                <td>{{feedback.studname}}</td>
+                <td>{{feedback.concern  | limitTo: 160}} {{feedback.concern.length > 160 ? '...' : ''}}</td>
+                <td>{{feedback.fbsubmitdate | date:'dd-MM-yyyy'}}</td>
+                
+              </tr>
+            
+            </table>
+       
+            <div id="tablemessage">{{tablemessage}}</div>
+      </div>
+    </div>
+
+	
+</div> 
+</div>
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

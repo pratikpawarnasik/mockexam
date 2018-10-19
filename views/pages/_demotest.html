@@ -1,0 +1,108 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+
+<div data-ng-controller="vidDemotestCtrl" id="demotest_keypress" oncontextmenu="return false" onkeydown="return false;" onmousedown="return false;">
+
+<h4 class="test_name">Demo Test for {{coursename}} course</h4>
+<div class="container-fluid wrapper online_test vm_demotest">
+    <div class="row"  ng-show="exam"><!-- ng-init="getCourse();" -->
+    	<div class="col-md-9 col-sm-9 col-xs-12">
+    		<div class="align_right" ng-if="!totalItems == 0">Remaining Time : &nbsp;<span>  {{minutes}}:{{seconds}}</span></div>
+    		<div id="{{question.id}}" ng-repeat="question in questionArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" class="question_area" style="margin-top:10px;">
+    				<div class="top_title">Questions</div>
+    				
+    				<h3 class="question_caption"><span class="question_no">{{currentPage}}</span><p ng-bind-html="question.question | to_trusted"></p></h3>
+    				<img ng-if="question.imgpath != null" src="{{question.imgpath}}" width="200px" heigth="200px">
+    				<a  ng-if="question.imgpath != null && question.imgpath != ''" href="javascript:;" ng-click="showPopup(question.imgpath)"><i class="fa fa-expand"></i></a>
+    				<p ng-repeat="option in question['options']">
+                         <b>{{ alphabet[$index] }}</b> &nbsp;&nbsp;&nbsp;&nbsp;
+    				<input 
+		             type="radio"
+		             ng-model="seloption[question.id]" 
+		             name="seloption{{question.id}}" 
+		             value="{{option.optid}}"
+		             ng-checked="queansid.indexOf(option.optid) > -1"
+		             />
+		             <!--ng-click="addAns(question.id,option.optid,option.option)" -->
+    				<input id="text{{option.optid}}" type="hidden" value="{{option.option}}">
+                    <span ng-bind-html="option.option | to_trusted"></span> 
+    				</p>
+    				<hr />
+    				<div>
+    			<button class="next_prev" ng-if="currentPage != 1" type="button" ng-model="currentPage" ng-click="selectPagePrev(currentPage - 1)"><i class="fa fa-angle-left"></i> Previous</button>
+			<button class="next_prev" ng-if="totalItems != currentPage" type="button" ng-model="currentPage" ng-click="selectPageNext(currentPage + 1)">Save & Next <i class="fa fa-angle-right"></i></button>
+			<button class="next_prev" ng-if="totalItems != currentPage" type="button" ng-model="currentPage" ng-click="selectPageSkip(currentPage + 1)">Skip <i class="fa fa-angle-right"></i></button>
+			
+			<button class="next_prev" type="button" ng-model="currentPage" ng-click="saveSelect(currentPage + 1)">Save</button>
+	    		</div>
+    		</div>
+
+    		<div class="align_right">
+				<button  ng-if="totalItems != 0" class="modal_btn end_btn" type="button" ng-click="submitResult()">end exam</button>
+		</div>
+    	</div>
+    	<div class="col-md-3 col-sm-3 col-xs-12" ng-if="totalItems != 0" >
+    	
+    		<div class="question_area">
+    		<div class="top_title">Questions Palette</div>
+    		<div class="color_note">
+    			<button class="question_not_answered"></button>&nbsp;&nbsp;Not Attempted<br />
+    			<button class="question_answered"></button>&nbsp;&nbsp;Attempted<br />
+    		</div>
+    		<hr />
+    		<div class="align_left" ng-repeat="question in questionArr">
+    			<button ng-click="multiSelect($index+1)" ng-show="selection.indexOf(question.id) == -1" class="question_not_answered">{{$index+1}}
+    			</button>
+    			<button ng-click="multiSelect($index+1)" ng-show="selection.indexOf(question.id) > -1" class="question_answered">{{$index+1}}
+    			</button>
+    			&nbsp;&nbsp;
+		</div>
+    		</div>
+    	</div>
+	</div>
+	<div ng-if="totalItems == 0" ><h3 class="text-center">{{emptymsg}}</h3></div>
+	<div class="row" ng-show="result">
+		<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+		    <div class="full_width_table">
+			<div id="resultdata">
+				
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!------------------modal- SHOW TIME OUT ---------------->
+<div id="show_time_out" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header">
+                <h4 class="modal-title form" style="text-align: center;"> TIME OUT </h4>
+            </div>
+            <!--<div class="modal-body">
+                <div class="">
+		     	<h2>TIME OUT</h2>
+	     		</div>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<!--------------------- image show popup ---------------------->
+<div id="imagepopupshow" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Image</h4>
+      </div>
+      <div class="modal-body">
+        <img src="{{popimglink}}" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div data-ng-include="'views/footer/_footer.html'"></div>

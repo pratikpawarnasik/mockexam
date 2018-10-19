@@ -1,0 +1,341 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidManageExamCtrl">
+<style>
+	#showParaModal.modal{
+		z-index: 3000;
+	}
+	.ui-timepicker-container{ 
+     z-index:1151 !important; 
+}
+</style>
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				{{formname}}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+	<div class="container">
+    <div class="row">
+    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+    	 <div id="getmessage">{{getmessage}}</div>
+    	 <!-- <div id="message">{{message}}</div> -->
+    	 </div>
+	    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="table_exam"  ng-init="getExam();">
+	    	<!-- <div class=""> -->
+	    		<div class="row table_action">
+    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+    						<button class="back_button" ng-click="doTheBack()">
+								<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+							</button>
+    						<button ng-click="openModal()">
+		        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Final Exam
+		        			</button>
+    				</div> 
+    			</div>
+
+
+	    		<table class="dashboard_tab exam_list_tab">
+	        		<tr>
+	        			<td align="left" width="5%">Sr.No</td>
+	        			<td align="left" width="25%">Exam Name</td>
+	        			<td align="left" width="25%">Course Name</td>
+	        			<td align="left" width="10%">No.Of Questions</td>
+	        		
+	        			<td align="right" width="25%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="exam in examArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	        			<td>
+	        				{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.
+	        			</td>
+	        			<td>{{exam.name}}</td>
+	        			<td>{{exam.cname}}</td>
+	        			<td>{{exam.totalques}}</td>
+	        			
+	        			<td align="right">
+							  <a href="javascript:;" ng-click="editExam(exam.id)"><i class="fa fa-pencil"></i></a>
+							  <a href="javascript:;" ng-click="deleteExam(exam.id)"><i class="fa fa-remove"></i></a>
+	        			</td>
+	        		</tr>        		
+        		</table>
+        		<pagination 
+				  ng-if="examArr.length != 0"
+			      ng-model="currentPage"
+			      total-items="examArr.length"
+			      ng-click="pageChange(currentPage)"
+			      max-size="maxSize" 
+			      class="pagination-sm"
+			      items-per-page="itemsPerPage" 
+			      boundary-links="true">
+				</pagination>
+        		<div id="tablemessage">{{tablemessage}}</div>
+			<!-- </div> -->
+	    </div>
+	     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="add_new_exam" ng-init="getExamCourse();">
+    			<div class="col-md-12">
+    			<div class="row table_action dashboard_tab">
+    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+    					<button ng-click="openExamList()">
+		        				<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+		        			</button>
+    						<button ng-click="openExamList()">
+		        				<i class="fa fa-eye"></i>&nbsp;&nbsp;Final Exam List
+		        			</button>
+		        			
+    				</div> 
+    			</div><br><br>
+		     	<form angular-validator-submit="submitCreateExam()" class="exam-form" id="examForm" name="examForm" novalidate angular-validator>	
+		     	 <div id="getmessage">{{getmessage}}</div>
+		     		<div class="col-md-4 col-sm-4 col-xs-12">
+		     		<label>Exam Name <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text" 
+			     		name="cname" 
+			     		placeholder="Exam Name"
+			     		ng-model="examDet.name" 
+			     		maxlength="60"
+					    required-message="'Please enter exam name.'"
+			     		class="dashboard_text vm_mastexam_input" 
+			     		validate-on="dirty"
+			     		required
+			     		autocomplete="off"
+		     		/>
+		     		</div>
+		     		<div class="col-md-4 col-sm-4 col-xs-12">
+		     		<label>Number Of Questions <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text"
+			     		placeholder="eg. 100" 
+			     		name="no. of. questions" 
+			     		ng-model="examDet.noofques" 
+			     		ng-pattern="/(^[1-9]\d{1,2}$)/" 
+		                invalid-message="'Enter digits only. enter no. of. questions between 10 to 999'"
+					    required-message="'Please enter no. of. questions.'"
+			     		class="dashboard_text vm_mastexam_input" 
+			     		ng-change="marlCal()"
+			     		validate-on="dirty"
+			     		required
+			     		autocomplete="off" 
+		     		/>
+		     		</div>
+		     		<div class="col-md-4 col-sm-4 col-xs-12">
+		     		<label>Course<span class="mandatory">*</span></label>
+		     		<select 
+			     		class="dashboard_text vm_mastexam_input" 
+			     		id="course"
+			     		name="course" 
+			     		data-ng-model="examDet.course"
+			     		required-message="'Please select course.'"
+			     		data-ng-change="getSubjectGrouplist(examDet.course);getCourseHirarchy(examDet.course);"
+			     		required
+			     		>
+		     			<option value="">Select Course</option>
+		     			<option value="{{item.id}}" ng-repeat="item in courseArr">{{item.name}}</option>
+		     		</select>
+		     		</div>
+		     		<div class="col-md-12 col-sm-12 col-xs-12" ng-show="subjectGroupArr.length > 0">
+		     			<label>Select Subject Group <span class="mandatory">*</span></label>
+		     		</div>	
+		     		<div class="col-md-12 col-sm-12 col-xs-12 vm_bg_mastexam" ng-repeat="subgroup in subjectGroupArr">
+		     		<div class="col-md-6 col-sm-6 col-xs-6">
+		     		<input 
+			     		type="checkbox"
+			     		name="checkSubjectGroup" 
+			     		ng-model="examDet.checkSubjectGroup[$index]"
+			     		data-ng-click="checkSubjectGroup($index,subgroup.id)"
+		     		/>
+		     		<label>{{subgroup.name}}</label>
+		     		</div>
+		     		<div class="col-md-6 col-sm-6 col-xs-6 vm_btn_rightalign" ng-show="examDet.checkSubjectGroup[$index] == true">
+		     			<button type="button" class="vm_master_exam_btn" ng-click="openExamScheduleModal($index,subgroup.name,'add','')">
+		        		<i class="fa fa-plus"></i>&nbsp;&nbsp;Add Schedule
+		        	  </button>
+		        	  <button type="button" class="vm_master_exam_btn" id="plus_btn_id{{$index}}" ng-click="openGetExamScheduleList($index,'plus')">
+		        		<i class="fa fa-plus"></i>
+		        	  </button>
+		        	  <button type="button" class="vm_master_exam_btn" id="minus_btn_id{{$index}}" ng-click="openGetExamScheduleList($index,'minus')">
+		        		<i class="fa fa-minus"></i>
+		        	  </button>
+		            </div>
+		            <div class="col-md-12 col-sm-12 col-xs-12" ng-show="examDet.subjectGroup[$index].examSchedule.length > 0" id="getAllScheduleList{{$index}}">           
+                    <table class="dashboard_tab exam_list_tab">
+	        		<tr>
+	        			<td align="left" width="10%">Exam ID</td>
+	        			<td align="left" width="16%">Date</td>
+	        			<td align="left" width="12%">Fees(Rs.)</td>
+	        			<!-- <td align="left" width="17%">Start Time</td> -->
+	        			<td align="left" width="15%">Duration(Min.)</td>
+	        			<td align="left" width="12%">Exam Mode</td>
+	        			<td align="right" width="18%">&nbsp;</td>
+	        		</tr>
+         	        <tr data-ng-repeat="examSchedule in examDet.subjectGroup[$index].examSchedule">
+         	        	<td>{{examSchedule.schedule_id}}</td>
+	        			<td>{{examSchedule.exam_date  |  date :  "dd.MM.y"}}</td>
+	        			<td>{{examSchedule.fee}}</td>
+	        			<!-- <td>{{examSchedule.start_time}}</td> -->
+	        			<td>{{examSchedule.exam_duration}}</td>
+	        			<td ng-show="examSchedule.mode== '0'">Online</td>
+	        			<td ng-show="examSchedule.mode== '1'">Offline</td>
+	        			<!-- <td ng-show="examSchedule.mode == '2'">Both(Online/Offline)</td> -->
+	        			<!-- <td>
+	        			</td> -->
+	        		<td align="right">
+							  <a href="javascript:;" ng-click="openExamScheduleModal($parent.$index,subgroup.name,'edit',$index)"><i class="fa fa-pencil"></i></a>
+							 <!--  <a href="javascript:;" ng-click="deleteExamSchedule($parent.$index,$index)"><i class="fa fa-remove"></i></a> -->
+	        		</td> 
+	        		</tr>
+                      </table>
+		     	    </div>
+		     		</div>
+
+		     		<div class="col-md-12" ng-if="courseHirarchi.length != 0" ng-show="examDet.course">
+		     			<h4><b> Enter Chapter Wise Question Count</b> </h4>
+		     			 <div id="message">{{message}}</div>
+		     			<!-- asdf{{finalquesCount}}asdf -->
+		     			<!-- <a style="float: right;" href="javascript:;" ng-click="openAddPara()">Add Paragraph Questions</a>	 -->	     			
+		     		</div>
+		     		
+		     		<div class="col-md-12 display_list" ng-if="courseHirarchi.length != 0" ng-show="examDet.course" style="max-height: 250px;overflow-y: scroll;">
+		     		<label style="text-transform: capitalize;">{{courseHirarchi.name}} </label>
+		     		<div class="col-md-12" ng-repeat="subject in courseHirarchi.subjectDetail">
+		     				<label style="text-transform: capitalize;">{{subject.name}} </label>
+		     				<div class="col-md-12" ng-repeat="chapter in subject.chapterDetail" ng-init="insertChapterId(chapter.id)">
+		     				<div class="col-md-8">
+			     			<label style="text-transform: capitalize;">{{chapter.name}} ({{chapter.totalquestion}})</label>
+			     			</div>
+			     			<div class="col-md-4" ng-if="chapter.is_topic == '0'">
+			     			<input 
+		     				type="text"
+		     				name="ques{{chapter.id}}"
+		     				class="dashboard_text vm_mastexam_input"
+		     				id="question_{{chapter.id}}"
+		     				ng-model="quesCount[chapter.id]"
+		     				ng-change='isNumeric(chapter.id)'		     				
+		     				>
+			     			</div>
+			     			</div>
+		     			</div>
+		     		</div>
+                  
+
+		     		<div class="col-md-12">
+		     		<input ng-show="edit" type="submit" value="Save Exam" class="dashboard_btn" />
+		     		<input ng-show="add" type="submit" value="Add Exam" class="dashboard_btn" />
+		     		</div>
+
+		     	</form>
+		     	</div>
+	      </div>
+	</div>
+</div>
+</div>
+
+<!------------------modal- add course ---------------->
+<div id="add_exam_schedule" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header m_student_modal">
+                <button class="close" data-dismiss="modal"><img src="" />X</button>
+               <h4 class="modal-title m_student_title form"> {{schedule_name}} {{schedule_exam_name}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+		     	<form angular-validator-submit="submitAddExamSchedule(index_id,schedule_action,edit_id)" class="exam-form" id="examScheduleForm" name="examScheduleForm" novalidate angular-validator>	
+		     		<div class="col-md-6">
+		     		<label>Exam Date <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text" 
+			     		name="examdate" 
+			     		placeholder="Exam Date"
+			     		id="exam_date"
+			     		ng-blur="adddate('dob')"
+
+			     		ng-model="examGroupDet.exam_date" 
+					    required-message="'Please enter exam date.'"
+			     		class="dashboard_text" 
+			     		validate-on="dirty"
+			     		required
+			     		autocomplete="off"
+		     		/>
+		     		</div>
+		     		<div class="col-md-6">
+		     		<label>Exam Fees (Rs.) <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text" 
+			     		name="examfee" 
+			     		placeholder="Exam Fees (Rs.)"
+			     		ng-model="examGroupDet.fee" 
+			     		maxlength="60"
+					    required-message="'Please enter exam fees.'"
+					    invalid-message="'Please enter exam fees.'"
+			     		class="dashboard_text" 
+			     		validate-on="dirty"
+			     		 ng-pattern="/^[0-9]/"
+			     		 maxlength="4"
+			     		required
+			     		autocomplete="off"
+		     		/>
+		     		
+		     		</div>
+		     		<div class="col-md-6">
+		     		<label>Exam Duration (Min.) <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text"
+			     		placeholder="eg. 30 (Min.)" 
+			     		name="duration" 
+			     		ng-model="examGroupDet.exam_duration" 
+			     		
+			     		ng-pattern="/^[0-9]/"
+		                invalid-message="'Enter digits only. enter duration between 10 to 999'"
+					    required-message="'Please enter exam duration.'"
+			     		class="dashboard_text" 
+			     		validate-on="dirty"
+			     		 maxlength="3"
+			     		required
+			     		autocomplete="off" 
+		     		/>
+		     		
+		     		</div>
+		     		<div class="col-md-6">
+		     			<label>Select Exam Mode <span class="mandatory">* :</span></label>&nbsp;&nbsp;&nbsp;&nbsp;<br>
+			     			<label >Online</label>
+			     			<input 
+			                type="radio"
+			                ng-model="examGroupDet.mode" 
+			                name="mode" 
+			                ng-value="0"
+			                checked="checked"
+			                required
+			                />
+			                &nbsp;&nbsp;&nbsp;&nbsp;
+			                <label >Offline(Paper and Pen)</label>
+			            
+			                 <input 
+			                type="radio" 
+			                ng-model="examGroupDet.mode" 
+			                name="mode" 
+			                ng-value="1"
+			                required-message="'Please select exam mode.'"
+			                required
+			                />
+		     		</div>
+		     		<div class="col-md-12">
+		     		<input ng-show="schedule_action == 'edit'" type="submit" value="Edit Exam Schedule" class="dashboard_btn" />
+		     		<input ng-show="schedule_action == 'add'" type="submit" value="Add Exam Schedule" class="dashboard_btn" />
+		     		</div>
+		     	</form>
+		     	</div>
+	     	   </div>
+            </div>
+        </div>
+    </div>
+
+    
+	
+</div> 

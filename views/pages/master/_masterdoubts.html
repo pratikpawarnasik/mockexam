@@ -1,0 +1,83 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidExtraCtrl">
+<style>
+	#showParaModal.modal{
+		z-index: 3000;
+	}
+	.ui-timepicker-container{ 
+     z-index:1151 !important; 
+}
+</style>
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Students Raise Questions
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+    <div class="row">
+    	<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" >
+    	 <div id="getmessage">{{getmessage}}</div>
+    	 <div id="message">{{message}}</div>
+    	 </div>
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" id="table_exam"  ng-init="getQueryList();">
+	    	<!-- <div class=""> -->
+	    		<div class="row table_action">
+    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+    					<button class="back_button" ng-click="doTheBack()">
+							<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+						</button>
+    						
+    				</div> 
+    			</div>
+
+
+	    		<table class="dashboard_tab exam_list_tab">
+	        		<tr>
+	        			<td align="left" width="5%">Sr.No</td>
+	        			<td align="left" width="15%">Name & Contact</td>
+	        			<td align="left" width="20%">Exam Details</td>
+	        			
+	        			<td align="left" width="50%">Question</td>
+	        			<td align="right" width="5%">Status</td>
+	        		</tr>
+	        		<tr data-ng-repeat="darray in doubtsArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	        			<td>
+	        				{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.
+	        			</td>
+	        			<td>{{darray.student}} ({{darray.mobile}})</td>
+	        			<td>{{darray.exam}}</br><b> on</b> {{darray.exam_date |  date :  "dd.MM.y"}}<b></td>
+	        			<td><span ng-bind-html="darray.question | to_trusted"></span></td>
+	        			<!-- <td>{{darray.question}}</td> -->
+	        			
+	        			<td align="right">							 
+							  <a href="javascript:;" ng-click="SolvedDoubt(darray.d_id)" ng-if="darray.mailStatus == 0"><i class="fa fa-check-circle"></i></a>
+							  <p ng-if="darray.solved_status == 1">Solved</p>
+	        			</td>
+	        			
+	        		</tr>        		
+        		</table>
+        		<pagination 
+				  ng-if="doubtsArr.length != 0"
+			      ng-model="currentPage"
+			      total-items="doubtsArr.length"
+			      ng-click="pageChange(currentPage)"
+			      max-size="maxSize" 
+			      class="pagination-sm"
+			      items-per-page="itemsPerPage" 
+			      boundary-links="true">
+				</pagination>
+        		<div id="tablemessage">{{tablemessage}}</div>
+			<!-- </div> -->
+	    </div>
+	   
+	</div>
+</div>
+
+
+ </div> 

@@ -1,0 +1,72 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+
+<div data-ng-controller="vidDashboardCtrl">
+<div ng-if="portal == 'main'">
+
+
+<!-- Banner -->
+<section class="intro-contact vm_admissionlink">
+    <div class="intro-body">
+        <div class="container-fluid custompadding">
+            <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h4>ADMISSION LINKS</h4>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section class=" vm_courses">
+        <div class="container vm_container_course">
+          <div class="row">
+        <!-- SIDEBAR Open -->
+        <div id="sidebar-left" class="col-3 col-lg-3 col-md-3 vm_couse_nav">
+            <ul class="vm_coursename ">
+                <li>Department Name</li>
+                <!-- <li><input type="text" name="" placeholder="Search Exam" class="vm_course_input"></li> -->
+                <li><a data-toggle="tab" href="#menu1">Josaa </a></li>
+                <li><a data-toggle="tab" href="#menu2">DMER </a></li>
+                <li><a data-toggle="tab" href="#menu3">DTE </a></li>
+                <li><a data-toggle="tab" href="#menu4">MahaCET  </a></li>
+                
+            </ul>
+       </div>
+   <!-- right content box -->
+     <div id="content-right" class="col-lg-9 container vm_nav_right_cntent" >
+           <div class="tab-content">
+            <div id="menu1" class="tab-pane vm_adm fade in active">
+              <a href="https://josaa.nic.in/" target="_blank" ><h3>Josaa </h3></a>
+
+             
+            </div>
+            <div id="menu2" class="tab-pane vm_adm fade">
+            	<a href="http://www.dmer.org/new/" target="_blank" ><h3>DMER </h3></a>
+              
+            </div>
+            <div id="menu3" class="tab-pane vm_adm fade">
+            	<a href="https://www.dtemaharashtra.gov.in/approvedinstitues/Home/HomePage.html" target="_blank" ><h3>DTE </h3></a>
+
+            </div>
+            <div id="menu4" class="tab-pane vm_adm fade">
+            	<a href="http://www.mahacet.org/cetcell/" target="_blank" ><h3>MahaCET </h3></a>
+
+            </div>
+            
+          </div>
+
+
+
+
+    </div>
+   </div>
+        </div>
+        
+    </section>
+
+</div>
+
+</div>
+
+<div data-ng-include="'views/footer/_footer.html'"></div>

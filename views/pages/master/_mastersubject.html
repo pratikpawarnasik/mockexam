@@ -1,0 +1,145 @@
+<!--------------------- footer page ----------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidManageSubjectCtrl">
+
+
+<div class="container-fluid wrapper">
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" ng-init="getSubject()">
+	    	<div class="full_width_table">
+	    	<div id="getmessage">{{getmessage}}</div>
+	    		<table class="table_action">
+	        		<tr>
+	        			<td align="left"><h3 class="header_title">Subjects for - <span class="text_strong">{{coursename}}</span> </h3></td>
+	        			<td align="right">
+	        				<button class="back_button" ng-click="doTheBack()">
+		        				<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+		        			</button>
+	        				<button ng-click="openModal()">
+		        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Subject
+		        			</button>
+		        			<!--<button class="remove_btn" ng-click="delSelectSubject()">
+		        				<i class="fa fa-close"></i>&nbsp;&nbsp;Delete All
+		        			</button>-->
+		        		</td>
+	        		</tr>
+	        	</table>
+	    	
+	    		<table class="dashboard_tab subject_list_tab">
+	        		<tr>
+	        			<!--<td align="left" width="5%"><input type="checkbox" id="select_subject" ng-model="allselect" /></td>-->
+	        			<td align="left" width="5%">Sr.No</td>
+	        			<td align="left" width="15%">Subject Name</td>
+	        			<!-- <td align="left" width="20%">Description</td> -->
+	        			<td align="left" width="20%">{{colname}}</td>
+	        			<td align="left" width="15%">No.of Questions</td>
+	        			<td align="left" width="15%">Final Exam Questions</td>
+	        			<td align="right" width="35%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="subject in subjectArr">
+	        			<!--<td>
+	        				<input 
+	        				class="subject" 
+	        				type="checkbox" 
+	        				name="selectedSubject[]"
+	        				ng-model="delsubject.selected" 
+	        				value="{{subject.id}}"
+	        				ng-click="toggleSelection(subject.id)"
+	        				>
+	        				
+	        			</td>-->
+	        			<td>{{$index+1}}</td>
+	        			<td>{{subject.name}}</td>
+	        			<!-- <td>{{subject.desc}}</td> -->
+	        			<td>{{subject.dispname}}</td>
+	        			<td>{{subject.totalquestion}}</td>
+	        			<td>{{subject.totalfinalquestion}}</td>
+	        			<td align="right">
+	        			<a href="javascript:;" ui-sref="root.masterchapter({name : 'subject',id : subject.id})"><i class="fa fa-plus"></i> Add Chapter</a>
+	        				  <a href="javascript:;" ng-click="editSubject(subject.id)"><i class="fa fa-pencil"></i></a>
+							  <a href="javascript:;" ng-click="deleteSubject(subject.id)"><i class="fa fa-remove"></i></a>
+	        			</td>
+	        		</tr>
+        		
+        		</table>
+        		<div id="tablemessage">{{tablemessage}}</div>
+			</div>
+	    </div>
+	     
+	</div>
+</div>
+
+<!------------------modal- add subject ---------------->
+<div id="add_new_subject" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header m_student_modal">
+                <button class="close" data-dismiss="modal">X</button>
+               <h4 class="modal-title m_student_title form"> {{formname}} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+		     	<form angular-validator-submit="submitCreateSubject()" class="subject-form" id="subjectForm" name="subjectForm" novalidate angular-validator>	
+		     	<div id="message">{{message}}</div>
+		     		<div>
+		     		<label>Subject Name <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text" 
+			     		name="cname" 
+			     		placeholder="Subject Name"
+			     		ng-model="subjectDet.name" 
+					    required-message="'Please enter subject name.'"
+			     		class="dashboard_text" 
+			     		validate-on="dirty"
+			     		maxlength="60"
+			     		required
+			     		autocomplete="off"
+		     		/>
+		     		</div>
+		     		<div>
+		     		<label>Description</label>
+		     		<input 
+			     		type="text"
+			     		placeholder="Description" 
+			     		name="desc" 
+			     		ng-model="subjectDet.desc" 
+					    class="dashboard_text" 
+			     		autocomplete="off" 
+		     		/>
+		     		</div>
+		     		<!--<div>
+		     		<label>Subject Weightage (%)<span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text"
+			     		placeholder="eg. 10%" 
+			     		name="weightage" 
+			     		ng-model="subjectDet.weightage" 
+			     		ng-pattern="/^([1-9]\d{0,1})(\.[0-9]{1,2})?$/" 
+	                  	invalid-message="'Enter digits only. enter weightage between 1 to 99'"
+					    class="dashboard_text" 
+					    style="width:95%"
+			     		required-message="'Please enter subject weightage.'"
+			     		validate-on="dirty"
+			     		required
+			     		autocomplete="off" 
+		     		/> %
+		     		</div>-->
+		     		<div>
+		     		<input ng-show="edit" type="submit" name="" value="Edit Subject" class="dashboard_btn" />
+		     		<input ng-show="add" type="submit" name="" value="Add Subject" class="dashboard_btn" /></div>
+		     	</form>
+	     	</div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+
+</div>
+
+<!--------------------- footer page ----------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

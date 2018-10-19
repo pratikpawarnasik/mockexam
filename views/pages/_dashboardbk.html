@@ -1,0 +1,505 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+
+<div data-ng-controller="vidDashboardCtrl">
+<div ng-if="portal == 'main'">
+<!------------------- Banner ------------------>
+<!-- Banner -->
+<button ng-click="topFunction()" id="myBtn" title="Go to top">^</button>
+    <section class="intro" ng-init="getExams()">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <h3 class="home-heading">A golden chance to take exam, before actual exam</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 banner_btn">
+                                  <div class="carousel slide media-carousel" id="media">
+        <div class="carousel-inner">
+          <div class="item  active">
+            <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-3 col-sm-4 ">
+                            <div class="box1">
+                                <i class="fa fa-cogs fa-3x" aria-hidden="true"></i>
+                                <p>JEE</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>    
+              </div>          
+              <div class="col-md-3 col-sm-4 ">
+                      <div class="box1">
+                                <i class="fa fa-stethoscope fa-3x" aria-hidden="true"></i>
+                                <p>NEET</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>  
+              </div>  
+              <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
+                                <p>MHT-CET</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>  
+              </div>
+               <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-briefcase fa-3x" aria-hidden="true"></i>
+                                <p>CAT</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>  
+              </div>  
+            </div>            
+            </div>
+          </div>
+          <div class="item">
+            <div class="row">
+                            <div class="col-md-12">
+               <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-user fa-3x" aria-hidden="true"></i>
+                                <p>XAT</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>  
+              </div>          
+              <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
+                                <p>BITSAT</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>  
+              </div> 
+              <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-graduation-cap vm_home_cap fa-3x" aria-hidden="true"></i>
+                                <p>IPU CET</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>  
+              </div> 
+               <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-fighter-jet fa-3x" aria-hidden="true"></i>
+                                <p>NDA</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                       </div>  
+              </div> 
+            </div>  
+             
+            </div>
+          </div>
+          <div class="item">
+            <div class="row">
+                            <div class="col-md-12">
+               <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
+                                <p>KCET </p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                            </div>  
+              </div>          
+              <div class="col-md-3 col-sm-4">
+                      <div class="box1">
+                                <i class="fa fa-cubes fa-3x" aria-hidden="true"></i>
+                                <p>NATA</p>
+                                <div class="readmore_btn">
+                                    <p class="read_morebtn"><a ui-sref='root.coursepage'>Read More</a></p>
+                                </div>
+                       </div>  
+                  </div>  
+                </div>  
+                </div>
+              </div>
+            </div>
+                    <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
+                    <a data-slide="next" href="#media" class="right carousel-control">›</a>
+          </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Course Categories sec -->
+<section class="course_cat_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h3 class="sec_title">Streams</h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-3 col-sm-6 col-xs-12 categories">
+                <div class="hexagon hex_blue">
+                    <img src="images/cat_4.png" />
+                    <h4 class="cat_title">Engineering</h4>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 col-xs-12 categories">
+                <div class="hexagon hex_orange">
+                    <img src="images/cat_2.png" />
+                    <h4 class="cat_title">Medical</h4>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 col-xs-12 categories">
+                <div class="hexagon hex_blue">
+                    <img src="images/cat_3.png" />
+                    <h4 class="cat_title">Management</h4>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 col-xs-12 categories">
+                <div class="hexagon hex_orange">
+                    <img src="images/cat_1.png" />
+                    <h4 class="cat_title">Banking </h4>
+                </div>
+            </div>
+        </div>
+        </div>
+                
+    </div>
+</section>
+
+<section class="m_mockexam_desc">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 text-center">
+                 <h4 class="mockexam_desc_heading">"TAKE OUR MOCK EXAMS AND SURPASS YOUR OWN EXPECTATIONS IN THE ACTUAL EXAMS"</h4>
+            </div>
+        </div>
+        <div class="row m_mockexam_desc1">
+            <div class="col-md-12 col-lg-12">
+                <h4>Why Mock Exams?</h4>
+                <p><b>THE NEED FOR MOCKS:</b></p>
+                <p>Most students do not succeed in getting good scores in entrance exams in spite of well preparation. The primary reason being insufficient practice(mock) tests in the exact environment in which the actual entrance exam is held. Stress & Time management is another factor where students have to miss answering some easy and known questions for lack of time. He will also get to know and practice well the exact pattern and the marking system (including negative marking if any). Also another very important factor is that there is no mechanism where he/she can come to know his/her relative preparedness vis-a-vis all other test takers. OUR MOCK EXAMS are the ANSWER to all these concerns. </p>
+                <p class="collapse" id="viewdetails">
+                 It gives the exact feel of the Big Day. We are the largest Mock Exam test givers in the State/India. This very large sample allows each of you to compare yourself with others’ preparedness. Our exam results also give so many reports in a very macro level, which gives sufficient time & alerts to you to remedy all your shortcomings and succeed in the actual exam much beyond your expectation.
+TAKE OUR MOCKS AND SURPASS YOUR OWN EXPECTATIONS IN THE ACTUAL EXAM. <br><br>
+<strong>Important Features of OUR MOCK EXAMS & RESULTS.</strong><br>
+
+Self-Analysis: (Brief Analysis, Question wise, Topic wise, Difficulty wise, Time wise)<br>
+Comparative Analysis: (of Self, vis-à-vis the answer papers of top ten rankers) <br>
+Customized Analysis: (Nation Wise, State Wise, City wise)<br><br>
+
+<strong>Why Mock Exams?</strong><br>
+mockexam.org gives you end to end solutions and handhold you right up to your admissions. Our huge website gives you the entire information and professional advise, on all the courses and colleges you are eligible for, admission  process,  college/branch shift after first year, govt. documents, education loans, scholarships, last year’s cut-offs, rank predictor, career prospects of each course,  placement details of all the colleges, internship opportunities during your course, all govt. and private jobs and courses after graduation, top post graduate courses /universities in India and the World. AND MUCH MORE. </p><a class="vm_viewmore_btn" data-toggle="collapse" data-target="#viewdetails">Read More...</a>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
+<!-- Reports sec -->
+<section class="reports_sec">
+    <div class="container">
+        <div class="row row-eq-height">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h3 class="sec_title">Reports</h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-bar-chart report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Comparative Analysis</h4>
+                    <p>
+                        Know your percentile and national ranking. Compare your performance with that of friends, test after test. Benchmark against national toppers  compare
+                        your test attempts/scores. Compare your performance within the peer group.
+                    </p>
+               </div>
+            </div>
+            
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-street-view report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Self-Analysis</h4>
+                    <p>
+                        Identify your Strong Areas and Weak Areas, Fastest Attempted or Slowest Attempted question types. Review every question and its solution, to identify what you missed out or misinterpreted in Question Wise.
+                    </p>
+               </div>
+            </div>
+            
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-line-chart report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Performance Graph</h4>
+                    <p>
+                        Track your progress till date through graphical analysis of tests taken. View your progress in terms of percentage, accuracy and/or average time taken.
+                    </p>
+               </div>
+            </div>
+            
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-user-o report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Expert Recommendations</h4>
+                    <p>
+                        Based on well-defined parameters, your test performance is evaluated to determine your competence level and make pin-point recommendations for remedial action.
+                    </p>
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- what we offer sec -->
+<section class="feat_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h3 class="sec_title whatweoffer_padd">What We Offer</h3>
+            </div>
+        </div>
+        <div class="featuers-list-wrapper row">
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                    <img src="images/feat_1.png" />
+                </div>
+                <div class="col-md-10 features_list">
+                        <h5>Variety of Tests</h5>
+                        <p>Topic-wise, Sectional & Mock Tests in actual test format.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_2.png" />
+                </div>
+                <div class="col-md-10 features_list">
+                        <h5>Comparative Analysis</h5>
+                        <p>Get comparative score against topic and thousands of other.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_3.png" />
+                </div>
+                <div class="col-md-10 col-xs-9 features_list">
+                       <h5>Review Your Performance:</h5>
+                        <p>Flag difficult questions and review all past answer anytime.</p>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_5.png" />
+                </div>
+                <div class="col-md-10 col-xs-9 features_list">
+                        <h5>Expert Recommendations</h5>
+                        <p>Improve with pinpointed Expert Recommendations.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_4.png" />
+                </div>
+                <div class="col-md-10 col-xs-9 features_list">
+                        <h5>Add Fun to Learning</h5>
+                        <p>Play real time quizzes & challenges with other.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_7.png" />
+                </div>
+                <div class="col-md-10 col-xs-9 features_list">
+                        <h5>Detailed Test Analysis</h5>
+                        <p>Know your performance trend up to sub-sub-sub skill level.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_8.png" />
+                </div>
+                <div class="col-md-10 col-xs-9 features_list">
+                        <h5>Topic-Wise Analysis</h5>
+                        <p>Know your weak areas so as to concentrate effort on those areas.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_9.png" />
+                </div>
+                <div class="col-md-10 col-xs-9 features_list">
+                        <h5>Manage Time Effectively</h5>
+                        <p>Identify questions that take most/least time.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-2 col-xs-3">
+                   <img src="images/feat_6.png" />
+                </div>
+                <div class="col-md-10 col-xs-9 features_list">
+                        <h5>Customize Your Preparation</h5>
+                        <p>Create your own tests with Test Generator.</p>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</section>
+
+<!-- Counter sec -->
+<section class="counter_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <!--<h3 class="sec_title">Course Categories</h3>-->
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="counter">
+                    <p>2,00,000</p>
+                    <p>Registered Students</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="counter">
+                    <p>20000</p>
+                    <p>Test Attempted</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="counter">
+                    <p>1,00,000</p>
+                    <p>Questions Answered</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="counter">
+                    <p>2000</p>
+                    <p>Students Guided</p>
+                </div>
+            </div>
+            
+          
+        </div>
+                
+    </div>
+</section>
+
+<!-- subscribe sec -->
+<!-- <section class="subscribe_sec1">
+    <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h3 class="sec_title">Subscribe For More Update</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form_wrapper subscribe_form">
+                    <input type="text" placeholder="Phone/ Mobile Number" class="input_val" />
+                    <input type="text" placeholder="Email Address" class="input_val" />
+                    <input type="submit" value="Subscribe Now" class="submit_btn" />
+                </div>
+            </div>
+        </div>        
+    </div>
+</section> -->
+<!-- Happy User -->
+<section class="subscribe_sec">
+    <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h3 class="sec_title">Happy Students</h3>
+            </div>
+        </div>
+        <div class="container-fluid">
+
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class="carousel slide media-carousel" id="media1">
+        <div class="carousel-inner">
+          <div class="item  active">
+            <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-4 col-sm-6 custom-testi">
+                    <div class="col-md-3"><img src="images/dummy-pic.png" class="img-responsive customeimguser"></div>
+                    <div class="col-md-9">
+                        <p>Mockexam.mockexam.org will be a great way to know and resolve your common mistakes. I personally feel it is a great step towards helping students like me who aim to be in the IITs.I really appreciate effort to provide the online education for all categories of exams. </p>
+                        <p><span class="testicolor">Prasad Kole</span></p>
+                    </div>
+              </div>          
+              <div class="col-md-4 hidden-xs col-sm-6 custom-testi">
+                    <div class="col-md-3"><img src="images/dummy-pic.png" class="img-responsive customeimguser"></div>
+                    <div class="col-md-9">
+                        <p>This great website comes with topic-wise examples and sample tests for every topic. The solved examples are the best to understand tricky concepts. This will surely be a great tool for IIT aspirants for recent exam.Best of Luck to All..!! </p>
+                        <p><span class="testicolor">Sujoy Bhaskaran</span></p>
+                    </div>
+              </div>  
+              <div class="col-md-4 hidden-xs hidden-sm custom-testi">
+                    <div class="col-md-3"><img src="images/dummy-pic.png" class="img-responsive customeimguser"></div>
+                    <div class="col-md-9">
+                        <p>Great forum for aspirants like me who seek a flexible schedule and up to date material. The live tests will gave us an actual test experience and helped us fight nervous breakdown. And the All India Ranking will helped to gauge  position in the competition. Overall, it is a good replacement for even the best coaching centers.</p>
+                        <p><span class="testicolor">Shreya M Jadhav </span> </p>
+                    </div>
+              </div> 
+            </div>            
+            </div>
+          </div>
+          <div class="item">
+            <div class="row">
+                            <div class="col-md-12">
+              <div class="col-md-4 col-sm-6 custom-testi">
+                    <div class="col-md-3"><img src="images/dummy-pic.png" class="img-responsive customeimguser"></div>
+                    <div class="col-md-9">
+                        <p>As an author & editor, mockexam giving an opportunity to student to Learn & earn knowledge simultaneously. mockexam is doing a great job for students to gain confidence before actual exam by providing them with large number of Mocktests. All the Best mockexam! </p>
+                        <p><span class="testicolor"> Dr. Deepak M Jadhav</span> </p>
+                    </div>
+              </div>          
+              <div class="col-md-4 hidden-xs col-sm-6 custom-testi">
+                    <div class="col-md-3"><img src="images/dummy-pic.png" class="img-responsive customeimguser"></div>
+                    <div class="col-md-9">
+                        <p>Comparitive and analytics reports is something i was looking for.Practice test before final exam will boost me,as i am preparing for NEET exam,i need lot of practice and confidence before final test.Mockexam going to provide and fullfill my need.looking forward for to get test.</p>
+                        <p><span class="testicolor">Ritika Kulkarni</span> </p>
+                    </div>
+              </div> 
+              <div class="col-md-4 hidden-xs col-sm-6 custom-testi">
+                    <div class="col-md-3"><img src="images/dummy-pic.png" class="img-responsive customeimguser"></div>
+                    <div class="col-md-9">
+                        <p>Mock tests by mockexam will give students a feel of the real exam. For most of the students about to take a major exam for the first time in their lives. Being placed in the same situation and feeling the same amount of pressure before the actual exam will inculcate some confidence and self-analytical capacity in the student.
+                        </p>
+                        <p><span class="testicolor">Rajesh Rathi</span> </p>
+                    </div>
+              </div> 
+            </div>  
+            </div>
+          </div>
+        </div>
+        <a data-slide="prev" href="#media1" class="left carousel-control">‹</a>
+        <a data-slide="next" href="#media1" class="right carousel-control">›</a>
+      </div>                          
+    </div>
+  </div>
+</div>
+         
+    </div>
+</section>
+
+</div>
+
+</div>
+
+<div data-ng-include="'views/footer/_footer.html'"></div>

@@ -1,0 +1,177 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+<style>
+    .question_option_wrapper{
+        float: left;
+        width: 100%;
+    }
+    
+     .question_option_wrapper .left_btn{
+        float: left;
+        width: 5%;
+    }
+    
+     .question_option_wrapper .right_text{
+        float: left;
+        width: 95%;
+    }
+    .custom_margin_for_option{
+    	line-height: 33px;
+    }
+</style>
+<div data-ng-controller="vidPrepairTestCtrl"  id="prepair_keypress" oncontextmenu="return false" onkeydown="return false;" onmousedown="return false;">
+
+<h4 class="test_name">{{subName}} : Preparation Test for {{chaptername}}</h4>
+<div class="container-fluid wrapper online_test">
+    <div class="row" ng-init="insertPrepair()">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+	    	<div class="full_width_table">
+	    	<div id="message">{{message}}</div>
+	    	<div class="col-md-9">
+	    		<div id="{{question.id}}" ng-repeat="question in questionArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" class="question_area">
+	    				<div class="top_title">Questions</div>
+	    				
+	    				<h3 class="question_caption"><span class="question_no">{{currentPage}}</span> 
+	    					<span ng-bind-html="question.question | to_trusted"></span></h3>
+	    			<!-- <div ng-repeat="option in question['options']">
+
+	    				<span class="question_option_wrapper">
+
+	    				<span class="left_btn custom_margin_for_option">
+	    				
+	    				<input 
+			             type="radio"
+			             ng-model="seloption[question.id]" 
+			             name="seloption{{question.id}}" 
+			             value="{{option.optid}}"
+			             ng-click="checkoption(option.optid,question.id)"
+			             ng-checked="queansid.indexOf(option.optid) > -1"
+			             />
+			             </span>
+			             <input id="text{{option.optid}}" type="hidden" value="{{option.option}}">
+	    				<span id="check{{option.optid}}" class="check_option_content"></span>
+			             <span class="right_text custom_margin_for_option " >
+	    				<p ng-bind-html="option.option | to_trusted"></p>
+	    			
+	    				</span>
+	    				</span>
+	    			</div> -->
+
+	    			<p ng-repeat="option in question['options']">
+	    					<b>{{ alphabet[$index] }}</b>&nbsp;&nbsp;&nbsp;&nbsp;
+	    				<input 
+			             type="radio"
+			             ng-model="seloption[question.id]" 
+			             name="seloption{{question.id}}" 
+			             value="{{option.optid}}"
+			             ng-click="checkoption(option.optid,question.id)"
+			             ng-checked="queansid.indexOf(option.optid) > -1"
+			             />
+			             <!--ng-click="addAns(question.id,option.optid,option.option)" -->
+			            
+	    				<input id="text{{option.optid}}" type="hidden" value="{{option.option}}">
+	    				<span id="check{{option.optid}}" class="check_option_content"></span>
+	    				<span class="right_text custom_margin_for_option " >
+	    				<span ng-bind-html="option.option | to_trusted"></span>
+	    				
+	    				
+	    				</p>
+
+
+
+	    				<hr />
+	    				<div id="expl{{question.id}}"></div>
+	    				<div>
+    				<button ng-show="next" class="next_prev" ng-if="totalItems != currentPage" type="button" ng-model="currentPage" ng-click="selectPageNext(currentPage + 1)">Save & Next <i class="fa fa-angle-right"></i></button></button>
+    				<button class="next_prev" ng-if="totalItems == currentPage" type="button" ng-model="currentPage" ng-click="selectPageNext(currentPage + 1)">Save<i class="fa fa-angle-right"></i></button></button>
+    				
+		    		</div>
+		    	</div>
+		    	<div style="display: table;text-align: center;width: 100%;">
+		    		<div style="display: table-cell; height: 100px;    font-size: 20px; vertical-align: middle;" ng-if="totalItems + 1 == currentPage">You have attempted the preparation test for <strong>{{chaptername}}</strong>.</div>
+		    	</div>
+	    		
+	    	</div>
+	    	<div class="col-md-3" ng-if="totalItems != 0">
+	    	<div class="">
+	    	<div class="question_area">
+	    		<div class="color_note">
+	    			<!-- <p>Total No. of Questions : {{totalItems}} </p> -->
+	    			<p>Attempt Question : {{currentPage - 1}} </p>
+	    			<p ng-if="totalItems + 1 == currentPage"><button type="button" class="btn" ng-click="startRetest()">Start Retest</button></p>
+	    		</div>
+	    		<hr />
+	    		<div style="overflow: auto; height: 400px;">
+	    		<div class="align_left" ng-repeat="item in attemptArr" style="scroll">
+	    			<button ng-click="openModel($index)" class="question_answered">{{$index+1}}
+	    			</button>
+	    			&nbsp;&nbsp;
+    			</div>
+    			</div>
+	    		</div>
+	    	</div>
+	    	</div>
+	    	</div>
+	    </div>
+	</div>
+	
+</div>
+<!------------------- Modal popups ------------------>
+<div id="questionDetail" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <!--<div class="modal-body">-->
+        <div class="preparation-page">
+        		<div class="modal-header">
+			        <button class="close" data-dismiss="modal">X</button>
+			        <h4 class="modal-title test_title">Question Answer Specifications</h4>
+			    </div>
+			    
+			    <div class="modal-body">
+			      	<h4 class="test_question">
+			      		<span class="specif_question">Q.</span> 
+			      		<span class="specif_question_title"><span ng-bind-html="singleQuestionDetails['question'] | to_trusted"></span></span>
+			      		<img ng-if="singleQuestionDetails['imgpath'] != null" src="{{singleQuestionDetails['imgpath']}}" width="200px" heigth="200px">
+			      		<a ng-if="singleQuestionDetails.imgpath != null && singleQuestionDetails.imgpath != ''" href="javascript:;" ng-click="showPopup(singleQuestionDetails.imgpath)"><i class="fa fa-expand"></i></a>
+			      	</h4>
+			      	<h4>Correct Ans: </h4>
+			      	<span class="specif_question_detail" ng-if="singleQuestionDetails['optiontext'] != null" ng-bind-html="singleQuestionDetails['optiontext'] | to_trusted"></span>
+			      	<img ng-if="singleQuestionDetails['optimgpath'] != null" src="{{singleQuestionDetails['optimgpath']}}" width="100px" heigth="100px"> 
+			      	<a ng-if="singleQuestionDetails.optimgpath != null && singleQuestionDetails.optimgpath != ''" href="javascript:;" ng-click="showPopup(singleQuestionDetails.optimgpath)"><i class="fa fa-expand"></i></a>
+			      	<h4>Options : </h4>
+			      	<p ng-repeat="option in singleQuestionDetails['options']">
+	    				<span id="check{{option.optid}}"> </span>
+	    				<span ng-bind-html="option.option | to_trusted"></span>
+	    				<span ng-if="option.imgpath != '' && option.imgpath != null && option.option != null && option.option != ''"><br></span>
+	    				<img ng-if="option.imgpath != null && option.imgpath != ''" src="{{option.imgpath}}" width="100px" heigth="100px">
+	    				<a  ng-if="option.imgpath != null && option.imgpath != ''" href="javascript:;" ng-click="showPopup(option.imgpath)"><i class="fa fa-expand"></i></a>
+	    			</p>
+	    				<hr />
+			      	<h4 ng-if="singleQuestionDetails['expl'] != null">Explanation: </h4>
+			      	<span ng-if="singleQuestionDetails['expl'] != null" class="specif_question_detail" ng-bind-html="singleQuestionDetails['expl'] | to_trusted"></span>
+			      	<img ng-if="singleQuestionDetails['explimg'] != null" src="{{singleQuestionDetails['explimg']}}" width="100px" heigth="100px">
+			      	<a ng-if="singleQuestionDetails.explimg != null && singleQuestionDetails.explimg != ''" href="javascript:;" ng-click="showPopup(singleQuestionDetails.explimg)"><i class="fa fa-expand"></i></a>
+		    	</div>
+        </div>
+      <!--</div>-->
+    </div>
+  </div>
+</div>
+
+<!--------------------- image show popup ---------------------->
+<div id="imagepopupshow" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Image</h4>
+      </div>
+      <div class="modal-body">
+        <img src="{{popimglink}}" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

@@ -1,0 +1,85 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+
+<div data-ng-controller="vidStudentCourseCtrl"><!-- student.js page -->
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Exam History
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">   
+ <div class="container-fluid wrapper">
+    <div class="row">
+		<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+
+			<div class="message"></div>
+			<div class="container-fluid wrapper">
+			    <div class="row">
+				    <div class="" ng-init="getExam_data()">
+				    	<div id="getmessage">{{getmessage}}</div>
+				    		<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+				    			<button class="back_button btn btn-primary" ng-click="doTheBack()">
+									<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+								</button>	
+		        				<button class="btn btn-primary" ng-click="getUpcomingExam()">
+			        				Upcoming
+			        			</button>
+			        			<button class="btn btn-primary" ng-click="getPreviousExam()">
+			        				Previous
+			        			</button>
+	        				</div>
+			    			<div class="row">
+									<h3>Exam Details</h3>
+							</div>
+							<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 table-responsive">
+				    		<table class="dashboard_tab course_list_tab">
+				        		<tr>
+				        			<td align="left" width="10%">Sr.No</td>
+				        			<td align="left" width="15%">Roll No.</td>
+				        			<td align="left" width="15%">Exam Name</td>
+				        			<td align="left" width="15%">Exam Date</td>
+				        			<!-- <td align="left" width="15%">Exam Time</td> -->
+				        			<td align="left" width="15%">Exam Duration (Min.)</td>
+				        			<td align="right" width="15%">&nbsp;</td>
+				        			<!-- <td align="right" width="15%">&nbsp;</td> -->
+				        		</tr>
+				        		<tr data-ng-repeat="e_data in examdataArr">				        			
+				        			<td>{{$index + 1}}.</td>
+				        			<td>{{e_data.roll_no}}</td>
+				        			<td>{{e_data.exam_name}}</td>
+				        			<td>{{e_data.exam_date |  date :  "dd.MM.y"}}</td>
+				        			<!-- <td>{{e_data.start_time}}</td> -->
+				        			<td>{{e_data.duration}}	Min</td>
+				        			<td align="right">
+				        				<a ui-sref-opts="{reload: true}" href="javascript:;" class="test_icon" target="_blank" ui-sref="root.hallticket({e_data : e_data.id, exam_id :e_data.examid})">Exam Detail</a>
+
+				        				<!-- <a class="" href="javascript:;" ng-click="finalExam(e_data.id,e_data.examid)">
+								    		<i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;&nbsp;Final Exam
+										</a> -->
+				        			</td>
+
+				        			<!-- <td align="left">
+				        				<button ng-click="downloadpdf(e_data.id)" class="" data-toggle="tooltip" title="Download PDF"><i class="fa fa-file-pdf-o">Hallticket</i></button>
+				        			</td> -->
+				        		</tr>
+			        		
+			        		</table>
+			        	</div>
+			        		<div id="tablemessage">{{tablemessage}}</div>
+				    </div>
+				     
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+ </div>
+</div>
+</div>
+
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

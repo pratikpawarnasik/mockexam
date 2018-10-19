@@ -1,0 +1,88 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidTestimonialManageCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Testimonial List
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+	<div class="container">
+		<div class="row">
+			
+				<div id="uploadmessage">{{uploadmessage}}</div>
+		    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-init="getTestimonialList()">
+		    	<div id="getmessage">{{getmessage}}</div>
+		    		<div class="row table_action">
+	    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+	    						<button class="back_button" ng-click="doTheBack()">
+									<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+								</button>
+			        			
+		        		</div>
+		        	</div>
+		    
+		    		<table class="dashboard_tab category_list_tab">
+		        		<tr>
+		        			<td align="left" width="5%">Sr.No.</td>
+		        			<td align="left" width="15%">Name</td>
+		        			<td align="left" width="45%">Message</td>
+		        			<td align="left" width="15%">Email Address</td>
+		        			<td align="left" width="10%">Mobile Number</td>
+		        			<td align="left" width="10%">Status</td>
+
+		        		</tr>
+		        		<tr data-ng-repeat="studlist in NewStudList.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+		        			
+		        			<td>
+		        			{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.
+		        			</td>
+		        			<td>{{studlist.name}}</td>
+		        			<td>{{studlist.message}}</td>
+		        			<td>{{studlist.email}}</td>
+		        			<td>{{studlist.contact}}</td>
+		        			<td>
+		        			<button class="btn btn-primary" ng-if="studlist.status== '1'" ng-click="activateStatus(studlist.sf_id,0)" title="Click for deactivate">
+								Activate
+							</button>
+							<button class="btn btn-default" ng-if="studlist.status == '0'" ng-click="activateStatus(studlist.sf_id,1)"  title="Click for activate">
+								Deactivate
+							</button>
+	        				
+	        			</td>
+		        		</tr>
+		        		
+	        		
+	        		</table>
+	        		<pagination 
+					  ng-if="NewStudList.length != 0"
+				      ng-model="currentPage"
+				      total-items="NewStudList.length"
+				      ng-click="pageChange(currentPage)"
+				      max-size="maxSize" 
+				      class="pagination-sm"
+				      items-per-page="itemsPerPage" 
+				      boundary-links="true">
+					</pagination>
+	        		<div id="tablemessage">{{tablemessage}}</div>
+		    </div>
+		     
+		</div>
+	</div>
+</div>
+
+
+
+</div> 
+
+
+</div>
+
+<!--------------------- footer page ----------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

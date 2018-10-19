@@ -1,0 +1,75 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+
+<div data-ng-controller="vidPaymentCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-md-12">
+				Make Payment
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper payment_course">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2 col-md-6 col-md-offset-3 col-sm-12 col-md-12">
+			<h4>Payment Information</h4>	
+				<div class="col-md-5 bgpaymentimg no-padding"></div>
+				<div class="col-md-7 no-padding">
+				<div class="course_block_outline paymentbox">
+				<h3><b>{{name}}</b></h3>
+                                        <strong>Amount Payable</strong> <br><br><span class="amount_note">Rs. <strong><!-- {{finalAmount}} -->{{finalAmount | number : 2}}</strong></span>
+					
+					<div class="pull-right vm_pay_btn_1">
+					
+					
+					<div id="message">{{message}}</div>
+					<div id="trytocheck"></div>
+					<button type="button" class="btn_submit vm_payamtbtn" ng-click="submitPayment()">Pay Amount</button>
+					<button type="button" class="btn_submit vm_cancelbtn" href="javascript:;" ui-sref="root.welcome()">Cancel</button>
+					</div>
+					<!--<button type="button" class="btn_submit" ng-click="payAmmount()">Pay Amount</button>-->
+				</div>
+				</div>
+			</div>
+	</div>
+	<br />
+	<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-md-12">
+				<span class="table_caption">Order Summary</span>
+				<table width="100%" border="1" class="order_summary">
+					<tr class="paymetheadrow">
+						<th width="20%">Exam Name</th>
+						<th width="20%">Duration (Min.)</th>
+						<th width="10%">Fees(Rs.)</th>
+						<!-- <td width="10%">Discount</td>
+						<td width="10%">Payable Amount</td> -->
+						<!--<td>Valid Till</td>-->
+						<th align="right" width="10%">Action</th>
+					</tr>
+					<tr ng-repeat="item in orderDetails">
+						<td ng-init="addTotal(item.payamount)">{{item.name}}</td>
+						<td>{{item.duration}} Min</td>
+						<td>{{item.fee}}</td>
+						<!-- <td>{{item.discount}} 
+						<span ng-if="item.discount_type == '0'"> Rs </span>   
+		        		<span ng-if="item.discount_type == '1'"> % </span>  
+		        		</td>
+		        		<td>{{item.payamount}}</td> -->
+						<!--<td>Valid Till</td>-->
+						<td align="right">
+							<a href="javascript:;" ng-click="removeOrder(item.tempid)"><i class="fa fa-2x fa-trash-o"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Total Amount (Rs.)</td>
+						<td class="amount_fig"><!-- {{totalAmount}}/ -->{{totalAmount | number : 2}}</td>
+					</tr>
+				</table>
+			</div>
+	</div>
+</div>
+
+</div>
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

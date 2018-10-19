@@ -1,0 +1,619 @@
+	<div data-ng-controller="vidHeaderCtrl">
+<div id="mySpinner" ng-show="loading"></div>
+<!------------------- topbar  ------------------------>
+<!------------------- Master header ------------------>
+<header data-ng-if='authcode == undefined && portal == "main"' class="dashboard_header vmhome_header">
+<!-- above Header -->
+	<div class="above_header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">            
+			
+					<a href="javascript:;" data-ng-click="login()" data-toggle="modal" data-target="#login" class="MainNavText custom_login login_link" > Login </a>&nbsp;
+				    <a href="javascript:;" data-ng-click="register()" data-toggle="modal" data-target="#login" class="MainNavText custom_login login_link" > Register</a>
+				    &nbsp;
+				    <a href="javascript:;" data-ng-click="demoTestNewVisitor()" data-toggle="modal" data-target="#login" class="MainNavText custom_login login_link" > Demo Test</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+     <div class="container">
+     	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+               <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                       <img src="images/menu.png" alt="menu" >
+                    </button>
+              
+                    <a href="index.html"><img src="images/logo.png" alt="logo" class="logo home_logo"></a>                   
+                </div>
+            
+               <div class="collapse navbar-collapse" id="navbar" aria-expanded="false">
+                    <ul class="nav navbar-nav menu vm_home_nav">
+                        <li class="active"><a ui-sref='root.dashboard'> Home </a></li>
+                        <li><a ui-sref='root.coursepage'> Exams </a></li>                       
+                        <li><a ui-sref='root.pricingpage'>Pricing</a></li>
+                        <li><a ui-sref='root.admissionlinks'>Admission Links</a></li>
+                        
+                        <li><a ui-sref='root.aboutus'> About us </a></li>
+                        
+                        <li><a ui-sref='root.contactus'> Contact us </a></li>
+
+                        
+                    </ul>
+                </div>
+            </div>
+     	</div>
+	</div>
+</header>
+
+
+<header data-ng-if='authcode !== undefined && portal == "main"' class="dashboard_header home_header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<nav class="navbar-default desktop dashboard_nav">
+				  <div class="container-fluid">
+				  	<button type="button" class="navbar-toggle desktop" onclick="$('.aside').asidebar('open')">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+				    <a class="dashboard" data-ui-sref="root.welcome"><img class="logo login_user" src="images/logo.png" /></a>
+
+				    
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+						  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">&nbsp;Welcome, {{name}} <span class="caret"></span></a>
+						  <ul class="dropdown-menu">
+						    <li><a href="javascript:;" ui-sref="root.studprofile">My Profile</a></li>
+						    <li><a href="javascript:;" ui-sref="root.studcourse">Preparation Test</a></li>
+						    <li role="separator" class="divider"></li>
+						    <li><a href="javascript:;" ui-sref="root.changepassword">Change Password</a></li>
+						  </ul>
+						</li>
+						<li class="vm_header_btn1"><a href="javascript:;" ui-sref="root.welcomepurchase({purmodal:'111'})" ng-click="reloadPage()">Buy Exam</li>
+						<li ng-if="cartCount"><a href="javascript:;" ui-sref="root.payment">
+							<i class="fa fa-shopping-cart"></i>
+							<span class="cart_count">
+				      		{{cartCount}}
+				     		</span>
+							</a>
+						</li>
+						<!-- <li>
+							<a href="javascript:;" onclick="$('.notifications').asidebar('open')">
+							<i class="fa fa-bell-o"></i>
+							<span class="notification_count">
+				      		{{normalNotiCount}}
+				     		</span>
+							</a>
+						</li> -->
+						
+						<li class="std_logout  vm_header_btn1"><a href="javascript:;" class="logout_btn" data-ng-click="logout()" class="">Logout</a></li>
+					</ul>
+				  </div><!-- /.container-fluid -->
+				</nav>
+			</div>
+		</div>
+	</div>
+	<div class="aside">
+	      <div class="aside-header">
+	        <div class="menu_username"><img src="{{imgpath}}" class="center-block"><p> {{name}}</p> </div>
+	        <div class="menu_userlogout"><a href="javascript:;"  data-ng-click="logout()">Logout</a></div>
+	        <div style="clear: both;"></div>
+	        <!-- <p>{{email}} &nbsp;&nbsp;&nbsp;<span class="text-right" ui-sref="root.studprofile"><i class="fa fa-pencil"></i></span></p> -->
+	        
+	      </div>
+	      <div class="aside-contents">
+	        <ul class="aside_links">
+	        			<li><a href="javascript:;" ui-sref='root.welcome'><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                    	<li><a href="javascript:;" ui-sref='root.studprofile'><i class="fa fa-vcard-o"></i> My Profile</a></li>
+                        <li><a href="javascript:;" ui-sref="root.schuduled"><i class="fa fa-th"></i> All Exams</a></li>
+                        <li><a href="javascript:;" ui-sref='root.studcourse'><i class="fa fa-bars"></i> Preparation Test</a></li>
+                        <li><a href="javascript:;" ui-sref='root.examhistory'><i class="fa fa-history"></i> Exam History</a></li>
+                        <li><a href="javascript:;" ui-sref='root.examresult'><i class="fa fa-line-chart"></i> My Result</a></li>
+                        <li><a href="javascript:;" ui-sref='root.viewnotes'><i class="fa fa-bookmark"></i> Study Material</a></li>
+                        <li><a href="javascript:;" ui-sref='root.payment'><i class="fa fa-shopping-cart"></i> My Cart</a></li>
+                        <li><a href="javascript:;" ui-sref='root.fbconcern'><i class="fa fa-mail-reply"></i> Feedback</a></li>
+                        <li><a href="javascript:;"  ui-sref='root.changepassword'><i class="fa fa-lock"></i> Change Password</a></li>	
+                        			
+			</ul>
+	      </div>
+	    </div>
+	    <div class="notifications">
+		  <div class="aside-contents">
+		  	<h4>Notifications</h4>
+	        <ul class="aside_links">
+				<li data-ng-repeat="notification in normalNotiArr" ng-if="$index <= 4">
+				        <span ng-if="notification.url == null && notification.userid == null" ng-class="{unread : (notification.userid == null)}" ng-click="notiRead(notification.notification_id,'normal',notification.url)" style="cursor: pointer;">
+					        <p ng-bind-html="notification.notification"></p>
+				        </span>
+				        <span ng-if="notification.url == null && notification.userid != null" ng-class="{unread : (notification.userid == null)}">
+					        <p ng-bind-html="notification.notification"></p>
+				        </span>
+				        
+				        <span ng-if="notification.url != null" ng-class="{unread : (notification.userid == null)}">
+					        <p ng-bind-html="notification.notification"></p>
+					        <a href="javascript:;" ng-if="notification.userid == null" ng-click="notiRead(notification.notification_id,'normal',notification.url)">Click Here</a>
+					        <a href="{{base_url}}{{notification.url}}" ng-if="notification.userid != null">Click Here</a>
+				        </span>
+				        
+				    </li>
+				    <li ng-if="normalNotiArr.length >= 6" style="text-align: center"><a ui-sref="root.notifications({notitype:'normal'})">View All</a></li>
+			</ul>
+	      </div>
+	    </div>
+	    <div class="aside-backdrop"></div>
+	    
+</header>
+<!------------------- Modal popups ------------------>
+<div id="login" class="modal fade floating_modal_box custom-regi" role="dialog" data-backdrop="static">
+  <div class="modal-dialog custom_registration">
+    <!-- Modal content-->
+    <div class="modal-content login_modal_content">
+      <div class="modal-body login_createaccountscroll">
+        <div class="login-page">
+		  <div class="form">
+		    <div class="register-form" id="regForm">
+		    <div class="modal-header m_student_modal">
+            	<button class="close" data-dismiss="modal">X</button>
+            	<h4 class="modal-title m_student_title">Create your New Account</h4>
+	        </div>
+                <div class="student">
+                <form angular-validator-submit="submitRegForm()" class="register-stud-form" id="regStudForm" name="regstudForm" novalidate angular-validator>
+			    <div class="form_input">
+				      <div class="col-md-12">
+
+					      <input type="text" 
+					      placeholder="Your Name" 
+					      class="input_control"
+					      name="stud_name"
+					      ng-model="registerDet.name"
+					      required-message="'Please enter the name.'"
+
+					      
+					      maxlength="50"	
+					      autocomplete="off"
+					      required
+					      />
+				  	  </div>		    
+				    	<div class="col-md-12">				    		
+    		     			<input  type = "email"
+			                  name = "email"
+			                  placeholder="Email Address"
+			                  class="input_control"
+			                  ng-model = "registerDet.email"
+			                  ng-pattern="emailFormat"
+			                  invalid-message="'Please enter the valid email address.'"
+			                  required-message="'Please enter the email address.'"
+			                  validate-on="dirty"
+			                  required
+			                  autocomplete="off"
+			                  maxlength="50"
+			                  />
+				    	</div>
+				    	<div class="col-md-12">
+		                 <input 
+			                  type="text" 
+			                  placeholder="Mobile Number" 
+			                  class="input_control"
+			                  name="contact" 
+			                  ng-model="registerDet.contact" 
+			                  ng-pattern="/(^[1-9]\d{9}$)/" 
+			                  invalid-message="'Enter only 10 digits number.'"
+			                  required-message="'Please enter the mobile number.'"
+			                 	maxlength="10"
+			                  required
+			                  autocomplete="off"
+			                  />
+	                    </div>
+	                <div class="col-md-12">
+	                  <input 
+	                  type="checkbox" 
+	                  name="check"                      
+	                  ng-model="registerDet.check"  
+	                  id="check"
+	                  value="check"
+	                  />
+	                  I Agree <a href="javascript:;" target="_blank" ui-sref='root.term&conditions'>Terms & Conditions</a>
+	                 <!-- I Agree <a href="javascript:;" ng-click="tremsCondition()">Terms & Conditions</a> -->
+	                  <div class="" id="registermessage">{{registermessage}}</div>
+	                </div>
+	                <div class="col-md-12">
+				      <button  type="submit" class="input_btn">create</button>
+				    </div>
+				    <div class="col-md-12">
+				      <p class="message reg_sign_in">Already registered? <a href="javascript:;" data-ng-click="login()">Login</a></p>
+				  </div>
+			    </div>
+				</form>
+				</div>
+		    </div>
+		    <div id="forgot-form">
+			    <div class="modal-header m_student_modal">
+				       <button class="close" data-dismiss="modal">X</button>
+				        <h3 class="modal-title m_student_title">Forgot Password?</h3>
+				</div>
+				<div class="form_input">
+			    <form class="forgot-form" angular-validator-submit="submitForgetForm()" name="forgetForm" novalidate angular-validator>
+				    
+				      <div id="forgetmessage"><h5>{{forgetmessage}}</h5></div>
+				      <h5>Enter your registered mobile number.</h5>
+			      	  <div>
+			      
+	                  <input 
+			                  type="text" 
+			                  placeholder="Mobile Number" 
+			                  class="input_control"
+			                  name="contact" 
+			                  ng-model="forgetDet.username" 
+			                  ng-pattern="/(^[1-9]\d{9}$)/" 
+			                  invalid-message="'Enter only 10 digits number.'"
+			                  required-message="'Please enter the mobile number.'"
+			                 	maxlength="10"
+			                  required
+			                  autocomplete="off"
+			                  />
+	                  </div>
+				      <button class="modal_btn" type="submit">Send</button>
+				      <p class="message sign_in">Back to <a href="javascript:;" data-ng-click="login()">Login</a></p>
+				    
+			    </form>  
+			    </div>
+		    </div>
+		    
+		    <div id="otp-form">
+			    <div class="modal-header m_student_modal">
+				        <button class="close" data-dismiss="modal">X</button>
+				        <h4 class="modal-title m_student_title">OTP</h4>
+				</div>
+				<div class="form_input">
+				    <form class="otp-form" angular-validator-submit="submitOtpForm()" name="otpForm" novalidate angular-validator>
+					    
+					      <div id="otpmessage">{{otpmessage}}</div>
+				      	  <div>
+				      	 <input 
+						 type="text" 
+						 name = "otp"
+						 placeholder="Enter OTP"
+						 class="static_text"
+						 ng-model = "otpDet.otp"
+						 required-message="'Please enter the OTP.'"
+						 validate-on="dirty"
+			             required 
+			             autocomplete="off"/>
+						</div>   
+						<span class="note">[Please enter the OTP sent to your registered mobile number ( ******{{contact | limitTo:-4 }} )]</span>
+						<button class="btn btn-success modal_btn" type="submit">Submit</button> 
+						   <!--  <button class="btn btn-primary modal_btn" ng-click="resendOTP()" type="button">Resend</button>
+				     --></form>
+			    </div>
+		    </div>
+		    <div id="set_password">
+			    <div class="modal-header m_student_modal">
+				        <button class="close" data-dismiss="modal">X</button>
+				        <h4 class="modal-title m_student_title">Set Password</h4>
+				</div>
+				<div class="form_input">
+				    <form class="set_password" angular-validator-submit="submitSetPasswordForm()" name="ccccccc" novalidate angular-validator>
+					    
+					      <div id="passwordmessage">{{pwdmessage}}</div>
+				      	  <div>
+				      	 <input 
+						 type="password" 
+						 name = "password"
+						 placeholder="Enter Password"
+						 class="static_text"
+						 validator = "passwordValidator(passwordForm.password) === true"
+						 invalid-message = "passwordValidator(passwordForm.password)"
+						 ng-model = "passwordForm.password"
+						 required-message="'Please enter the Password.'"
+						 validate-on="dirty"
+			             required 
+			             autocomplete="off"/>
+						</div> 
+						<div>
+		      	  	  <input  
+	                      type = "password"
+		                  name = "confirmPassword"
+		                  placeholder="Re-type Password"
+		                  class = "static_text"
+		                  ng-model = "passwordForm.confirmPassword"
+		                  validator = "passwordForm.password === passwordForm.confirmPassword"
+		                  validate-on="dirty"
+		                  invalid-message = "'Password does not match!'"
+		                  required-message="'Please enter the confirm password.'"
+		                  required
+		                  autocomplete="off"
+	                  />
+                  </div>  
+						<span class="note">[Please enter the Password. Please do not share anywhere.]</span>
+						<br><button class="modal_btn" type="submit">Submit</button> 
+				    </form>
+			    </div>
+		    </div>
+		   
+			<div id="facebook-form">
+			<div class="modal-header m_student_modal">
+			        <button class="close" data-dismiss="modal">X</button>
+			        <h4 class="modal-title m_student_title">Other Details</h4>
+			</div>
+			<div class="form_input">
+		    <form class="facebook-form" angular-validator-submit="submitfacebookForm()" name="facebookForm" novalidate angular-validator>
+			    
+			      <div id="facebookmessage">{{facebookmessage}}</div>
+		      	  <div>
+		      	  <input  type = "email"
+                  name = "email"
+                  id="facebookemail"
+                  placeholder="Email Address"
+                  ng-model = "facebookDet.email"
+                  ng-pattern="emailFormat"
+                  invalid-message="'Please enter the valid email address.'"
+                  required-message="'Please enter the email address.'"
+                  validate-on="dirty"
+                  required
+                  autocomplete="off"
+                  />
+                  <div>
+	                 <input 
+	                  type="text" 
+	                  placeholder="Mobile Number" 
+	                  name="contact" 
+	                  ng-model="facebookDet.contact" 
+	                  ng-pattern="/(^[1-9]\d{9}$)/" 
+	                  invalid-message="'Enter Only 10 digits Number'"
+	                  required-message="'Please enter the contact number.'"
+	                  validate-on="dirty"
+	                  required
+	                  autocomplete="off"
+	                  />
+                 </div>
+                  </div>
+			      <button class="modal_btn" type="submit">Send</button>
+		    </form>
+		    </div>
+			</div>
+			<div id="login-form">
+			        <button class="close" data-dismiss="modal">X</button>
+			        
+			<div class="col-lg-6 col-md-6 col-sm-12 hidden-xs" id="login_left_page">
+				<div class="floating_sidebar set_margin">
+					
+					<br>
+						<h3 class="login_text"> Why Mock exam ?</h3>
+						<p class="">
+						<ul class="login_text">
+						<li>Variety of questions.</li>
+						<li> Know detailed test analysis.</li>
+						<li> Get comparative score against toppers.</li>
+						<li>Topic-wise and Sectional wise questions.</li>
+						<li>Identify question and manage time effectively.</li>
+						<li> Find out difficulties and improve performance.</li>
+						</ul>
+						</p>
+					
+					</center>
+				
+				
+				</div>
+	        </div>
+	        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 custom_loginform" id="login_page">
+				<h3 class="floating_form_title">Login</h3>
+            	<div id="form_wrapper" class="form_space">
+
+					<div class="form_input vm_login_nopadd">
+					<form angular-validator-submit="submitLoginForm()" class="login-form" name="loginForm" novalidate angular-validator>
+					    <div id="loginmessage">{{loginmessage}}</div>
+					      <h5>Enter the details to login</h5>
+				      	  <div>
+				      	  <input  type = "text"
+		                  name = "uname"
+		                  placeholder="Email or Mobile Number"
+		                  ng-model = "loginDet.username"
+		                  required-message="'Please enter the username'"
+		                  required
+		                  autocomplete="off"
+		                  />
+		                  </div>
+		                  <div class="vm_password">
+
+		                  	<span class="showPassword" ng-click="togglePassword()"><i class="fa fa-eye" aria-hidden="true"></i></span><br> 
+		                  	<input type="{{ typePassword ? 'text' : 'password' }}" 
+		                  			name="password" 
+		                  			placeholder="Password" 
+		                  			required-message="'Please enter the password'" 
+		                  			ng-model="loginDet.password" 
+		                  			required
+		                  			autocomplete="off" class="input_password">
+
+				      	  <!-- <input 
+				      	  type="password" 
+				      	  placeholder="Password" 
+				      	  name="password" 
+				      	  ng-model="loginDet.password" 
+				      	  required-message="'Please enter the password'"
+		                  required
+		                  autocomplete="off"
+				      	  /> -->
+				      	  </div>
+					     <!-- <button type="button" ng-click="myForm.reset()" class="modal_btn">Reset</button>-->
+					      <button type="submit" class="input_btn" >login</button>
+					      <span class="message forgot_pwd"><a href="javascript:;" data-ng-click="forget()">Forgot Password?</a></span>
+					      <p class="message sign_up">New User <a href="javascript:;" data-ng-click="register()">Click here to Register</a></p>
+					     
+						  <div id="name"></div>
+				    </form>
+				    </div>
+					<div class="social_login" data-ng-init="startApp()">
+						
+	                    <button type="button" class="facebook_login_btn" ng-click="fb_login()"><i class="fa fa-facebook"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facebook</button>
+	                	
+	                    <button type="button" class="gplus_login_btn" id="customBtn"><i class="fa fa-google-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Google</button>
+	                	
+	                </div>
+            	</div>
+            </div>	
+			</div>
+		  	<div id="login-form-other">
+			<div class="modal-header m_student_modal">
+			        <button class="close" data-dismiss="modal">X</button>
+			        <h4 class="modal-title m_student_title">Login your Account</h4>
+			</div>
+			<div class="form_input">
+			
+			    <div id="loginmessageother">{{loginmessageother}}</div>
+			      <h5>Enter the details to login</h5>
+			      <div>
+			      	 <input type="radio" name="login_user" id="login_student" ng-model="login_user" value="student" class="css-checkbox" checked="checked"/><label for="login_student" class="css-label radGroup2">Student</label>
+	                                
+				   <input type="radio" name="login_user" ng-model="login_user" id="login_institute" class="css-checkbox" value="institute" /><label for="login_institute" class="css-label radGroup2">Other</label>
+			      </div>
+			     <form ng-if="login_user == 'student'" angular-validator-submit="submitLoginForm()" class="login-form" name="loginForm" novalidate angular-validator>
+		      	  <div>
+		      	  <input  type = "text"
+                  name = "uname"
+                  placeholder="Username"
+                  ng-model = "loginDet.username"
+                  required-message="'Please enter the username'"
+                  required
+                  autocomplete="off"
+                  />
+                  </div>
+                  <div>
+		      	  <input 
+		      	  type="password" 
+		      	  placeholder="Password" 
+		      	  name="password" 
+		      	  ng-model="loginDet.password" 
+		      	  required-message="'Please enter the password'"
+                  required
+                  autocomplete="off"
+		      	  />
+		      	  </div>
+			      <button type="submit" class="modal_btn" >sign in</button>
+			      <span class="message forgot_pwd"><a href="javascript:;" data-ng-click="forgot_other()">Forgot Password?</a></span>
+				  <div id="name"></div>
+		    	</form>
+		   
+		    </div>
+			</div>
+		  </div>
+		</div>
+      </div>
+    </div>
+
+  </div>
+  <div id="exam_buy" class="modal fade floating_modal_box custom-regi" role="dialog" data-backdrop="static">
+  <div class="modal-dialog custom_registration">
+    <!-- Modal content-->
+    <div class="modal-content">
+       <div class="modal-header m_student_modal">
+                <button class="close" data-dismiss="modal">X</button>
+                <h4 class="modal-title m_student_title">Select Course for Demo Test</h4>
+
+        </div>
+      <div class="modal-body">
+        <div class="login-page">
+      <div class="form">
+        <div id="otp-form">
+        <div class="form_input" ng-init="">
+        	
+            <form class="otp-form" angular-validator-submit="startDemoTest()" id="demoTestBtn" name="buyExamForm" novalidate angular-validator>
+                
+                  	 <div class="col-md-4">
+
+					      <input type="text" 
+					      placeholder="Your Name" 
+					      class="input_control"
+					      name="stud_name"
+					      ng-model="registerDet.name"
+					      required-message="'Please enter the name.'"
+
+					      
+					      maxlength="50"	
+					      autocomplete="off"
+					      required
+					      />
+				  	  </div>
+				     <!--  -->
+		             				    
+				    	<div class="col-md-4">				    		
+    		     			<input  type = "email"
+			                  name = "email"
+			                  placeholder="Email Address"
+			                  class="input_control"
+			                  ng-model = "registerDet.email"
+			                  ng-pattern="emailFormat"
+			                  invalid-message="'Please enter the valid email address.'"
+			                  required-message="'Please enter the email address.'"
+			                  validate-on="dirty"
+			                  required
+			                  autocomplete="off"
+			                  maxlength="50"
+			                  />
+				    	</div>
+				    	<div class="col-md-4">
+		                 <input 
+			                  type="text" 
+			                  placeholder="Mobile Number" 
+			                  class="input_control"
+			                  name="contact" 
+			                  ng-model="registerDet.contact" 
+			                  ng-pattern="/(^[1-9]\d{9}$)/" 
+			                  invalid-message="'Enter only 10 digits number.'"
+			                  required-message="'Please enter the mobile number.'"
+			                 	maxlength="10"
+			                  required
+			                  autocomplete="off"
+			                  />
+	                    </div>
+	                    <div>
+				    	<div class="col-md-12">
+		                  <select
+		                    class="form-control custom-dropdown"
+		                    name="course" 
+		                    data-ng-model="democourse.coursename"
+		                    >
+		                      <option value="">Select Exam</option>
+		                      <option value="{{item.id}}" ng-repeat="item in courseArr">{{item.name}}</option>
+		                    
+		                  </select>
+                  		</div>
+                  		<div class="col-sm-12" ng-if="sentotp">
+			            		<input type = "otp"
+		                   				name = "otp"
+		                   				class="input_control" 
+		                   				placeholder="Insert your OTP."
+		                   				ng-model = "registerDet.conformOTP"
+		                   				invalid-message = "'OTP does not match!'"
+		                   				required-message="'Please enter the OTP.'"
+		                   				
+		                   				autocomplete="off"
+		                   			/>
+					        </div>
+                  		</div>
+                 
+                         
+            <!-- <br><button class="btn btn-success modal_btn" type="submit">Submit</button>  -->
+            <button  type="submit" class="input_btn">{{btnName}}</button>
+             <div class="" id="OTPmessage">{{OTPmessage}}</div>
+            </form>
+          </div>
+        </div>
+       
+       
+      
+     
+      
+      </div>
+    </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+</div>

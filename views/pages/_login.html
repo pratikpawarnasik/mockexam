@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,700italic,900' rel='stylesheet' type='text/css'>
+    
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/mainstyle.css" rel="stylesheet" type="text/css" />
+    
+    <link href="css/jasny_bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/navmenu.css" rel="stylesheet">
+  
+</head>
+
+<body>
+<!------------------- topbar ------------------>
+<div class="container-fluid top_bar">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        	<div class="align_center"><a href="index.html"><img src="images/logo.png" class="admin_logo"></a></div>
+        </div>
+    </div>
+</div>
+
+<!------------------- Banner ------------------->
+<!------------------- Banner ------------------>
+<div ng-controller="vidAdminLoginCtrl">
+<div id="mySpinner" ng-show="loading"></div>
+<section class="wrapper dashboard_bg">
+	<div class="container-fluid">
+	    <div class="row">
+	        <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
+				<div class="register_contact">
+					<form class="change-form" angular-validator-submit="submitLoginForm()" name="regForm" id="regForm" novalidate angular-validator>
+						<div id="loginmessage">{{loginmessage}}</div>
+						<div><label>Email Address</label>
+                                <input 
+						      	  type="text" 
+						      	  placeholder="Email Address" 
+						      	  class="static_text"
+						      	  name="email" 
+						      	  ng-model="loginDet.email" 
+						      	  required-message="'Please enter the email address.'"
+				                  validate-on="dirty"
+				                  required
+				                  autocomplete="off"
+						      	  />
+                        </div>
+                            
+                        <div><label>Password</label>
+                                <input 
+						      	  type="password" 
+						      	  placeholder="Password" 
+						      	  class="static_text"
+						      	  name="password" 
+						      	  ng-model="loginDet.password" 
+				                  required-message="'Please enter the password.'"
+				                  validate-on="dirty"
+				                  required
+				                  autocomplete="off"
+						      	  />
+                        </div>                           
+						
+						<input type="submit" class="master_loginbtn dashboard_btn" value="Login" />
+					</form>
+				</div>
+			</div>	
+		</div>
+	</div>
+</section>
+
+</div>
+<!------------------- contact info ------------------->
+
+<!----------------- Footer ------------------>
+
+        <div class="row copy_right_wrapper">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                Copyrights &copy; 2018 mockexam All Rights Reserved.
+            </div>
+        </div>
+
+
+
+</body>
+
+<script type="text/javascript" src="js/jquery1.11.0.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jasny-bootstrap.min.js"></script>
+	
+</html>

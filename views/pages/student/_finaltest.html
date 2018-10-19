@@ -1,0 +1,106 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+ <style>
+.sub_class_name {
+	background: #25335e;
+    color: #fff;
+    padding: 2px;
+}
+ </style>
+<div data-ng-controller="vidFinalTestCtrl" id="final_keypress" oncontextmenu="return false" onkeydown="return false;" onmousedown="return false;">
+
+<h4 class="test_name">Final Examination of {{examName}} </h4>
+<div class="container-fluid wrapper online_test">
+    <div class="row" ng-init="getFinalTest();" ng-show="exam">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+	    	<div class="full_width_table">
+	    	<div class="col-md-9">
+	    		<div class="align_right">Remaining Time : &nbsp;<span>  {{minutes}}:{{seconds}}</span></div>
+	    		<div id="{{question.id}}" ng-repeat="question in questionArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" class="question_area" style="margin-top:10px;">
+	    				<div class="top_title">Questions</div><div class="top_heading_subject">{{question.subject_name}}</div>
+	    				
+	    				
+	    				
+	    				<h3 class="question_caption"><span class="question_no">{{currentPage}}</span> <span ng-bind-html="question.question | to_trusted"><span ng-bind-html="question.question | to_trusted"></span></h3>
+	    				
+	    			
+	    				<p ng-repeat="option in question['options']">
+	    					<b>{{ alphabet[$index] }} </b>&nbsp;&nbsp;&nbsp;&nbsp;
+	    				<input 
+			             type="radio"
+			             ng-model="seloption[question.id]" 
+			             name="seloption{{question.id}}" 
+			             value="{{option.optid}}"
+			             ng-checked="queansid.indexOf(option.optid) > -1"
+			             />
+	    				<input id="text{{option.optid}}" type="hidden" value="{{option.option}}">
+	    				<!-- {{option.option}} -->
+	    				<span ng-bind-html="option.option | to_trusted"></span>
+	    				
+	    				
+	    				</p>
+	    				<hr />
+	    				<div>
+	    			<button class="next_prev" ng-if="currentPage != 1" type="button" ng-model="currentPage" ng-click="selectPagePrev(currentPage - 1)"><i class="fa fa-angle-left"></i> Previous</button>
+    				<button class="next_prev" ng-if="totalItems != currentPage" type="button" ng-model="currentPage" ng-click="selectPageNext(currentPage + 1)">Save & Next <i class="fa fa-angle-right"></i></button>
+    				<button class="next_prev" ng-if="totalItems != currentPage" type="button" ng-model="currentPage" ng-click="selectPageSkip(currentPage + 1)">Skip <i class="fa fa-angle-right"></i></button>
+    				
+    				<button class="next_prev" type="button" ng-model="currentPage" ng-click="saveSelect(currentPage + 1)">Save</button>
+		    		</div>
+	    		</div>
+	    		
+				<div class="align_right">
+    					<button  ng-if="totalItems != 0" class="modal_btn end_btn" type="button" ng-click="submitResult()">end exam</button>
+    			</div>
+    			<div class="rise_qun">
+    					<button ng-if="totalItems != 0" id="doubt_btn" class="modal_btn " type="button" ng-click="submitdoubts(currentPage + 1)">Raise a question</button>
+    					<h4 id="getresemessage">{{resesmessage}}</h4>
+    			</div>
+	    		
+	    	</div>
+	    	<div class="col-md-3" ng-if="totalItems != 0" >
+	    	
+	    	
+	    		<div class="question_area" ng-init="manageQunList(questionArr)">
+	    		<div class="top_title">Questions Palette</div>
+	    		<div class="color_note">
+	    			<button class="question_not_answered"></button>&nbsp;&nbsp;Not Attempted<br />
+	    			<button class="question_answered"></button>&nbsp;&nbsp;Attempted<br />
+	    		</div>
+	    	
+	    		<div class="align_left" ng-repeat="question in questionArr">
+	    			
+	    			<button ng-click="multiSelect($index+1)" ng-show="selection.indexOf(question.id) == -1" class="question_not_answered">{{$index+1}}
+	    			</button>
+	    			<button ng-click="multiSelect($index+1)" ng-show="selection.indexOf(question.id) > -1" class="question_answered">{{$index+1}}
+	    			</button>
+	    			&nbsp;&nbsp;
+    			</div>
+	    		</div>
+	    	
+	    	</div>
+	    	</div>
+	    </div>
+	</div>
+	<div ng-if="totalItems == 0" ><h3>{{emptymsg}}</h3></div>
+</div>
+<!------------------modal- SHOW TIME OUT ---------------->
+<div id="show_timeout" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header">
+                <h4 class="modal-title form" style="text-align: center;"> TIME OUT </h4>
+            </div>
+            <!--<div class="modal-body">
+                <div class="">
+		     	<h2>TIME OUT</h2>
+	     		</div>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

@@ -1,0 +1,357 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+<div data-ng-controller="vidStudentProfileCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				My Profile
+			</div>
+		</div>
+	</div>
+</div>
+<!------------------- Body ------------------>
+<div id="add_new_institute" class="wrapper" ng-init="getStudent()">
+	<div class="container-fluid">
+				<div class="row">
+	    		<div class="col-lg-6 col-lg-offset-3 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+				<div class="box_wrapper course_block  profile">
+	    		<div class="align_center pattern_bg">
+		     		<div class="align_center">
+			     		<div class="fileinput fileinput-new upload_img" data-provides="fileinput">
+			     			<img 
+			     			src="{{imgpath}}" 
+			     			alt="profile_picture"  
+			     			id="blah" 
+			     			alt="your image"  
+			     			/>
+						    <span class="btn btn-default btn-file"><span><i class="fa fa-pencil"></i></span>
+						    <input 
+						    type="file" 
+						    id="myFile"
+						    name="myFile"
+						    ng-model="studProfileDet.fname" 
+			     			file-model="myFile"
+			     			/></span>
+						    <span class="fileinput-filename"></span>
+						</div>
+					</div>
+					<div>
+						<input type="button" ng-click="upload()" value="Upload Profile Photo" class="dashboard_btn student_profile_upload" />
+					</div>
+		     	</div>
+	        	<form angular-validator-submit="editStudent()" class="institute-form" id="instituteForm" name="instituteForm" novalidate angular-validator>	
+	        	<div class="prof_msg"><div id="message">{{message}}</div></div>
+		     	<div class="row profile" ng-init="get_district_name(state_id);">
+			     		<!--<label>Upload Logo</label>-->
+			     	<div class="col-md-12">
+			     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+			     		<!-- <label>Student Name <span class="mandatory">*</span></label> -->
+		     			<input 
+				     		type="text" 
+				     		name="studname" 
+				     		placeholder="Student Name"
+				     		ng-model="studProfileDet.studname" 
+						    required-message="'Please enter student name.'"
+				     		class="dashboard_text student_profile_input" 
+				     		validate-on="dirty"
+				     		maxlength="50"
+				     		required
+				     		autocomplete="off"
+			     		/>
+			     		</div>
+			     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			 <!--     		<label>Email Address  <span class="mandatory">*</span></label> -->
+				     	<input  type = "email"
+		                  name = "email"
+		                  placeholder="Email Address"
+		                  ng-model = "studProfileDet.email"
+		                  ng-pattern="emailFormat"
+		                  class="dashboard_text student_profile_input"
+		                  invalid-message="'Please enter the valid email address.'"
+		                  required-message="'Please enter the email address.'"
+		                  validate-on="dirty"
+		                  required
+		                  autocomplete="off"
+		                  />
+		                  </div>
+			     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		         <!--         <label>Contact Number <span class="mandatory">*</span></label>  -->
+		                 <input 
+		                  type="text" 
+		                  placeholder="Contact Number" 
+		                  class="dashboard_text student_profile_input"
+		                  name="contact" 
+		                  ng-model="studProfileDet.contact" 
+		                  ng-pattern="/(^[1-9]\d{9}$)/" 
+		                  invalid-message="'Enter only 10 digits contact number.'"
+		                  required-message="'Please enter the contact number.'"
+		                  validate-on="dirty"
+		                  required
+		                  autocomplete="off"
+		                  />
+		                  </div>
+		                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+<!-- 		                  <label>Mother Name <span class="mandatory">*</span></label>  -->
+		                 <input 
+		                  type="text" 
+		                  placeholder="Mother Name" 
+		                  class="dashboard_text student_profile_input"
+		                  name="mother_name" 
+		                  ng-model="studProfileDet.mother_name" 		                 
+		                  required-message="'Please enter mother name.'"
+		                  validate-on="dirty"
+		                  autocomplete="off"
+		                  />
+		                </div>
+		                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		                  <label>Gender <span class="mandatory">*</span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+		         			<label >Male</label>			     		
+			                <input 
+			                type="radio"
+			                ng-model="studProfileDet.gender" 
+			                name="gender" 
+			                ng-value="1"		               
+			                />
+			                &nbsp;&nbsp;&nbsp;&nbsp;
+			                <label >Female</label>			            
+			                <input 
+			                type="radio" 
+			                ng-model="studProfileDet.gender" 
+			                name="gender" 
+			                ng-value="2"
+			                required
+			                required-message="'Please select your gender.'"
+			                />
+		                </div>
+		                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	<!-- 	                	<label>Date of Birth<span class="mandatory">*</span></label> -->
+			                <input 
+				     		type="text" 
+				     		name="dob"
+	                        id="dob"
+	                        ng-blur="adddate('dob')"
+				     		placeholder="Select Date of Birth"
+				     		ng-model="studProfileDet.dob"
+						    required-message="'Please enter Your birth date.'"
+				     		class="dashboard_text student_profile_input" 
+				     		validate-on="dirty"
+				     		autocomplete="off"
+				     		
+    		     		/>
+		                </div>
+		            </div>
+		            <div class="col-md-12">
+		                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+				<!-- 			<label>Class  <span class="mandatory">*</span></label>	 -->		     			
+							<input type="text" 
+			                  placeholder="Enter Standard, eg.11th,12th etc." 
+			                  class="dashboard_text student_profile_input"
+			                  name="course" 
+			                  ng-model="studProfileDet.standard" 			                  
+			                  validate-on="dirty"
+						    	required-message="'Please enter your standard.'"
+
+			                  required
+			                  autocomplete="off"
+			                  />
+			     		</div>
+			     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+		<!-- 					<label>College Name <span class="mandatory">*</span></label> -->			     			
+							<input 
+			                  type="text" 
+			                  placeholder="Enter College Name" 
+			                  class="dashboard_text student_profile_input"
+			                  name="college_name" 
+			                  ng-model="studProfileDet.college_name"
+						    	required-message="'Please enter your college name.'"
+
+			                  validate-on="dirty"
+			                  required
+			                  autocomplete="off"
+				             />
+			     		</div>
+			     		<div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+			<!-- 				<label>Address  <span class="mandatory">*</span></label> -->
+							<input type="text" 
+						      placeholder="Enter The Address" 
+						      class="dashboard_text student_profile_input"
+						      name="address"
+						      ng-model="studProfileDet.address"
+						      validate-on="dirty"
+						      required-message="'Please enter the address.'"
+						      required
+						      autocomplete="off"
+						    />
+				     		
+		                 
+		                </div>
+		                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		                  <label>Country <span class="mandatory">*</span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+		         			<label >India</label>			     		
+			                <input 
+			                type="radio"
+			                ng-model="studProfileDet.country" 
+			                name="country" 
+			                ng-value="1"		               
+			                />
+			                &nbsp;&nbsp;&nbsp;&nbsp;
+			                <label >Other</label>			            
+			                <input 
+			                type="radio" 
+			                ng-model="studProfileDet.country" 
+			                name="country" 
+			                ng-value="2"
+			                required-message="'Please select your Country.'"
+			                />
+		                </div>
+		                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" ng-if="studProfileDet.country == 2">
+			<!-- 				<label>Country Name  <span class="mandatory">*</span></label> -->
+							<input type="text" 
+						      placeholder="Country" 
+						      class="dashboard_text student_profile_input"
+						      name="other_country"
+						      ng-model="studProfileDet.other_country"
+						      required-message="'Please enter the other_country.'"
+						      maxlength="20"
+						      validate-on="dirty"
+						      autocomplete="off"
+						      required
+						    />
+
+			     		</div>
+			     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" ng-if="studProfileDet.country == 1">
+<!-- 							<label>Pin Code </label>	  -->    			
+			     			<input 
+			                  type="text" 
+			                  placeholder="Pin Code" 
+			                  class="dashboard_text custom-dropdown-state student_profile_input"
+			                  name="pin" 
+			                  ng-model="studProfileDet.pin" 
+			                  ng-pattern="/(^[1-9]\d{5}$)/" 
+			                  invalid-message="'Enter Only 6 digits Number'"
+			                  required-message="'Please enter the pin code.'"
+			                  validate-on="dirty"
+			                  maxlength="6"
+			                  required
+			                  autocomplete="off"
+			                  />
+			     		</div>
+		                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12"  ng-if="studProfileDet.country == 1">
+<!-- 		                	<label>Select State </label> -->
+		                	<select
+					     		id="state"
+					     		class="form-control custom-dropdown-state student_profile_input"
+					     		name="state" 
+					     		data-ng-model="studProfileDet.state"
+					     		data-ng-change="get_district(studProfileDet.state)"
+					     		data-ng-click=""
+					     		required-message="'Please select state.'"
+					     		required
+					     		>
+	        					<option value="" selected>Select State</option>
+	        					<option value="{{item.state_id}}" ng-repeat="item in stateDetail">{{item.state_name}}</option>	        					
+		        			</select> &nbsp;
+			     		</div>
+			     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" ng-if="studProfileDet.country == 1">
+<!-- 			     			<label>Select City </label> -->
+		                	<select
+					     		id="district"
+					     		class="form-control custom-dropdown-state student_profile_input"
+					     		name="district" 
+					     		data-ng-model="studProfileDet.district"
+					     		
+					     		>
+	        					<option value="" selected>Select District</option>
+	        					<option value="{{item.district_id}}" ng-repeat="item in distDetail">{{item.district_name}}</option>
+	        				</select> &nbsp;
+			     		</div>
+			     		<!-- <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" ng-if="studProfileDet.country == 1">
+							<label>Pin Code</label>		     			
+			     			<input 
+			                  type="text" 
+			                  placeholder="Pin Code" 
+			                  class="dashboard_text custom-dropdown-state"
+			                  name="pin" 
+			                  ng-model="studProfileDet.pin" 
+			                  ng-pattern="/(^[1-9]\d{5}$)/" 
+			                  invalid-message="'Enter Only 6 digits Number'"
+			                  required-message="'Please enter the pin code.'"
+			                  validate-on="dirty"
+			                  maxlength="6"
+			                  required
+			                  autocomplete="off"
+			                  />
+			     		</div> -->
+			     	</div>
+			     	<div class="col-md-12">	
+			     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+<!-- 							<label>Coordinator Name</label>	 -->		     			
+							<input 
+			                  type="text" 
+			                  placeholder="Enter Coordinator Name" 
+			                  class="dashboard_text student_profile_input"
+			                  name="coordinator" 
+			                  ng-model="studProfileDet.coordinator"			                  
+			                  validate-on="dirty"
+			                  autocomplete="off"
+				             />
+			     		</div>
+			     		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+<!-- 							<label>How to know? </label> -->			     			
+							<input 
+			                  type="text" 
+			                  placeholder="How did you get to know about exam?" 
+			                  class="dashboard_text student_profile_input"
+			                  name="how_to_know" 
+			                  ng-model="studProfileDet.how_to_know" 
+			                  validate-on="dirty"
+			                  autocomplete="off"
+				             />
+			     		</div>
+			     	</div>	
+				    	
+				    
+				    
+	               
+	              <!--   <div class="col-md-12">
+
+		        		<div class="col-md-6">
+		        				<select
+						     		id="clg_district"
+						     		class="form-control custom-dropdown"
+						     		name="clg_district" 
+						     		data-ng-model="studProfileDet.clg_district"
+						     		data-ng-change="loadData(clg_district)"
+						     		>
+		        					<option value="">Select college District</option>
+		        					<option value="{{item.district_id}}" ng-repeat="item in distDetail">{{item.district_name}}</option>
+		        				</select> 
+		        		</div>
+		        		<div class="col-md-6">
+		        				<input type="text" 
+							      placeholder="College Taluka" 
+							      class="dashboard_text"
+							      name="clg_taluka"
+							      ng-model="studProfileDet.clg_taluka"
+							      required-message="'Please enter the College Taluka.'"
+							      required
+							      maxlength="20"
+							      validate-on="dirty"
+							      autocomplete="off"
+							    />
+		        		</div>				  
+				    </div> -->
+			     		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			     			<input type="submit" ng-disabled="valid" value="Save" class="dashboard_btn" />
+			     		</div>
+			     		</div>
+		     	</form>
+		     	</div>
+				</div>
+		</div>
+	</div>
+</div>
+</div> 
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div> 

@@ -1,0 +1,78 @@
+<!--------------------- footer page ---------------------->
+<div ng-if="header_show == 3" data-ng-include="'views/header/_header.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidExamResultCtrl"><!-- student.js page -->
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				My Result
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid wrapper">
+
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" ng-init="getExamResult()">
+	    	<div id="getmessage">{{message}}</div>
+	    		<div class="row table_action">
+	    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+	    						<button class="back_button" ng-click="doTheBack()">
+									<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+								</button>
+			        			
+		        		</div>
+		        	</div>
+    				
+	    		<table class="dashboard_tab category_list_tab">
+	        		<tr>
+	        			
+	        			<td align="left" width="5%">Sr.No</td>
+	        			<td align="left" width="15%">Roll No.</td>
+	        			<td align="left" width="20%">Exam Name</td>
+	        			<td align="left" width="20%">Date</td>
+	        			<td align="left" width="20%">Course Name</td>
+	        			<td align="right" width="20%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="exam in examArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	        			
+	        			<td>{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.</td>
+	        			<td>{{exam.roll_no}}</td>
+	        			<td>{{exam.exam_name}}</td>
+	        			<td>{{exam.date | date:'dd-MM-yyyy'}}</td>
+	        			<td>{{exam.course_name}}</td>
+	        			<td align="right">
+							 <a ng-if="urlid == null || urlid == ''" class="block_button_blue" href="javascript:;" ui-sref="root.singleexamresult({id : exam.stud_exam_id})">
+			        		<i class="fa fa- fa-angle-double-right"></i>&nbsp;&nbsp;&nbsp;View Result
+		        			</a>
+		        			<a ng-if="urlid != null && urlid != ''" class="block_button_blue" href="javascript:;" ui-sref="root.studresult({id : exam.stud_exam_id})">
+			        		<i class="fa fa- fa-angle-double-right"></i>&nbsp;&nbsp;&nbsp;View Result
+		        			</a>
+		        			
+		        			
+	        			</td>
+	        		</tr>
+        		</table>
+        		<pagination 
+				  ng-if="examArr.length != 0"
+			      ng-model="currentPage"
+			      total-items="examArr.length"
+			      ng-click="pageChange(currentPage)"
+			      max-size="maxSize" 
+			      class="pagination-sm"
+			      items-per-page="itemsPerPage" 
+			      boundary-links="true">
+				</pagination>
+        		<div id="tablemessage">{{tablemessage}}</div>
+	    </div>
+	     
+	</div>
+</div>
+
+</div>
+
+<!--------------------- footer page -------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

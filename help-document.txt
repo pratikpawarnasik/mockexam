@@ -1,0 +1,36 @@
+***--------  URL Changes ------***
+
+index.html
+app.js
+API_URLS.js
+paytm/pgRedirect.php
+config.php
+
+
+Dashboard.php
+////////////////////////////////////////////////////  http://mockexam.mockexam.org/
+
+Login with facebook and Gmail
+change app id and auth id @ controller.js
+and same change on facebook and gmail change localhost to live both
+///////////////////////////////////////////////////
+PAYTM
+
+/////////////////////////////////////////////////
+
+///////////////////////
+back button code
+
+$scope.doTheBack = function() {
+  window.history.back();
+};
+
+
+<button class="back_button" ng-click="doTheBack()">
+									<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+								</button>
+////////
+send mail from 
+/////////////////////
+
+change database creditals at paytm/lib/config file in paytm folder

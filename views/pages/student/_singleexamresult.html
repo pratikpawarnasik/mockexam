@@ -1,0 +1,342 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_header.html'"></div>
+<style>
+td span p{
+    margin-bottom:0px;
+}
+</style>
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidSingleExamResultCtrl" ng-init="getExamResult()">
+<div class="page_title">
+	<div class="container-fluid">
+	    <div class="row">
+		    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+		    	<strong>{{examArr.exam_name}}</strong> Exam Result <span class="pull-right"><strong>Roll No: {{examArr.roll_no}}</strong></span>
+
+		    </div>
+		</div>
+	</div>
+	
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+	    	<div class="row table_action">
+	    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+	    						<button class="back_button" ng-click="doTheBack()">
+									<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+								</button>
+			        			
+		        		</div>
+		        	</div>
+	    	
+			<div id="exTab1">	
+				<ul class="nav nav-pills">
+					<li class="active">
+		        	<a href="#brief" data-toggle="tab">Brief</a>
+					</li>
+					<li>
+					<a href="#rank-wise" data-toggle="tab">Ranking</a>
+					</li>
+					<li>
+					<a href="#overall" data-toggle="tab">Overall</a>
+					</li>
+					<li>
+					<a href="#question-wise" data-toggle="tab">Question-Wise</a>
+					</li>
+					
+				</ul>
+				
+				<div class="tab-content clearfix course_block">
+					<!-- brief result -->
+					<div class="tab-pane active" id="brief">
+					        <div class="score_displaysOutter">
+						    	<div class="score_display score">
+						    		<span class="score_displayIcon"><i class="fa fa-star-o" style="color: #fff;"></i></span>
+						    		<h2>{{totalscore}}/{{exam_mark_total}}</h2>
+						    		<p>Score</p>
+						    	</div>
+						    	<div class="score_display accuracy">
+						    		<span class="score_displayIcon"><i class="fa fa-thumbs-o-up" style="color: #fff;"></i></span>
+						    		<h2>{{examArr.correct / examArr.attempted * 100 | number: 2 }} %</h2>
+						    		<p>Accuracy</p>
+						    	</div>
+						    	<div class="score_display percentage">
+						    		<span class="score_displayIcon"> <i class="fa fa-trophy" style="color: #fff;"></i></span>
+						    		<h2>{{totalscore / exam_mark_total * 100  | number: 2 }} %</h2>
+						    		<p>Percentage</p>
+						    	</div>
+						    	<div class="score_display myrank">
+						    		<span class="score_displayIcon"><i class="fa fa-hand-peace-o" style="color: #fff;"></i></span>
+						    		<h2>{{examArr.getSingleRank.serial_number }}</h2>
+						    		<p>My Rank</p>
+						    	</div>
+
+					    	</div>
+					    	<div class="middleOptions">
+						    	<div class="attemp_opt">
+							    	<div class="attemp_four">
+							    		<div class="attttm">Attempted</div>
+							    		<div class="out_of">{{examArr.attempted}} out of {{examArr.no_of_question}}</div>
+							    	</div>
+							    	<div class="attemp_four">
+							    		<div class="attttm">Correct</div>
+							    		<div class="out_of">{{examArr.correct}} out of {{examArr.attempted}}</div>
+							    	</div>
+							    	<div class="attemp_four">
+							    		<div class="attttm">Not Attempted</div>
+							    		<div class="out_of">{{examArr.no_of_question - examArr.attempted}} out of {{examArr.no_of_question}}</div>
+							    	</div>
+							    	<div class="attemp_four">
+							    		<div class="attttm">Wrong</div>
+							    		<div class="out_of">{{examArr.wrong}} out of {{examArr.attempted}}</div>
+							    	</div>
+						    	</div>
+						    	<!-- <div class="score_display myrank">
+						    		<span class="score_displayIcon"><i class="fa fa-hand-peace-o" style="color: #fff;"></i></span>
+						    		<h2>{{examArr.getSingleRank.serial_number }}</h2>
+						    		<p>My Rank</p>
+						    	</div> -->
+					    	</div>
+					</div>
+					<!-- overall result -->
+					<div class="tab-pane" id="overall">
+			          		<div class="score_displaysOutter">
+						    	<div class="score_display score">
+						    		<span class="score_displayIcon"><i class="fa fa-star-o" style="color: #fff;"></i></span>
+						    		<h2>{{totalscore}}/{{exam_mark_total}}</h2>
+						    		<p>Score</p>
+						    	</div>
+						    	<div class="score_display accuracy">
+						    		<span class="score_displayIcon"><i class="fa fa-thumbs-o-up" style="color: #fff;"></i></span>
+						    		<h2>{{examArr.correct / examArr.attempted * 100 | number: 2 }} %</h2>
+						    		<p>Accuracy</p>
+						    	</div>
+						    	<div class="score_display percentage">
+						    		<span class="score_displayIcon"> <i class="fa fa-trophy" style="color: #fff;"></i></span>
+						    		<h2>{{totalscore / exam_mark_total * 100  | number: 2 }} %</h2>
+						    		<p>Percentage</p>
+						    	</div>
+						    	<div class="score_display myrank">
+						    		<span class="score_displayIcon"><i class="fa fa-hand-peace-o" style="color: #fff;"></i></span>
+						    		<h2>{{examArr.getSingleRank.serial_number }}</h2>
+						    		<p>My Rank</p>
+						    	</div>
+					    	</div>
+					    	<div class="full_width_table" style="padding-top: 5%">
+						    		<table class="dashboard_tab category_list_tab score_tab">
+						        		<tr>
+						        			
+						        			<td align="left" width="15%">Sr.No</td>
+						        			<td align="left" width="20%">My Answer</td>
+						        			<td align="left" width="20%">Right Answer</td>
+						        			<td align="left" width="10%">Result</td>
+						        			<td align="left" width="5%">Time (Sec)</td>
+						        			<td align="left" width="7%">Less Attempt Time (Sec.)</td>
+						        			<td align="left" width="8%">Average Attempt Time (Sec.)</td>
+						        			<td align="right" width="15%">&nbsp;</td>
+						        		</tr>
+						        		<tr data-ng-repeat="ques in examArr.ques.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+						        			
+						        			<td>{{($index + 1) + ((currentPage-1) * 10)}}.</td>
+						        			<td>
+						        			<span ng-if="ques.ques_option_id != null"><p ng-bind-html="ques.myopttext | to_trusted"></p>
+						        		<!--	<img ng-if="ques.optimgpath != null" src="{{ques.optimgpath}}" width="100px" heigth="100px"> -->
+						        			</span>
+						        			<span ng-if="ques.ques_option_id == null">N.A</span>
+						        			</td>
+						        			<td>
+						        			<span>
+						        				<p ng-bind-html="ques.corropttext | to_trusted"></p>
+						        		<!--	<img ng-if="ques.optimgpath1 != null" src="{{ques.optimgpath1}}" width="100px" heigth="100px">-->
+						        			</span>
+						        			</td>
+						        			<td>
+						        				<span ng-if="ques.ques_option_id == ques.correct_option_id">
+						        					<img src="images/green.png" style="height: 17px;width: 17px">
+						        				</span>
+						        				<span ng-if="ques.ques_option_id != ques.correct_option_id">
+						        					<img src="images/red.png" style="height: 17px;width: 17px">
+						        				</span>
+						        			</td>
+						        			<td>
+						        			<span ng-if="ques.time_taken !=null"> {{ques.time_taken}}</span>
+						        			<span ng-if="ques.time_taken ==null"> N.A</span>
+						        			</td>
+						        			<td>
+						        			<span ng-if="ques.lessattempttime !=null"> {{ques.lessattempttime}}</span>
+						        			<span ng-if="ques.lessattempttime ==null"> N.A</span>
+						        			</td>	
+						        			<td>
+						        			<span ng-if="ques.avgTime !=null"> {{ques.avgTime | number : 0}}</span>
+						        			<span ng-if="ques.avgTime ==null"> N.A</span>
+						        			</td>					        			
+						        			<td align="right">
+												 <a class="block_button_blue" href="javascript:;" ng-click="showQuesDet(ques.question_id,ques.ques_option_id)">
+								        		<i class="fa fa- fa-angle-double-right"></i>&nbsp;&nbsp;&nbsp;View					        						</a>
+						        			</td>
+						        		</tr>
+					        		
+					        		</table>
+							</div>
+							<pagination 
+								  ng-if="examArr.no_of_question != 0"
+							      ng-model="currentPage"
+							      total-items="examArr.no_of_question"
+							      ng-click="pageChange(currentPage)"
+							      max-size="maxSize" 
+							      class="pagination-sm"
+							      items-per-page="itemsPerPage" 
+							      boundary-links="true">
+							</pagination>
+					</div>
+					<!-- Ranking result -->
+					<div class="tab-pane" id="rank-wise">
+			          		<div class="score_displaysOutter">
+						    	<div class="score_display score">
+						    		<span class="score_displayIcon"><i class="fa fa-star-o" style="color: #fff;"></i></span>
+						    		<h2>{{totalscore}}/{{exam_mark_total}}</h2>
+						    		<p>Score</p>
+						    	</div>
+						    	<div class="score_display accuracy">
+						    		<span class="score_displayIcon"><i class="fa fa-thumbs-o-up" style="color: #fff;"></i></span>
+						    		<h2>{{examArr.correct / examArr.attempted * 100 | number: 2 }} %</h2>
+						    		<p>Accuracy</p>
+						    	</div>
+						    	<div class="score_display percentage">
+						    		<span class="score_displayIcon"> <i class="fa fa-trophy" style="color: #fff;"></i></span>
+						    		<h2>{{totalscore / exam_mark_total * 100  | number: 2 }} %</h2>
+						    		<p>Percentage</p>
+						    	</div>
+						    	<div class="score_display myrank">
+						    		<span class="score_displayIcon"><i class="fa fa-hand-peace-o" style="color: #fff;"></i></span>
+						    		<h2>{{examArr.getSingleRank.serial_number }}</h2>
+						    		<p>My Rank</p>
+						    	</div>
+					    	</div>
+					    	<div class="full_width_table" style="padding-top: 5%">
+						    		<table class="dashboard_tab category_list_tab score_tab">
+						        		<tr>
+						        			
+						        			<td align="left" width="10%">Rank</td>
+						        			<td align="left" width="15%">Roll No.</td>
+						        			<td align="left" width="20%">Student Name</td>
+						        			<td align="left" width="15%">Score</td>
+						        			<td align="left" width="15%">Attempt</td>
+						        			<td align="left" width="15%">Time (Min)</td>
+						        			
+						        		</tr>
+						        		<tr data-ng-repeat="ranks in examArr.getSchRank.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+						        			<td>{{ranks.serial_number}}</td>
+						        			<td>{{ranks.sr_stud_roll_no}}</td>
+						        			<td>{{ranks.studName}}</td>
+						        			<td>{{ranks.sr_total_score}}</td>
+						        			<td>{{ranks.sr_attempt_que}}</td>
+						        			<td>{{ranks.sr_total_time / 60 | number: 1}}</td>
+						        			
+						        			
+						        		</tr>
+					        		
+					        		</table>
+							</div>
+							<pagination 
+								  ng-if="examArr.no_of_question != 0"
+							      ng-model="currentPage"
+							      total-items="examArr.no_of_question"
+							      ng-click="pageChange(currentPage)"
+							      max-size="maxSize" 
+							      class="pagination-sm"
+							      items-per-page="itemsPerPage" 
+							      boundary-links="true">
+							</pagination>
+					</div>
+					<!-- question-wise result -->
+			        <div class="tab-pane" id="question-wise">
+			        <div class="row">
+			       	 <div class="col-md-8">
+				       <!--  <p ng-if="questionArr['questype'] != '0'"><strong class="paragraph_title">Paragraph : &nbsp;&nbsp;</strong><span class="" ng-bind-html="questionArr['paratext'] | to_trusted"></span></p> -->
+					      	<h4 class="test_question">					      		
+					      		<span class="specif_question">Q.</span> 
+					      		<span class="specif_question_title" ng-bind-html="questionArr['question'] | to_trusted"></span>
+					      	</h4>
+					      	<h4>Options </h4>
+					      	
+					      	<div class="specif_question_detail question_option_div" ng-repeat="option in questionArr['options']">
+					      	<b>{{ alphabet[$index] }}</b> &nbsp;&nbsp;&nbsp;&nbsp;
+					      	<p class="" ng-if="questionArr['optionid'] != option.optid && questionArr['myoptionid'] == option.optid"> <span class="question_option_span" ng-bind-html="option.option | to_trusted"></span></p>
+					      	<p class="" ng-if="questionArr['optionid'] == option.optid && questionArr['myoptionid'] != option.optid"><span class="question_option_span" ng-bind-html="option.option | to_trusted"></span></p>
+					      	<p class="" ng-if="questionArr['optionid'] == option.optid && questionArr['myoptionid'] == option.optid"> <span class="question_option_span" ng-bind-html="option.option | to_trusted"></span>
+					      	</p>
+					      	<p class="" ng-if="questionArr['optionid'] != option.optid && questionArr['myoptionid'] != option.optid"><span class="question_option_span" ng-bind-html="option.option | to_trusted"></span>
+					      	</p>
+					      	</div>
+					      	<h4 ng-if="(questionArr['expl'] != null && questionArr['expl'] != '') || questionArr['explimg'] != null" class="question_ans_line_height">Answer Explanation: 
+					      	</h4>
+					      	<span  ng-if="questionArr['expl'] != null" class="specif_question_detail"><p ng-bind-html="questionArr['expl'] | to_trusted"></p>
+					      	</span>
+			    		</div>
+					<div class="col-md-4">
+			        	<div class="align_left" ng-repeat="ques in examArr.ques" style="scroll">
+			        	
+	    					<button ng-if="ques.correct_option_id == ques.ques_option_id" ng-click="viewQuesDet(ques.question_id,ques.ques_option_id)" class="res_ques res_sucess">{{$index+1}}</button>
+	    					<button ng-if="ques.correct_option_id != ques.ques_option_id && ques.ques_option_id != null" ng-click="viewQuesDet(ques.question_id,ques.ques_option_id)" class="res_ques res_error">{{$index+1}}</button>
+	    					<button ng-if="ques.ques_option_id == null" ng-click="viewQuesDet(ques.question_id,ques.ques_option_id)" class="res_ques">{{$index+1}}</button>
+	    					&nbsp;&nbsp;
+    					</div>
+			        </div>
+			        </div>
+			        
+			        </div>
+				</div>						
+			</div>
+</div>
+	     
+</div>
+</div>
+<!------------------- Modal popups ------------------->
+<div id="questionDetail" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="preparation-page">
+        		<div class="modal-header m_student_modal">
+			        <button class="close" data-dismiss="modal">X</button>
+			        <h4 class="modal-title m_student_title test_title">Question Answer Specifications</h4>
+			    </div>
+			    
+			    <div class="modal-body">
+			    	
+			      	<h4 class="test_question">
+			      		<span class="specif_question">Q.</span> 
+			      		<!--<span class="specif_question_title">{{quesArr['question']}}</span>-->
+			      		<span class="specif_question_title"  ng-bind-html="quesArr['question'] | to_trusted"></span>
+			      		<!--<img ng-if="quesArr.imgpath != null" src="{{quesArr.imgpath}}" width="100px" heigth="100px">--> </p>
+			      	</h4>
+			      	<h4>Options </h4>
+			      	<div class="specif_question_detail question_option_div" ng-repeat="option in quesArr['options']">
+			      	<b>{{ alphabet[$index] }} </b>
+			      	<p ng-if="quesArr['optionid'] != option.optid && quesArr['myoptionid'] == option.optid"> <img src="images/red.png" style="height: 17px;width: 17px" class="question_preview_result_img"> <span class="question_option_span" ng-bind-html="option.option | to_trusted"></span>
+			      <!--	<img ng-if="option.imgpath != null" src="{{option.imgpath}}" width="100px" heigth="100px">--> </p>
+			      	<p ng-if="quesArr['optionid'] == option.optid && quesArr['myoptionid'] != option.optid"> <img src="images/green.png" style="height: 17px;width: 17px" class="question_preview_result_img"> <span class="question_option_span" ng-bind-html="option.option | to_trusted"></span>
+			      <!--	<img ng-if="option.imgpath != null" src="{{option.imgpath}}" width="100px" heigth="100px">--></p>
+			      	<p ng-if="quesArr['optionid'] == option.optid && quesArr['myoptionid'] == option.optid"> <img src="images/green.png" style="height: 17px;width: 17px" class="question_preview_result_img"> <span class="question_option_span" ng-bind-html="option.option | to_trusted"></span>
+			      <!--	<img ng-if="option.imgpath != null" src="{{option.imgpath}}" width="100px" heigth="100px">--></p>
+			      	<p ng-if="quesArr['optionid'] != option.optid && quesArr['myoptionid'] != option.optid"> <img src="images/round.gif" style="height: 15px;width: 15px" class="question_preview_result_img"> <span class="question_option_span" ng-bind-html="option.option | to_trusted"></span>
+			      <!--	<img ng-if="option.imgpath != null" src="{{option.imgpath}}" width="100px" heigth="100px">--></p>
+			      	</div>
+			      	<!--<h4>Your Ans: </h4>
+			      	<span class="specif_question_detail">{{quesArr['optiontext']}}</span>-->
+			      	<h4 ng-if="quesArr['expl'] != null && quesArr['expl'] != ''"class="question_ans_line_height">Answer Explanation: </h4>
+			      	<span ng-if="quesArr['expl'] != null" class="specif_question_detail" ng-bind-html="quesArr['expl'] | to_trusted"></span>
+			      	<!--<img ng-if="quesArr['explimg'] != null" src="{{quesArr['explimg']}}" width="100px" heigth="100px">-->
+		    	</div>
+        </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!--------------------- footer page ----------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

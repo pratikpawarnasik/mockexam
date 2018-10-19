@@ -1,0 +1,480 @@
+<!--------------------- header page ---------------------->
+<div data-ng-if="header_show == 1" data-ng-include="'views/header/_masterheader.html'"></div>
+
+<style>
+	.margin {
+		margin-bottom: 15px;
+	}
+	.img_style { position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;}
+	#imagepopupshow.modal{
+		z-index: 3000;
+	}
+	#add_new_question.modal{z-index: 2000 !important;}
+</style>
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidManageQuestionCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+	    <div class="row">
+		    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		    	Add Question Set
+		    </div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+	<div class="container">
+    <div class="row" ng-init="getQuestion()">
+	    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	    	<div class="full_width_table">
+	    	<div id="uploadmessage">{{uploadmessage}}</div>
+	    	<!--<h3 class="header_title">Add Question Set</h3>-->
+	    	<b>Upload Question Excel</b>
+	     	<div class="upload_block">
+	     		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-5">
+		        	<div class="vm_uploadfile">
+				    <a class='btn btn-primary' href='javascript:;'>
+				     Browse Excel
+				     <input type="file" id="myFile" ng-model="uplodDet.fname" file-model="myFile" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+				    </a>
+				    &nbsp;
+				   </div>
+			   </div>
+			   <div class="col-lg-7 col-md-6 col-sm-6 col-xs-7">
+			    	<span id="upload-file-info"></span>
+			     	<input type="button" ng-click="uploadQuestion(id)" value="Upload Questions" class="btn bt_submit no_margin vm_upload_question"/>
+			   </div>
+			   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				   <div class="table_action align_right mobile">
+				    <button ng-click="downloadexcel()"><i class="fa fa-download"></i>&nbsp;&nbsp;Download Excel Format</button>
+				   </div>
+			   </div>
+	        </div>
+	    	
+	    	<div id="getmessage">{{getmessage}}</div>
+	    		<table class="table_action">
+	        		<tr>
+	        			<td align="left">
+	        			<h3 class="header_title" ng-if="topicid != ''">Question for Chapter - <span class="text_strong">{{chaptername}} ({{totalQun}})</span></h3>
+	        			
+	        			</td>
+	        			<td align="right">
+	        			<!--   <input type="text" class="select_ctrl" placeholder="Question" ng-model="searchtext">
+				     	 <button type="button" ng-click="getQuestion()">Search</button>
+				     	   &nbsp;
+				     	   <button type="button" ng-click="reset()">Reset</button>
+				     	   &nbsp;
+	        				Show Record <select id="numPerPage" class="auto">
+	        				<option ng-value=5>5</option>
+	        				<option ng-value=10>10</option>
+	        				<option ng-value=20>20</option>
+	        				<option ng-value=30>30</option>
+	        				<option ng-value=50>50</option>
+	        				<option ng-value=100>100</option>
+	        				</select> --> &nbsp;&nbsp;
+	        				<button class="back_button" ng-click="doTheBack()">
+								<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+							</button>
+
+	        				<button ng-click="openModal(0)">
+		        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Question
+		        			</button>
+<!-- 		        			<button ng-click="openParaModal()">
+		        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add Paragraph Question
+		        			</button>
+		        			<button ng-click="getParaList()">
+		        				<i class="fa fa-eye"></i>&nbsp;&nbsp;Paragraph List
+		        			</button> -->
+		        					        			
+		        			<button class="remove_btn" ng-click="delSelectQuestion()">
+		        				<i class="fa fa-close"></i>&nbsp;&nbsp;Delete Selected
+		        			</button>
+		        			<!--<button class="remove_btn" ng-click="downloadexcel()">
+		        				<i class="fa fa-download"></i>&nbsp;&nbsp;Question Upload Formate
+		        			</button>-->
+		        		</td>
+	        		</tr>
+	        	</table>
+	    	
+	    		<table class="dashboard_tab question_list_tab">
+	        		<tr>
+	        			<td align="left" width="5%"><!-- <input type="checkbox" id="select_questions" ng-model="allselect" /> --></td>
+	        			<td align="left" width="5%">Sr. No.</td>
+	        			<td align="left" width="60%">Question Name</td>
+	        			<td align="left" width="10%">Question Type</td>
+	        			<td align="left" width="5%">Mark</td>
+	        			<td align="left" width="5%">Negative Mark</td>
+	        			<td align="right" width="20%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="question in questionArr">
+	        			<td>
+	        			<!-- ng-checked="selection.indexOf(fruitName) > -1"-->
+	        				<input 
+	        				class="categories" 
+	        				type="checkbox" 
+	        				name="selectedQuestion[]"
+	        				ng-model="delquestion.selected" 
+	        				value="{{question.id}}"
+	        				ng-click="toggleSelection(question.id)"
+	        				>	        				
+	        			</td>
+	        			<td>{{begin + $index+1}}</td>
+	        			<td><span ng-bind-html="question.text | to_trusted"></span></td>
+
+	        			<td>
+	        				<input 
+	        				class="categories" 
+	        				type="checkbox" 
+	        				name="selectedQuestionForStatus"
+	        				ng-checked = "question.is_final != '0'"
+	        				
+	        				ng-model="question.is_final"
+	        				ng-true-value="1" ng-false-value="0"
+	        				ng-click="clickFinalStatus(question.id,question.is_final)"
+	        				ng-disabled="question.is_final == 0 && qunStatus == 'hide'"
+	        				ng-enabled="checked"
+	        				>	        				
+	        				<span ng-if="question.is_final == '0'">Normal</span>
+	        				<span ng-if="question.is_final == '1'">Final</span>
+	        			</td>
+	        			<td>{{question.qun_mark}}</td>
+	        			<td>{{question.qun_neg_mark}}</td>
+	        			<td align="right">
+	        				  <!-- <a href="javascript:;" ng-click="showQuestionPreview(question.id)"><i class="fa fa-eye"></i></a> -->
+							  <a href="javascript:;" ng-click="editQuestion(question.id,0)"><i class="fa fa-pencil"></i></a>
+							  <a href="javascript:;" ng-click="deleteQuestion(question.id)"><i class="fa fa-remove"></i></a>
+	        			</td>
+	        		</tr>
+        		
+        		</table>
+        		<div id="tablemessage">{{tablemessage}}</div>        		
+			</div>
+
+			<pagination 
+				  ng-if="totalcount != 0"
+			      ng-model="currentPage"
+			      total-items="totalcount"
+			      ng-click="pageChange(currentPage)"
+			      max-size="maxSize" 
+			      class="pagination-sm"
+			      items-per-page="numPerPage" 
+			      boundary-links="true">
+			</pagination>
+			<span class="pull-right" ng-if="qunCount >='2'">Total final questions set are <b>{{qunCount}}</b>.</span>
+			<span class="pull-right" ng-if="qunCount =='1'">Total final questions set is <b>{{qunCount}}</b>.</span>
+			<span class="pull-right" ng-if="qunCount =='0'" style="color: red">Final exam is not created for this chapter.</span>
+
+
+	    </div>
+	     
+	</div>
+</div>
+</div>
+
+<!------------------modal- add course ---------------->
+<div id="add_new_question" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+     	<!--<div id="sub_question_modal"></div>-->
+        <div class="modal-content">
+        	<div class="modal-header m_student_modal">
+                <button ng-show="add" class="close" data-dismiss="modal"><img src=""  />X</button>
+                <button ng-show="edit" class="close" data-dismiss="modal"><img src=""  />X</button>
+               <h4 class="modal-title m_student_title form"> {{formname}} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+		     	<form angular-validator-submit="submitCreateQuestion()" class="question-form" id="questionForm" name="questionForm" novalidate angular-validator>	
+		     	<div id="message">{{message}}</div>
+		     		<label>New Question<span class="mandatory">*</span></label>
+		     		<textarea 
+			     		type="text" 
+			     		name="questiontext" 
+			     		id="questiontext" 
+			     		placeholder="Enter Question"
+			     		ng-model="questionDet.text" 
+					    class="dashboard_text margin" 
+			     		autocomplete="off"
+		     		>
+		     	
+			     		</textarea>
+		     		<br /><br />
+		     		
+		     		<div class="row">
+
+			     		<div class="col-md-4">
+			     		<label>Question Mark <span class="mandatory">*</span></label>
+			     		<input 
+			                  type="text" 
+			                  placeholder="  Question Mark" 
+			                  class="input_control"
+			                  name="qunMark" 
+			                  data-ng-model="questionDet.qunMark" 
+			                  ng-pattern="/^[0-9]/"
+			                  invalid-message="'Please enter mark.'"
+			                  required-message="'Please enter mark.'"
+			                  validate-on="dirty"
+			                 	maxlength="2"
+			                  required
+			                  autocomplete="off"
+			                  />
+			     		<!-- <select 
+				     		class="dashboard_text vm_mastexam_input" 
+				     		style="width:140px"
+				     		name="negativewt" 
+				     		data-ng-model="questionDet.qunMark"
+				     		required-message="'Please select question marks.'"
+				     		required
+				     		>
+			     			<option value="">Select Question Mark</option>
+			     			<option value="1">1</option>
+			     			<option value="2">2</option>
+			     			<option value="3">3</option>
+			     			<option value="4">4</option>
+			     			<option value="5">5</option>
+			     			
+			     		</select> -->
+			     		</div>
+			     		<div class="col-md-4">
+			     		<label>Negative Mark </label>
+			     		<input 
+			                  type="text" 
+			                  placeholder=" Question Negative Mark" 
+			                  class="input_control"
+			                  name="Negative Mark" 
+			                  data-ng-model="questionDet.qunNegMark" 
+			                  ng-pattern="/^[0-9]/"
+			                  invalid-message="'Please enter -ve mark.'"
+			                  required-message="'Please enter -ve mark.'"
+			                 	maxlength="2"
+			                 	validate-on="dirty"
+			                  required
+			                  autocomplete="off"
+			                  />
+			     		<!-- <select 
+				     		class="dashboard_text vm_mastexam_input" 
+				     		style="width:140px"
+				     		name="negativewt" 
+				     		data-ng-model="questionDet.qunNegMark"
+				     		required-message="'Please select question -ve marks.'"
+				     		
+				     		>
+			     			<option value="">Select Negative Mark</option>
+			     			<option value="0">0</option>
+			     			<option value="1">1</option>
+			     			<option value="2">2</option>
+			     			<option value="3">3</option>
+			     			<option value="4">4</option>
+			     			<option value="5">5</option>
+			     			
+			     		</select> -->
+			     		</div>
+			     		<div class="col-md-4"></div>
+			     		<!-- <div class="col-md-12">
+				     		<label>Do you want question option in sequence? </label>&nbsp;
+				     		<input 
+						     		type="radio" 
+						            ng-model="questionDet.sequence" 
+						            name="sequence" 
+						            ng-value="1"
+						            checked="checked"
+					            /> <span>No</span>&nbsp; 
+					        <input 
+						     		type="radio" 
+						            ng-model="questionDet.sequence" 
+						            name="sequence" 
+						            ng-value="0"
+						            checked="checked"
+						            ng-disabled="x.status == 'disabled'"
+					            />&nbsp;<span>Yes</span> 
+					           
+			     		</div> -->
+		     		<div class="col-md-12" id="finalQuestionStatus">
+		     		<div  ></div>
+		     		<div class="col-md-12" id="finalQuestionStatus">
+			     		<label>Set to final Exam? </label>&nbsp;
+
+			     		<input 
+			     		type="checkbox"
+			     		name="is_final" 
+			     		ng-model="questionDet.is_final"
+			     		ng-disabled="qunStatus == 'hide'"
+		     			/>
+
+		     		</div>
+		     		</div>
+		     		<div class="row" id="upload_options">
+		     		<div class="col-md-12">
+			     		<div class="col-md-12 col-sm-12 col-xs-12" id="append_options">
+			     		
+			     		<div class="margin">
+			     		<label>Enter Options</label>
+			     		</div>
+			     		<div class="margin">
+			     			<div class="col-md-1">
+			     				<input 
+						     		type="radio" 
+						            ng-model="questionDet.correctid" 
+						            name="correctid" 
+						            ng-value="1"
+						            checked="checked"
+					            />
+			     			</div>
+				     		<div class="col-md-11">
+					     		 Option 1
+					     		
+					     		<textarea 
+						     		type="text" 
+						     		name="option1" 
+						     		id="option1" 
+						     		placeholder="Option 1"
+						     		ng-model="optionDet[0]" 
+								    class="dashboard_text mandatory margin" 
+						     		autocomplete="off"
+						     		rows="10"
+				     				>			     		
+					     		</textarea> 
+					     		
+					     	</div>
+					     	<!-- <div ng-show="edit" class="col-md-1" id="viewoptimg1">
+			     			</div> -->
+					     	
+			     		</div>
+			     		<div class="margin">
+			     			<div class="col-md-1">
+			     				<input 
+						     		type="radio" 
+						            ng-model="questionDet.correctid" 
+						            name="correctid" 
+						            ng-value="2"
+						            checked="checked"
+					            />
+			     			</div>
+				     		<div class="col-md-11">
+					     		 Option 2	 
+					     		
+					     		<textarea 
+						     		type="text" 
+						     		name="option2" 
+						     		id="option2" 
+						     		placeholder="Option 2"
+						     		ng-model="optionDet[1]"  
+								    class="dashboard_text mandatory margin" 
+						     		autocomplete="off"
+						     		rows="10"
+				     				>			     		
+					     		</textarea> 
+					     		
+					     	</div>
+					     	<!-- <div ng-show="edit" class="col-md-1" id="viewoptimg1">
+			     			</div> -->
+			     		</div>
+			    
+			     		<div class="margin">
+			     			<div class="col-md-1">
+			     				<input 
+						     		type="radio" 
+						            ng-model="questionDet.correctid" 
+						            name="correctid" 
+						            ng-value="3"
+						            checked="checked"
+					            />
+			     			</div>
+				     		<div class="col-md-11">
+					     		 Option 3	
+					     		
+					     		<textarea 
+						     		type="text" 
+						     		name="option3" 
+						     		id="option3" 
+						     		placeholder="Option 3"
+						     		ng-model="optionDet[2]"  
+								    class="dashboard_text mandatory margin" 
+						     		autocomplete="off"
+				     				>		     		
+					     		</textarea> 
+					     		
+					     	</div>
+					     	<!-- <div ng-show="edit" class="col-md-1" id="viewoptimg1">
+			     			</div> -->
+			     		</div>
+			     	
+			     		<div class="margin">
+			     			<div class="col-md-1">
+			     				<input 
+						     		type="radio" 
+						            ng-model="questionDet.correctid" 
+						            name="correctid" 
+						            ng-value="4"
+						            checked="checked"
+					            />
+			     			</div>
+				     		<div class="col-md-11">
+					     		 Option 4	&nbsp; 
+					     		
+					     		<textarea 
+						     		type="text" 
+						     		name="option4" 
+						     		id="option4" 
+						     		placeholder="Option 4"
+						     		ng-model="optionDet[3]"  
+								    class="dashboard_text mandatory margin" 
+						     		autocomplete="off"
+				     				>					
+					     		</textarea> 
+					     		
+					     	</div>
+					     	<!-- <div ng-show="edit" class="col-md-1" id="viewoptimg1">
+			     			</div> -->
+			     		</div>
+			     	  		
+			     		</div>
+			     		<button class="dashboard_btn add_questionremove" ng-if="count > 4" type="button" data-ng-click="removeoption(count)">Remove</button>
+		     			<button class="dashboard_btn add_questionremove" type="button" addbuttons>Add Option</button>
+			     		</div>
+		     		
+		     		</div>
+		     		
+		     		<div class="row">
+		     			<div class="col-md-12 col-sm-12 col-xs-12">
+		     				<div class="col-md-12 col-lg-12 col-sm-12">
+		     		        <label>Answer Explanation</label>
+		     			<div ng-show="edit" id="editExplImgDiv">
+			     		
+			     			
+			     		</div>
+			     		</div>
+						</div>
+		     			<div class="col-md-12 col-sm-12 col-xs-12">
+		     				<div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+
+				     		
+				     		<textarea 
+				     		type="text" 
+				     		id="explanation" 
+				     		name="explanation" 
+				     		placeholder="Enter Explanation"
+				     		class="dashboard_text textarea margin"
+				     		ng-model="explanation"
+
+					     	autocomplete="off"
+				     		>
+			     		</textarea><br />
+			     		</div>
+			     	</div>
+		     		</div>
+		     		<input ng-show="edit" type="submit" name="" value="Save Question" class="dashboard_btn add_questionremove" />
+		     		<input ng-show="edit" type="button" name="" value="Close" ng-click="clickclose()" class="dashboard_btn add_questionremove" />
+		     		<input ng-show="add" type="submit" name="" value="Add Question" class="dashboard_btn" />
+		     	</form>
+	     	</div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+</div>
+
+<!--------------------- footer page ---------------------->
+<div data-ng-if="header_show == 1" data-ng-include="'views/footer/_masterfooter.html'"></div>  
+<div data-ng-if="header_show == 4" data-ng-include="'views/footer/_branchfooter.html'"></div>  

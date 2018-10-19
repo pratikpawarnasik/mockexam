@@ -1,0 +1,124 @@
+<!--------------------- header page ---------------------->
+<div ng-if="header_show == 1" data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidManageFeedbackCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Student Feedback
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" ng-init="getFeedback()">
+	    	<div id="getmessage">{{getmessage}}</div>
+	    		<table class="dashboard_tab feedback_list_tab">
+	        		<tr>
+	        			<td align="center" width="10%">Sr.No</td>
+	        			<td align="center" width="15%">Student Name & Contact</td>
+	        			
+	        			<td align="center" width="60%">Feedback Message</td>
+	        			<td align="center" width="15%">Submit Date</td>
+	        			
+	        		</tr>
+	        		<tr data-ng-repeat="feedback in feedbackArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	        		
+	        			<td>{{($index + 1) + ((currentPage-1) * 10)}}.</td>
+	        			<td>{{feedback.studname}} ({{feedback.contact}})</td>
+	        			<td>{{feedback.concern}}</td>
+	        			<td>{{feedback.fbsubmitdate | date:'dd-MM-yyyy'}}</td>
+	        			
+	        		</tr>
+        		
+        		</table>
+        		<pagination 
+								  ng-if="feedbackArr.length != 0"
+							      ng-model="currentPage"
+							      total-items="feedbackArr.length"
+							      ng-click="pageChange(currentPage)"
+							      max-size="maxSize" 
+							      class="pagination-sm"
+							      items-per-page="itemsPerPage" 
+							      boundary-links="true">
+							</pagination>
+        		<div id="tablemessage">{{tablemessage}}</div>
+	    </div>
+	     
+	</div>
+</div>
+
+<!------------------modal- add feedback ---------------->
+<div id="add_new_feedback" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header">
+                <button class="close" data-dismiss="modal">X</button>
+               <h4 class="modal-title form"> {{formname}}(Response) </h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+		     	<form angular-validator-submit="submitCreateFeedback()" class="feedback-form" id="feedbackForm" name="feedbackForm" novalidate angular-validator>	
+		     	<div id="message">{{message}}</div>
+		     		<label>Response Text<span class="mandatory">*</span></label>
+		     		<textarea 
+			     		type="text" 
+			     		name="cname" 
+			     		maxlength="500"
+			     		placeholder="Response Text"
+			     		ng-model="responceDet.resptext" 
+					    required-message="'Please enter responce.'"
+			     		class="dashboard_text" 
+			     		validate-on="dirty"
+			     		required
+			     		autocomplete="off"
+		     		>
+		     		</textarea>
+		     		<br>
+		     		<input type="submit" name="" value="Add Feedback" class="dashboard_btn" />
+		     	</form>
+	     	</div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+<!------------------modal- view feedback ---------------->
+<div id="view_feedback" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header">
+                <button class="close" data-dismiss="modal">X</button>
+               <h4 class="modal-title form"> {{formname}} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                <b>{{ feedbackDet.concerntext }} ( {{ feedbackDet.coursename }} )</b>
+					<div class="align_right">
+						{{feedbackDet.feedbackdate | date:'dd-MM-yyyy'}}
+					</div>
+		     		<br>		     			     	
+		     		<label>Student Feedback :</label>		     				     		
+		     		<div class="dashboard_text" readonly> {{ feedbackDet.feedback }} </div>
+				<div ng-if="feedbackDet.reply != null && feedbackDet.reply != ''">
+			     		<label>Admin Reply :</label>
+			     		<div class="dashboard_text" readonly> {{ feedbackDet.reply }} </div>
+		     		</div>
+	     	</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!--------------------- footer page ----------------------->
+<div ng-if="header_show == 1" data-ng-include="'views/footer/_masterfooter.html'"></div>  
+<div ng-if="header_show == 2" data-ng-include="'views/footer/_institutefooter.html'"></div>  
+<div ng-if="header_show == 4" data-ng-include="'views/footer/_branchfooter.html'"></div>  

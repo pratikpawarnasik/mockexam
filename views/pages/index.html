@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>403 Forbidden</title>
+</head>
+<body>
+
+<p>Directory access is forbidden.</p>
+
+</body>
+</html>
+
+<!--
+$state.reload();
+
+$window.location.href = $rootScope.base_url+'masterdashboard';
+
+
+//get
+$http({
+		              method : 'GET',
+		              url : url_getcourse,
+		              data: $.param($scope.param),
+		              headers : {'authcode': $scope.authcode}
+		           }).success(function(response){
+		            	if(response.status == 200)
+		            	{
+		            		$scope.categoryArr = response.category;
+						}
+						else{
+							$("#message").addClass('has_error')
+							$scope.message = response.message;
+						}
+		           }).error(function(error){
+		           		$("#message").addClass('has_error')
+						$scope.message = response.error;
+		           });
+		           
+//post
+$http({
+		              method : 'POST',
+		              url : url_addcourse,
+		              data: $.param($scope.courseDet) ,
+		              headers : {'Content-Type': 'application/x-www-form-urlencoded','authcode': $scope.authcode}
+		           }).success(function(response){
+		            	
+		            	if(response.status == 200)
+		            	{
+		            		$(".course-form")[0].reset();
+							$("#message").addClass('has_success')
+							$scope.message = "Course added successfully.";
+						}
+						else{
+							$("#message").addClass('has_error')
+							$scope.message = response.message;
+						}
+		            	
+		           }).error(function(error){
+		           		$("#message").addClass('has_error')
+						$scope.message = response.error;
+		           });
+-->

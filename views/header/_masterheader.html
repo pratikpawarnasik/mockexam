@@ -1,0 +1,111 @@
+<div data-ng-controller="vidMasterHeaderCtrl">
+
+<!------------------- topbar ---------------->
+<div class="dashboard_wrapper">
+<div id="mySpinner" ng-show="loading"></div>
+
+<!------------------- header ---------------->
+
+<header data-ng-if='authcode !== undefined && portal == "main"' class="dashboard_header home_header vm_student_dashboard">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<nav class="navbar-default desktop dashboard_nav">
+				  <div class="container-fluid">
+				  	<button type="button" class="navbar-toggle desktop" onclick="$('.aside').asidebar('open')">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+				    <a class="dashboard" data-ui-sref="root.dashboard"><img class="logo login_user" src="images/logo.png" /></a>
+				    
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown dashboard_header_profile">
+						  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="images/user11.png" class="dashboard_headerimg">&nbsp;Welcome, Admin <span class="caret"></span></a>
+						  <ul class="dropdown-menu">
+						    <!--<li><a href="javascript:;" ui-sref="root.studprofile">My Profile</a></li>
+						    <li><a href="javascript:;" ui-sref="root.studcourse">My Account</a></li>
+						    <li role="separator" class="divider"></li>-->
+						    <li><a href="javascript:;" ui-sref="root.changepasswordmaster">Change Password</a></li>
+						  </ul>
+						</li>
+						<li class="dashboard_logout"><a href="javascript:;"  data-ng-click="logout()">Logout</a></li>
+					</ul>
+				  </div>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<div class="aside">
+	      <div class="aside-header">
+	        <div class="menu_username"><img src="images/man.png" class="center-block"><P> Admin</P> </div>
+	        <div class="menu_userlogout"><a href="javascript:;"  data-ng-click="logout()">Logout &nbsp;<i class="fa fa-sign-out"></i></a></div>
+	        <div style="clear: both;"></div>
+	        <p>{{email}} &nbsp;&nbsp;&nbsp;<!--<span class="text-right" ui-sref="root.studprofile"><i class="fa fa-pencil"></i></span>--></p>
+	        
+	      </div>
+	      <div class="aside-contents">
+	        <ul class="aside_links">	        
+	        			<li><a href="javascript:;" ui-sref='root.masterdashboard'><i class="fa fa-dashboard"></i> Dashboard</a></li>
+	        			<li><a href="javascript:;" ui-sref='root.masterstudents'><i class="fa fa-user-o"></i> Manage Students</a></li>
+                        <li><a href="javascript:;" ui-sref='root.mastercategory'> <i class="fa fa-bookmark"></i> Manage Category</a></li>
+                        <li><a href="javascript:;" ui-sref='root.mastercourse'><i class="fa fa-list"></i>  Manage Course</a></li>
+                        <li><a href="javascript:;" ui-sref='root.mastersubjectgroup'><i class="fa fa-bars"></i>Manage Subject Group</a></li>
+                        <li><a href="javascript:;" ui-sref='root.masterexam'><i class="fa fa-calendar-plus-o"></i> Manage Final Exam</a></li>
+                        <li><a href="javascript:;" ui-sref='root.allexamsadmin'><i class="fa fa-book"></i> All Final Exams</a></li>
+                        <li><a href="javascript:;" ui-sref='root.studentranks'><i class="fa fa-trophy"></i> Student Ranks</a></li>
+                        <li><a href="javascript:;" ui-sref='root.managenotes'> <i class="fa fa-bookmark"></i> Manage Study Material</a></li>
+                        <li><a href="javascript:;" ui-sref='root.masterdoubts'><i class="fa fa-pencil"></i> Students Raise Questions</a></li>
+                        <li><a href="javascript:;" ui-sref='root.feedback'><i class="fa fa-commenting-o"></i> Manage Student Feedback </a></li>
+                        <li><a href="javascript:;" ui-sref='root.paymentmanage'><i class="fa fa-credit-card-alt"></i> Payment History</a></li>
+                        <li><a href="javascript:;" ui-sref='root.testimonial'><i class="fa fa-sticky-note"></i> Manage Testimonials </a></li>
+                        <li><a href="javascript:;" ui-sref='root.subscribe'><i class="fa  fa-check-circle"></i> Subscribe List</a></li>
+                        <li><a href="javascript:;" ui-sref='root.changepasswordmaster'><i class="fa fa-lock"></i> Change Password</a></li>	 	
+			</ul>
+	      </div>
+	    </div>
+	    <div class="ind_notifications">
+		  <div class="aside-contents">
+		  	<h4>Indivisual Notifications</h4>
+	        <ul class="aside_links">
+				<li data-ng-repeat="notification in indivisualNotiArr" ng-if="$index <= 4">
+				        <h4 ng-if="notification.is_read == '0'" ng-class="{unread : (notification.is_read == '0')}" ng-click="notiRead(notification.notification_id,'indivisual',null)" style="cursor: pointer;">
+					        <p ng-bind-html="notification.notification"></p>
+				        </h4>
+				        <h4 ng-if="notification.is_read == '1'" ng-class="{unread : (notification.is_read == '0')}">
+					        <p ng-bind-html="notification.notification"></p>
+				        </h4>
+				    </li>
+				    <li ng-if="indivisualNotiArr.length >= 6" style="text-align: center"><a ui-sref="root.notifications({notitype:'indivisual'})">View All</a></li>
+			</ul>
+	      </div>
+	    </div>
+	    <div class="notifications">
+		  <div class="aside-contents">
+		  	<h4>Notifications</h4>
+	        <ul class="aside_links">
+				<li data-ng-repeat="notification in normalNotiArr" ng-if="$index <= 4">
+				        <span ng-if="notification.url == null && notification.userid == null" ng-class="{unread : (notification.userid == null)}" ng-click="notiRead(notification.notification_id,'normal',notification.url)" style="cursor: pointer;">
+					        <p ng-bind-html="notification.notification"></p>
+				        </span>
+				        <span ng-if="notification.url == null && notification.userid != null" ng-class="{unread : (notification.userid == null)}">
+					        <p ng-bind-html="notification.notification"></p>
+				        </span>
+				        
+				        <span ng-if="notification.url != null" ng-class="{unread : (notification.userid == null)}">
+					        <p ng-bind-html="notification.notification"></p>
+					        <a href="javascript:;" ng-if="notification.userid == null" ng-click="notiRead(notification.notification_id,'normal',notification.url)">Click Here</a>
+					        <a href="{{base_url}}{{notification.url}}" ng-if="notification.userid != null">Click Here</a>
+				        </span>
+				        
+				    </li>
+				    <li ng-if="normalNotiArr.length >= 6" style="text-align: center"><a ui-sref="root.notifications({notitype:'normal'})">View All</a></li>
+			</ul>
+	      </div>
+	    </div>
+	    <div class="aside-backdrop"></div>
+	    
+</header>
+
+</div>
+</div>

@@ -1,0 +1,202 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidpaymentManageCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Payment History
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+	<div class="container">
+		<div class="row">
+			<div>
+				<div class="">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+			    		
+			    	</div>
+				</div>
+				<div class="vm_payment">
+					<ul>
+						<li class="vm_pytm_border">
+						<input 
+		        				class="categories" 
+		        				type="checkbox" 
+		        				name="adminCollect"
+		        				ng-model="adminCollect" 
+		        				value="true"
+		        				ng-click="getpaymentHistory()"
+		        				>
+		        				<label>Admin Collection</label>	
+		        			</li>
+		        			<li class="vm_pytm_border">
+				        		<input 
+				        				class="categories" 
+				        				type="checkbox" 
+				        				name="paytmCollect"
+				        				ng-model="paytmCollect" 
+				        				value="true"
+				        				ng-click="getpaymentHistory()"
+				        				>	
+				        				<label>Paytm Collection</label>  
+		        			</li>
+		        			<li class="vm_pytm_border">
+							<input 
+		        				class="categories" 
+		        				type="checkbox" 
+		        				name="onlineStud"
+		        				ng-model="onlineStud" 
+		        				value="true"
+		        				ng-click="getpaymentHistory()"
+		        				>
+		        				<label>Online</label>	
+		        			</li>
+		        			<li class="vm_pytm_border">
+							<input 
+		        				class="categories" 
+		        				type="checkbox" 
+		        				name="OfflineStud"
+		        				ng-model="OfflineStud" 
+		        				value="true"
+		        				ng-click="getpaymentHistory()"
+		        				>
+		        				<label>Offline</label>	
+		        			</li>
+		        			<li>
+		        		   
+				    		<select id=""
+					     		class="select_ctrl auto"
+					     		name="searchby" 
+					     		data-ng-model="searchby"
+					     		ng-change="reset();"
+					     		>
+
+						<option value="">Search by </option>
+						<option ng-value='Name'>Name</option>
+						<option ng-value='Date'>Date</option>
+						<!-- <option ng-value='adminCollect'>Admin Collection</option>
+						<option ng-value='paytmCollect'>Paytm Collection</option> -->
+						
+						</select>
+					</li>
+					
+	    					<input 
+	    			     		type="text" 
+	    			     		name="startdate"
+	                            id="startdatepayment"
+	                            ng-blur="adddate('startdate')"
+	    			     		placeholder="Start date"
+	    			     		ng-model="startdate"
+	    			     		class="select_ctrl" 
+	    			     		 ng-show="searchby== 'Date'"
+	    		     		/>
+	    		     
+	    		     		&nbsp;
+	    		     		<input 
+	    			     		type="text" 
+	    			     		name="enddate"
+	                            id="enddate"
+	                            ng-blur="adddate('enddate')"
+	    			     		placeholder="End date"
+	    			     		ng-model="enddate"
+	    			     		class="select_ctrl" 
+	    			     		 ng-show="searchby== 'Date'"
+	    		     		/>
+	    		     	
+	    		     	
+	    		     		&nbsp;<input type="text" class="select_ctrl" placeholder="Name" ng-model="searchtext" ng-show="searchby== 'Name'">
+	    		     	
+	    		     	<li>
+					     	   <button type="button" class="btn btn-primary" ng-click="getpaymentHistory()">Search</button>
+					    </li>
+					    <li>
+					     	   <button type="button" class="btn remove_btn" ng-click="reset()">Reset</button>
+					     	</li>
+					     </ul>
+	    		</div>
+	    	</div><br>
+				<div id="uploadmessage">{{uploadmessage}}</div>
+		    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-init="getpaymentHistory()">
+		    	<div id="getmessage">{{getmessage}}</div>
+		    		<div class="row table_action">
+	    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+	    						<button class="back_button" ng-click="doTheBack()">
+									<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+								</button>
+			        			 <button class="excel_btn" ng-click="downloadStudentExcel()"  data-toggle="tooltip" title data-original-title="Download Excel">
+			        				<i class="fa fa-file-excel-o"></i>
+			        			</button>
+			        			<!--<button class="pdf_btn" ng-click="downloadStudentPdf()" data-toggle="tooltip" title data-original-title="Download Pdf">
+			        				<i class="fa fa-file-pdf-o"></i>
+			        			</button> -->
+		        		</div>
+		        	</div>
+		    
+		    		<table class="dashboard_tab category_list_tab">
+		        		<tr>
+		        			<td align="left" width="5%">Sr.No.</td>
+		        			<td align="left" width="15%">Name</td>
+		        			<td align="left" width="25%">Email(Mobile No.)</td>
+		        			<td align="left" width="15%">Exam Name </td>
+		        			<td align="left" width="10%">Exam Mode </td>
+		        			<td align="left" width="10%">Buy Date</td>
+		        			<td align="left" width="13%">Payment Mode</td>
+		        			<td align="" width="7%">Amount(Rs.)</td>
+		        		</tr>
+		        		<tr data-ng-repeat="studlist in NewStudList.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+		        			<td>
+		        			{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.
+		        			</td>
+		        			<td>{{studlist.stud_name}}</td>
+		        			<td>{{studlist.stud_email}} ({{studlist.stud_contact}})</td>
+		        			<td>{{studlist.exam_name}} ({{studlist.exam_date}})</td>
+		        			<td align="right">
+							  <span ng-if="studlist.exam_mode == '0'">Online</span>
+	        				<span ng-if="studlist.exam_mode == '1'">Offline</span>
+		        			<td>{{studlist.submitdate  |  date :  "dd.MM.y"}}</td>
+		        			<td>{{studlist.payment_type}}</td>
+		        			<td>{{studlist.fees}}</td>
+		        		</tr>
+		        		<tr>
+		        			<td align="left" width="5%" bgcolor="#ccccff"></td>
+		        			<td align="left" width="15%" bgcolor="#ccccff"></td>
+		        			<td align="left" width="25%" bgcolor="#ccccff"></td>
+		        			<td align="left" width="15%" bgcolor="#ccccff">  </td>
+		        			<td align="left" width="10%" bgcolor="#ccccff"> </td>
+		        			<td align="left" width="10%" bgcolor="#ccccff"> </td>
+		        			<td align="left" width="13%"  bgcolor="#ccccff"><b>Total Amount(Rs.)</b></td>
+		        			<td align="" width="7%" bgcolor="#ccccff"><b>{{TotalAmt}}</b></td>
+		        		</tr>
+	        		
+	        		</table>
+	        		<pagination 
+					  ng-if="NewStudList.length != 0"
+				      ng-model="currentPage"
+				      total-items="NewStudList.length"
+				      ng-click="pageChange(currentPage)"
+				      max-size="maxSize" 
+				      class="pagination-sm"
+				      items-per-page="itemsPerPage" 
+				      boundary-links="true">
+					</pagination>
+	        		<div id="tablemessage">{{tablemessage}}</div>
+		    </div>
+		     
+		</div>
+	</div>
+</div>
+
+
+
+</div> 
+
+
+</div>
+
+<!--------------------- footer page ----------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

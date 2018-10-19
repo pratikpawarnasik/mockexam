@@ -1,0 +1,56 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+
+<div data-ng-controller="vidAllExamCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Available Exams
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+    <div class="row" ng-init="getExam_data()">
+    	<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+	    	<div id="getmessage">{{getmessage}}</div>
+	    		<div class="row table_action">
+    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+    					
+		        		<button class="back_button" ng-click="doTheBack()">
+							<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+						</button>
+    				</div>
+    			</div>
+    			<div class="col-lg-3 col-md-3" data-ng-repeat="e_data in examdataArr">
+    					<div class="vm_exam_box">
+    					<div class="vmexam_heading">
+    						<img src="images/course_1.png"><h4>{{e_data.exam_name}} <span class="pull-right">    Code-{{e_data.id}}</span></h4>
+    						<h5>{{e_data.course_name}} <b> <span class="pull-right">{{e_data.duration}} Minutes</span></b></h5>
+    					</div>
+    					<div class="vmexam_desc">
+    						<div class="vmexamtime"><strong>Exam Date</strong> &nbsp;<p class="groupText dateSize"><b >{{e_data.exam_date |  date :  "dd.MM.y"}}</b></p></div><br>
+    						
+    						<div  class="groupText"><b>{{e_data.group_name}}</b></div>
+    						<div class="vmexamtime" ng-if="e_data.exam_mode == '0'" style="color:green;"><b>ONLINE</b></div>
+    						<div class="vmexamtime" ng-if="e_data.exam_mode == '1'" style="color:orange;"><b>OFFLINE</b></div>
+    						<div class="vmexamtime" ng-if="e_data.exam_mode == '2'" style="color:#0099cc;"><b>ONLINE/OFFLINE</b></div>
+
+    					</div>
+    					<div class="vmallexambtn">
+    						<div class="vm_examprice"><i class="fa fa-inr" aria-hidden="true"></i> {{e_data.fee}}</div>
+						<a class="view_link vm_link_btn" href="javascript:;" ng-click="callLogin();" data-ng-if='authcode == undefined && portal == "main"'>
+		        			<i class="fa fa-shopping-cart">&nbsp;</i>Buy Exam</a>
+		        		<a class="view_link vm_link_btn" href="javascript:;" ui-sref="root.welcomepurchase({purmodal:111})" ng-show='authcode !== undefined && portal == "main"'>
+		        			<i class="fa fa-shopping-cart">&nbsp;</i>Buy Exam</a>
+		        		
+    					</div>
+    				</div>
+    			</div>
+	    		
+		</div>
+	</div>
+</div>
+</div>
+
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>

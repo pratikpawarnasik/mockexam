@@ -1,0 +1,143 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_masterheader.html'"></div>
+
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidManageSubjectGroupCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Subject Group
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid wrapper">
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" ng-init="getSubjectGrouplist()">
+	    	<div id="getmessage">{{getmessage}}</div>
+	    	
+	    		<div class="row table_action">
+    				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+    					<button class="back_button" ng-click="doTheBack()">
+								<i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+							</button>
+    					<button ng-click="openModal()">
+		        				<i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Subject Group
+		        			</button>
+    				</div>
+    			</div>
+	    		<table class="dashboard_tab course_list_tab">
+	        		<tr>
+	        			<td align="left" width="5%">Sr.No</td>
+	        			<td align="left" width="35%">Subject Group Name</td>
+	        			<td align="left" width="25%">Course Name</td>
+	        			<td align="left" width="25%">Subject Name</td>
+	        			<td align="right" width="35%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="subjectgroup in subjectGroupArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	        			<td>{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.</td>
+
+	        			<td>{{subjectgroup.name}}</td>
+	        			<td>{{subjectgroup.course}}</td>
+	        			<td>{{subjectgroup.subject_name}}</td>
+	        			<td align="right">  
+						 <a href="javascript:;" title="Update Subject Group" ng-click="editSubjectGroup(subjectgroup.id)"><i class="fa fa-pencil"></i></a>
+						 <a href="javascript:;" title="Delete Subject Group" ng-click="deleteSubjectGroup(subjectgroup.id)"><i class="fa fa-close"></i></a>	
+						</td>
+	        		</tr>
+        		
+        		</table>
+        		<pagination 
+				  ng-if="subjectGroupArr.length != 0"
+			      ng-model="currentPage"
+			      total-items="subjectGroupArr.length"
+			      ng-click="pageChange(currentPage)"
+			      max-size="maxSize" 
+			      class="pagination-sm"
+			      items-per-page="itemsPerPage" 
+			      boundary-links="true">
+				</pagination>
+
+        		<div id="tablemessage">{{tablemessage}}</div>
+	    </div>
+	     
+	</div>
+</div>
+
+<!------------------modal- add course ---------------->
+<div id="add_new_subjectgroup" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+        <div class="modal-content">
+        	<div class="modal-header m_student_modal">
+                <button class="close" data-dismiss="modal">X</button>
+               <h4 class="modal-title m_student_title form"> {{formname}} </h4>
+            </div>
+            <div class="modal-body" ng-init="getCourse()">
+                <div class="">
+		     	<form angular-validator-submit="submitCreateSubjectGroup()" class="course-form" id="subjectGroupForm" name="subjectGroupForm" novalidate angular-validator>	
+		     	<div id="message">{{message}}</div>
+		     		<div class="row">
+		     		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		     		<label>Subject Group Name <span class="mandatory">*</span></label>
+		     		<input 
+			     		type="text" 
+			     		name="sub_group_name" 
+			     		placeholder="Subject Group Name"
+			     		ng-model="subjectGroupDet.sub_group_name"
+					    required-message="'Please enter subject group name.'"
+			     		class="dashboard_text" 
+			     		validate-on="dirty"
+			     		maxlength="100"
+			     		required
+			     		autocomplete="off"
+		     		/>
+		     		</div>
+		     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				     		<label>Select Course <span class="mandatory" ng-show="action !='edit'">*</span></label>
+				     		<select 
+					     		class="dashboard_text" 
+					     		id="course_name"
+					     		name="course_name" 
+					     		data-ng-model="subjectGroupDet.course_id"
+					     		required-message="'Please select course.'"
+					     		required
+					     		ng-change="getSubject()"
+					     		ng-disabled = "action == 'edit'"
+					     		>
+				     			<option value="">Select Course</option>
+				     			<option value="{{item.id}}" ng-repeat="item in courseArr">{{item.name}}</option>
+				     		</select>
+				     	</div>
+		     		</div>
+		     		<div>
+		     		<div id="append_subject">
+		     			<label>Select Subject <span class="mandatory">*</span></label><br>
+		     			<span ng-repeat="x in subjectArr">     				
+		     			<input  
+			     			 type="checkbox"
+			     			 name="subject{{$index}}"
+			     			 ng-model="subjectGroupDet.subject_check[$index]"
+			     			 ng-click="check_subject($index,x.id)"
+			     			/>
+		     			<label >{{x.name}}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+		     			</span>
+		     		</div>
+		     		</div>
+		     		
+		     		<input ng-show="edit" type="submit" name="" value="Edit Subject Group" class="dashboard_btn" />
+		     		<input ng-show="add" type="submit" name="" value="Add Subject Group" class="dashboard_btn" />
+		     	</form>
+	     	</div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+
+</div>
+
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>  

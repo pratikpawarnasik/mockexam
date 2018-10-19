@@ -1,0 +1,102 @@
+<div data-ng-include="'views/header/_header.html'"></div>
+
+<div data-ng-controller="vidDashboardCtrl">
+<div ng-if="portal == 'main'">
+
+
+<!-- Banner -->
+<section class="intro-contact vm_courses_1">
+    <div class="intro-body">
+        <div class="container-fluid custompadding">
+            <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h4>EXAMS</h4>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+  <div class="container vm_pricingcontainer" ng-init="getCoursePage()">
+    <div class="row" ng-init="">
+      <div id="sidebar-left" class="col-3 col-lg-3 col-md-3 vm_couse_nav">
+            <ul class="vm_coursename ">
+                <li>Exam Name</li>
+              <!--   <li><input type="text" name="" placeholder="Search Exam" class="vm_course_input"></li> -->
+                <li data-ng-repeat="examLi in courseArr" ng-click="getCourseData(examLi.id)">{{examLi.name}}</li>
+               
+            </ul>
+       </div>
+
+    <!-- right content box -->
+     <div id="content-right" class="col-lg-9 container vm_nav_right_cntent" >
+           <div class="tab-content">
+            <div class="tab-pane fade in active">
+              <h3>{{courseList.name}}</h3><br>
+              <span ng-bind-html="courseList.desc | to_trusted"></span>
+           <!--  <p>{{courseList.desc}}asdf</p> -->
+            </div>
+          </div>
+    </div>
+     
+  </div>
+</div>
+</section>
+<section class="reports_sec">
+    <div class="container">
+        <div class="row row-eq-height">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h3 class="sec_title">Reports</h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-bar-chart report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Comparative Analysis</h4>
+                    <p>
+                        Know your percentile and national ranking. Compare your performance with that of friends, test after test. Benchmark against national toppers  compare
+                        your test attempts/scores. Compare your performance within the peer group.
+                    </p>
+               </div>
+            </div>
+            
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-street-view report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Self-Analysis</h4>
+                    <p>
+                        Identify your Strong Areas and Weak Areas, Fastest Attempted or Slowest Attempted question types. Review every question and its solution, to identify what you missed out or misinterpreted in Question Wise.
+                    </p>
+               </div>
+            </div>
+            
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-line-chart report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Performance Graph</h4>
+                    <p>
+                        Track your progress till date through graphical analysis of tests taken. View your progress in terms of percentage, accuracy and/or average time taken.
+                    </p>
+               </div>
+            </div>
+            
+            <div class="col-md-3 row-eq-height col-sm-12 col-xs-12">
+                <div class="reports">
+                    <i class="fa fa-user-o report_icon" aria-hidden="true"></i>
+                    <h4 class="report_title">Expert Recommendations</h4>
+                    <p>
+                        Based on well-defined parameters, your test performance is evaluated to determine your competence level and make pin-point recommendations for remedial action.
+                    </p>
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+</div>
+<div data-ng-include="'views/footer/_footer.html'"></div>

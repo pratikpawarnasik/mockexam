@@ -1,0 +1,102 @@
+
+<div data-ng-include="'views/header/_header.html'"></div>
+<!------------------- topbar ------------------>
+<script type="text/javascript"></script>
+<section class="intro-contactdas vm_forget_1">
+    <div class="intro-body">
+        <div class="container-fluid custompadding">
+            <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h4>FORGOT PASSWORD?</h4>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!------------------- Banner ------------------>
+<!------------------- Banner ------------------>
+<div ng-controller="vidForgetCtrl">
+<div id="mySpinner" ng-show="loading"></div>
+
+<section ng-show="valid" class="wrapper">
+	<div class="container-fluid">
+	    <div class="row">
+	        <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
+				<!--<h5 class="align_center note">Please enter the following information for forget password.</h5>-->
+				<div class="register_contact_custom">
+					<form class="register-form" angular-validator-submit="submitforgetForm()" name="regForm" id="regForm" novalidate angular-validator>
+						<div id="registermessage">{{registermessage}}</div>
+						<div>
+						<label>OTP</label>
+						<input 
+						type="text" 
+						name = "otp"
+						placeholder="Enter OTP"
+						class="static_text"
+						ng-model = "registerDet.otp"
+						required-message="'Please enter the OTP.'"
+						validate-on="dirty"
+	                    required 
+	                    
+	                    autocomplete="off"/>
+	                    <!--&nbsp;&nbsp;
+	                    <button class="btn" type="button">Resend</button>
+	                    <br>-->
+	                    <span class="note" >[Please enter the OTP sent to your registered mobile number ( ******{{contact | limitTo:-4 }} )]</span>
+	                    <button class="btn btn-success" ng-click="resendOTP()" type="button">Resend</button>
+						</div> 
+						<div><label>Password</label>
+                                <input 
+						      	  type="password" 
+						      	  placeholder="Password" 
+						      	  class="static_text"
+						      	  name="password" 
+						      	  ng-model="registerDet.password" 
+						      	  validator = "passwordValidator(registerDet.password) === true"
+				                  invalid-message = "passwordValidator(registerDet.password)"
+				                  required-message="'Please enter the password.'"
+				                  validate-on="dirty"
+				                  required
+				                  autocomplete="off"
+						      	  />
+                        </div>
+                            
+                        <div><label>Confirm Password</label>
+                                <input  
+                                type = "password"
+	                            name = "confirmPassword"
+	                            placeholder="Re-type Password"
+	                            class = "static_text"
+	                            ng-model = "registerDet.confirmPassword"
+	                            validator = "registerDet.password === registerDet.confirmPassword"
+	                            validate-on="dirty"
+	                            invalid-message = "'Passwords do not match!'"
+	                            required-message="'Please enter the confirm password.'"
+	                            required>
+                        </div>                           
+						
+						<input type="submit" class="dashboard_btn" value="Submit" />
+					</form>
+				</div>
+			</div>	
+		</div>
+	</div>
+</section>
+<div class="wrapper text-center" ng-show="invalid" ><h3 style="color: red">{{message}}</h3></div>
+<div class="wrapper text-center" ng-show="success"><h3  style="color: blue">Password change successfully.</h3>
+<a href="{{base_url}}"  style="color: orange">Click Here to homepage</a>
+</div>
+</div>
+<!------------------- contact info ------------------->
+
+<!------------------- Footer ------------------>
+<footer>
+    <div class="container-fluid">
+        <div class="row copy_right_wrapper">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                Copyrights &copy; 2018 mockexam All Rights Reserved.
+            </div>
+        </div>
+        
+    </div>
+</footer>

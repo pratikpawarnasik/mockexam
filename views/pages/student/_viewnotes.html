@@ -1,0 +1,76 @@
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/header/_header.html'"></div>
+<style>
+.margin {
+		margin-bottom: 15px;
+	}
+	.img_style { position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;}
+</style>
+<!------------------- Banner ------------------>
+<div data-ng-controller="vidViewNotesCtrl">
+<div class="page_title">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+				Study Material
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+	    <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 table-responsive" ng-init="getNotes();">
+	    	<div class="">
+	    	<div id="getmessage">{{getmessage}}</div>
+	    	<div class="table_action">
+	    	
+			
+				<br />
+			   <input type="text" class="select_ctrl margin_space" ng-model="searchtext" placeholder="Title/Name/Type">
+	     	   <button type="button" ng-click="getNotes()">Search</button>
+	     	   &nbsp;
+	     	   <button type="button" ng-click="reset()">Reset</button>
+			</div>
+	    		<table class="dashboard_tab notes_list_tab">
+	        		<tr>
+	        			<td align="left" width="10%">Sr.No</td>
+	        			<td align="left" width="20%">Title</td>
+	        			<td align="left" width="20%">File Name</td>
+	        			<td align="left" width="20%">Course</td>
+	        			<td align="left" width="30%">&nbsp;</td>
+	        		</tr>
+	        		<tr data-ng-repeat="notes in notesArr.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	        			<td>{{($index + 1) + ((currentPage-1) * itemsPerPage)}}.</td>
+	        			<td>{{notes.title}}</td>
+	        			<td>{{notes.display_name}}</td>
+	        			<td>{{notes.course}}</td>
+	        			<td align="right">
+							  <a ng-if="notes.type == 'url' || notes.type == 'doc'" href="{{notes.path}}" target="_blank">View</a>
+	        			</td>
+	        		</tr>
+        		</table>
+        		<div ng-if="notesArr.length == 0"><h3 class="ng-binding has-success">Notes are not inserted.</h3></div> 
+        		<pagination 
+				  ng-if="notesArr.length != 0"
+			      ng-model="currentPage"
+			      total-items="notesArr.length"
+			      ng-click="pageChange(currentPage)"
+			      max-size="maxSize" 
+			      class="pagination-sm"
+			      items-per-page="itemsPerPage" 
+			      boundary-links="true">
+			</pagination>
+        		<div id="tablemessage">{{tablemessage}}</div>
+			</div>
+	    </div>
+	</div>
+</div>
+
+  </div>
+</div>
+
+</div>
+
+<!--------------------- footer page ---------------------->
+<div data-ng-include="'views/footer/_masterfooter.html'"></div>
